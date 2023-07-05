@@ -1,0 +1,41 @@
+<script src="javascript.js"></script>
+<div th:fragment="header">
+    <header class="p-3 mb-3 border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+            <div class="container">
+                <a class="navbar-brand" href="#">MainFrame</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample07">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/match">Матчи</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/team">Клубы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Админ-панель</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle disabled" href="#" data-bs-toggle="dropdown" aria-expanded="false">Функции</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/match/add">Добавить матч</a></li>
+                                <li><a class="dropdown-item" href="#">Добавить пользователя</a></li>
+                                <li><a class="dropdown-item" href="/team/add">Добавить команду</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form role="search">
+                        <input class="form-control" type="search" placeholder="Искать" aria-label="Искать">
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+</div>

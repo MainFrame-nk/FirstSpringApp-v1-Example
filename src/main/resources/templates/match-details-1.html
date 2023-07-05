@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Детали матча</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div th:insert="index/header :: header"></div>
+
+<div class="container mt-5">
+    <div th:each="m : ${match}">
+        <h1>Матч №<span th:text="${m.idMatch}"></span></h1>
+        <h1><span th:text="${m.teamHome}"></span> - <span th:text="${m.teamGuest}"></span></h1>
+        <h1><span th:text="${m.scoreHome}"></span> : <span th:text="${m.scoreGuest}"></span></h1>
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <form method="post">
+                    <tbody th:each="m : ${match}">
+                    <tr>
+                        <th></th>
+                        <th>Manchester City</th>
+                        <th>Arsenal</th>
+                        <th>Всего</th>
+                    </tr>
+                    <tr>
+                        <th>Владение</th>
+                        <td th:text="${m.possessionFirstHalfHome}"></td>
+                        <td th:text="${m.possessionFirstHalfGuest}"></td>
+                        <td th:text="${m.possessionFirstHalfHome} + ${m.possessionFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Удары</th>
+                        <td th:text="${m.shotFirstHalfHome}"></td>
+                        <td th:text="${m.shotFirstHalfGuest}"></td>
+                        <td th:text="${m.shotFirstHalfHome} + ${m.shotFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Удары в створ</th>
+                        <td th:text="${m.shotOnTargetFirstHalfHome}"></td>
+                        <td th:text="${m.shotOnTargetFirstHalfGuest}"></td>
+                        <td th:text="${m.shotOnTargetFirstHalfHome} + ${m.shotOnTargetFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Угловые</th>
+                        <td th:text="${m.cornerFirstHalfHome}"></td>
+                        <td th:text="${m.cornerFirstHalfGuest}"></td>
+                        <td th:text="${m.cornerFirstHalfHome} + ${m.cornerFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Штрафные удары</th>
+                        <td th:text="${m.freeKickFirstHalfHome}"></td>
+                        <td th:text="${m.freeKickFirstHalfGuest}"></td>
+                        <td th:text="${m.freeKickFirstHalfHome} + ${m.freeKickFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Оффсайды</th>
+                        <td th:text="${m.offsideFirstHalfHome}"></td>
+                        <td th:text="${m.offsideFirstHalfGuest}"></td>
+                        <td th:text="${m.offsideFirstHalfHome} + ${m.offsideFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Жёлтые карточки</th>
+                        <td th:text="${m.yellowCardFirstHalfHome}"></td>
+                        <td th:text="${m.yellowCardFirstHalfGuest}"></td>
+                        <td th:text="${m.yellowCardFirstHalfHome} + ${m.yellowCardFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Красные карточки</th>
+                        <td th:text="${m.redCardFirstHalfHome}"></td>
+                        <td th:text="${m.redCardFirstHalfGuest}"></td>
+                        <td th:text="${m.redCardFirstHalfHome} + ${m.redCardFirstHalfGuest}"></td>
+                    </tr>
+                    <tr>
+                        <th>Фолы</th>
+                        <td th:text="${m.foulFirstHalfHome}"></td>
+                        <td th:text="${m.foulFirstHalfGuest}"></td>
+                        <td th:text="${m.foulFirstHalfHome} + ${m.foulFirstHalfGuest}"></td>
+                    </tr>
+                    </tbody>
+                </form>
+            </table>
+        </div>
+        <a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-warning">Матч</a>
+        <a th:href="'/match/' + ${m.idMatch} + '/1'" class="btn btn-warning">1-й тайм</a>
+        <a th:href="'/match/' + ${m.idMatch} + '/2'" class="btn btn-warning">2-й тайм</a><br><br>
+        <a th:href="'/match/' + ${m.idMatch} + '/edit/1'" class="btn btn-warning">Редактировать</a><br><br>
+        <form th:action="'/match/' + ${m.idMatch} + '/delete'" method="post">
+            <button class="btn btn-warning" type="submit">Удалить</button>
+        </form>
+    </div>
+</div>
+
+
+<div th:insert="index/footer :: footer"></div>
+</body>
+</html>
