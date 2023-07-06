@@ -1,10 +1,10 @@
-package com.example.demo;
+package nk.mframe.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class HermesTests {
 
 	@Test
 	void contextLoads() {

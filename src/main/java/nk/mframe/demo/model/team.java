@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package nk.mframe.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,9 +15,9 @@ public class team {
 
     private String nameTeam;
 
-    private Long league;
+    private Integer leagueTeam;
 
-    private String logo;
+    private String logotypeTeam;
 
     private Byte levelTeam;
 
@@ -45,9 +45,17 @@ public class team {
         this.levelTeam = levelTeam;
     }
 
+    public Integer getLeagueTeam() {
+        return leagueTeam;
+    }
 
-    public team(String name, Byte levelTeam) {
-        this.nameTeam = name;
+    public void setLeagueTeam(Integer league) {
+        this.leagueTeam = league;
+    }
+
+    public team(String nameTeam, Integer leagueTeam, Byte levelTeam) {
+        this.nameTeam = nameTeam;
+        this.leagueTeam = leagueTeam;
         this.levelTeam = levelTeam;
     }
 

@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package nk.mframe.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -71,6 +71,7 @@ public class match_table {
     public void setTeamGuest(int teamGuest) {
         this.teamGuest = teamGuest;
     }
+
 
     public Integer getShotFirstHalfHome() {
         return shotFirstHalfHome;

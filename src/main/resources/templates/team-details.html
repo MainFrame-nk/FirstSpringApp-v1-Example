@@ -13,11 +13,12 @@
         <h1>Команда №<span th:text="${tm.idTeam}"></span></h1>
         <ul>
             <li><b>Название команды: </b><span th:text="${tm.nameTeam}"></span></li>
+            <li><b>Лига: </b><span th:text="${tm.leagueTeam}"></span></li>
             <li><b>Уровень команды: </b><span th:text="${tm.levelTeam}"></span></li>
         </ul>
-        <a th:href="'/team/' + ${tm.idTeam} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+        <a th:href="'/team/' + ${tm.idTeam} + '/edit'" class="btn btn-light">Редактировать</a><br><br>
         <form th:action="'/team/' + ${tm.idTeam} + '/delete'" method="post">
-            <button class="btn btn-warning" type="submit">Удалить</button>
+            <button class="btn btn-light" type="submit">Удалить</button>
         </form>
     </div>
 </div>

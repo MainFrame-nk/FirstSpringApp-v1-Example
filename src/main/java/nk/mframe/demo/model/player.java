@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package nk.mframe.demo.model;
 
 //@Entity
 public class player {

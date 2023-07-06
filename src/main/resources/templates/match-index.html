@@ -28,26 +28,24 @@
       </thead>
       <form method="post">
         <tbody>
-          <tr th:each="m : ${match}">
+          <tr th:each="m, itemStat : ${match}">
             <td th:text="${m.idMatch}"></td>
             <td style="color: red">[НЕ НАСТРОЕНО]</td>
             <td style="color: red">[НЕ НАСТРОЕНО]</td>
     <!--        <td th:text="${el.date}"></td>-->
     <!--        <td th:text="${el.time}"></td>-->
             <td th:text="${m.teamHome}"></td>
-            <td style="color: red">[НЕ НАСТРОЕНО]</td>
-<!--              <td th:each="tm : ${team.id_team == m.idTeamHome}" th:text="${tm.name}"></td>-->
+              <td th:each="tm : ${team_home[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
             <td th:text="${m.teamGuest}"></td>
-<!--             <td th:each="cl : ${clubs}" th:text="${cl.name}"></td>&ndash;&gt;-->
-            <td style="color: red">[НЕ НАСТРОЕНО]</td>
+             <td th:each="tm : ${team_guest[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
             <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
-            <td><a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-warning">Подробнее</a></td>
+            <td><a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-light">Подробнее</a></td>
           </tr>
         </tbody>
       </form>
     </table>
   </div>
-  <a href="/match/add" class="btn btn-success" >Добавить матч</a>
+  <a href="/match/add" class="btn btn-light" >Добавить матч</a>
 </div>
 
 <div th:insert="index/footer :: footer"></div>

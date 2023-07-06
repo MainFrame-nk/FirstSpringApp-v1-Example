@@ -14,9 +14,13 @@
         <form method="post">
             <span>Введите название команды:</span><br>
             <input type="text" name="name_team" th:value="${tm.nameTeam}" class="form-control"><br>
+            <span>Выберите лигу:</span><br>
+            <select size="3" name="team_league" class="form-control">
+                <option th:each="l : ${league}" th:value="${l.idLeague}" th:name="team_league" th:selected="${l.idLeague == tm.leagueTeam}" th:text="${l.nameLeague}"></option>
+            </select><br>
             <span>Введите уровень команды (1 - 6):</span><br>
             <input type="text" name="level_team" th:value="${tm.levelTeam}" class="form-control"><br>
-            <button type="submit" class="btn btn-success">Обновить</button>
+            <button type="submit" class="btn btn-light">Обновить</button>
         </form>
     </div>
 </div>

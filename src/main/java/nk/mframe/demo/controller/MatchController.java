@@ -1,9 +1,9 @@
-package com.example.demo.controllers;
+package nk.mframe.demo.controller;
 
-import com.example.demo.models.match_table;
-import com.example.demo.models.team;
-import com.example.demo.dao.MatchRepository;
-import com.example.demo.dao.TeamRepository;
+import nk.mframe.demo.model.match_table;
+import nk.mframe.demo.model.team;
+import nk.mframe.demo.dao.MatchRepository;
+import nk.mframe.demo.dao.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +26,17 @@ public class MatchController {
         Iterable<match_table> matches = matchRepository.findAll();
         model.addAttribute("match", matches);
 
-        Iterable<team> team = teamRepository.findAll();
-        model.addAttribute("team", team);
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        for (match_table mt : matches) {
+            Optional<team> team_home = teamRepository.findById(mt.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(mt.getTeamGuest());
+
+            team_home.ifPresent(th::add);
+            team_guest.ifPresent(tg::add);
+            model.addAttribute("team_home", th);
+            model.addAttribute("team_guest", tg);
+        }
         return "match-index";
     }
 

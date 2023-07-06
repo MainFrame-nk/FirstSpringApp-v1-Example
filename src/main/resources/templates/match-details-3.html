@@ -84,9 +84,9 @@
         <a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-warning">Матч</a>
         <a th:href="'/match/' + ${m.idMatch} + '/1'" class="btn btn-warning">1-й тайм</a>
         <a th:href="'/match/' + ${m.idMatch} + '/2'" class="btn btn-warning">2-й тайм</a><br><br>
-        <a th:href="'/match/' + ${m.idMatch} + '/edit/3'" class="btn btn-warning">Редактировать</a><br><br>
+        <a th:href="'/match/' + ${m.idMatch} + '/edit/3'" class="btn btn-light">Редактировать</a><br><br>
         <form th:action="'/match/' + ${m.idMatch} + '/delete'" method="post">
-            <button class="btn btn-warning" type="submit">Удалить</button>
+            <button class="btn btn-light" type="submit">Удалить</button>
         </form>
     </div>
 </div>
