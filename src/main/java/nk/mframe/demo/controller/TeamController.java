@@ -70,19 +70,33 @@ public class TeamController {
         return "team-details";
     }
 
-//    @GetMapping("/team/{id}/matches")
-//    public String teamMatchDetails(@PathVariable(value = "id") int idTeam, Model model) {
-//        if(!teamRepository.existsById(idTeam)) {
-//            return "redirect:/team";
-//        }
-//        Iterable<match_table> matches = matchRepository.findAll();
-//        model.addAttribute("match", matches);
-//        Optional<team> team = teamRepository.findById(idTeam);
-//        ArrayList<team> res = new ArrayList<>();
-//        team.ifPresent(res::add);
-//        model.addAttribute("team", res);
-//        return "team-details";
-//    }
+    @GetMapping("/team/{id}/matches")
+    public String teamMatchDetails(@PathVariable(value = "id") int idTeam, Model model) {
+        if(!teamRepository.existsById(idTeam)) {
+            return "redirect:/team";
+        }
+        Iterable<match_table> matches = matchRepository.findAll();
+
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        ArrayList<match_table> m = new ArrayList<>();
+        for (match_table mt : matches) {
+            if (mt.getTeamHome() == idTeam || mt.getTeamGuest() == idTeam) {
+                Optional<match_table> mtm = matchRepository.findById(mt.getIdMatch());
+                Optional<team> team_home = teamRepository.findById(mt.getTeamHome());
+                Optional<team> team_guest = teamRepository.findById(mt.getTeamGuest());
+
+                mtm.ifPresent(m::add);
+                model.addAttribute("matches", m);
+
+                team_home.ifPresent(th::add);
+                team_guest.ifPresent(tg::add);
+                model.addAttribute("team_home", th);
+                model.addAttribute("team_guest", tg);
+            }
+        }
+        return "team-calendar";
+    }
 
     @GetMapping("/team/{id}/edit")
     public String teamEdit(@PathVariable(value = "id") int idTeam, Model model) {

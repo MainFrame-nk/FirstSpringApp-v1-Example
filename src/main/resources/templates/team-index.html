@@ -31,7 +31,7 @@
         <td th:each="l : ${league_team[__${itemStat.index}__]}" th:text="${l.nameLeague}"></td>
         <td th:text="${tm.levelTeam}"></td>
         <td><a th:href="'/team/' + ${tm.idTeam}" class="btn btn-light">Подробнее</a></td>
-        <td><a href="#" class="btn btn-light">Календарь</a></td>
+        <td><a th:href="'/team/' + ${tm.idTeam} + '/matches'" class="btn btn-light">Календарь</a></td>
       </tr>
       </tbody>
     </table>
