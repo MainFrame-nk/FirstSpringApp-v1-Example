@@ -1,9 +1,14 @@
 package nk.mframe.demo.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class match_table {
@@ -12,14 +17,15 @@ public class match_table {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idMatch;
 
-    private Integer teamHome;
+    private int teamHome;
 
-    private Integer teamGuest;
+    private int teamGuest;
 
     private Integer scoreHome, scoreGuest;
 
-    //private Date dateMatch;
-    //private Time timeMatch;
+    private LocalDate dateMatch;
+
+    private LocalTime timeMatch;
     private Integer shotFirstHalfHome, shotSecondHalfHome, shotExtraTimeHome;
 
     private Integer shotFirstHalfGuest, shotSecondHalfGuest, shotExtraTimeGuest;
@@ -521,20 +527,38 @@ public class match_table {
         this.foulExtraTimeGuest = foulExtraTimeGuest;
     }
 
+    public LocalDate getDateMatch() {
+        return dateMatch;
+    }
+
+    public void setDateMatch(LocalDate dateMatch) {
+        this.dateMatch = dateMatch;
+    }
+
+    public LocalTime getTimeMatch() {
+        return timeMatch;
+    }
+
+    public void setTimeMatch(LocalTime timeMatch) {
+        this.timeMatch = timeMatch;
+    }
+
     public match_table() {
     }
 
-    public match_table(Integer teamHome, Integer teamGuest, Integer shotFirstHalfHome, Integer shotSecondHalfHome, Integer shotExtraTimeHome, Integer shotFirstHalfGuest, Integer shotSecondHalfGuest, Integer shotExtraTimeGuest, Integer scoreHome, Integer scoreGuest, Integer possessionFirstHalfHome, Integer possessionSecondHalfHome, Integer possessionExtraTimeHome, Integer possessionFirstHalfGuest, Integer possessionSecondHalfGuest, Integer possessionExtraTimeGuest, Integer shotOnTargetFirstHalfHome, Integer shotOnTargetSecondHalfHome, Integer shotOnTargetExtraTimeHome, Integer shotOnTargetFirstHalfGuest, Integer shotOnTargetSecondHalfGuest, Integer shotOnTargetExtraTimeGuest, Integer cornerFirstHalfHome, Integer cornerSecondHalfHome, Integer cornerExtraTimeHome, Integer cornerFirstHalfGuest, Integer cornerSecondHalfGuest, Integer cornerExtraTimeGuest, Integer yellowCardFirstHalfHome, Integer yellowCardSecondHalfHome, Integer yellowCardExtraTimeHome, Integer yellowCardFirstHalfGuest, Integer yellowCardSecondHalfGuest, Integer yellowCardExtraTimeGuest, Integer redCardFirstHalfHome, Integer redCardSecondHalfHome, Integer redCardExtraTimeHome, Integer redCardFirstHalfGuest, Integer redCardSecondHalfGuest, Integer redCardExtraTimeGuest, Integer freeKickFirstHalfHome, Integer freeKickSecondHalfHome, Integer freeKickExtraTimeHome, Integer freeKickFirstHalfGuest, Integer freeKickSecondHalfGuest, Integer freeKickExtraTimeGuest, Integer offsideFirstHalfHome, Integer offsideSecondHalfHome, Integer offsideExtraTimeHome, Integer offsideFirstHalfGuest, Integer offsideSecondHalfGuest, Integer offsideExtraTimeGuest, Integer foulFirstHalfHome, Integer foulSecondHalfHome, Integer foulExtraTimeHome, Integer foulFirstHalfGuest, Integer foulSecondHalfGuest, Integer foulExtraTimeGuest) {
+    public match_table(int teamHome, int teamGuest, LocalDate dateMatch, LocalTime timeMatch,Integer shotFirstHalfHome, Integer shotSecondHalfHome, Integer shotExtraTimeHome, Integer shotFirstHalfGuest, Integer shotSecondHalfGuest, Integer shotExtraTimeGuest, Integer scoreHome, Integer scoreGuest, Integer possessionFirstHalfHome, Integer possessionSecondHalfHome, Integer possessionExtraTimeHome, Integer possessionFirstHalfGuest, Integer possessionSecondHalfGuest, Integer possessionExtraTimeGuest, Integer shotOnTargetFirstHalfHome, Integer shotOnTargetSecondHalfHome, Integer shotOnTargetExtraTimeHome, Integer shotOnTargetFirstHalfGuest, Integer shotOnTargetSecondHalfGuest, Integer shotOnTargetExtraTimeGuest, Integer cornerFirstHalfHome, Integer cornerSecondHalfHome, Integer cornerExtraTimeHome, Integer cornerFirstHalfGuest, Integer cornerSecondHalfGuest, Integer cornerExtraTimeGuest, Integer yellowCardFirstHalfHome, Integer yellowCardSecondHalfHome, Integer yellowCardExtraTimeHome, Integer yellowCardFirstHalfGuest, Integer yellowCardSecondHalfGuest, Integer yellowCardExtraTimeGuest, Integer redCardFirstHalfHome, Integer redCardSecondHalfHome, Integer redCardExtraTimeHome, Integer redCardFirstHalfGuest, Integer redCardSecondHalfGuest, Integer redCardExtraTimeGuest, Integer freeKickFirstHalfHome, Integer freeKickSecondHalfHome, Integer freeKickExtraTimeHome, Integer freeKickFirstHalfGuest, Integer freeKickSecondHalfGuest, Integer freeKickExtraTimeGuest, Integer offsideFirstHalfHome, Integer offsideSecondHalfHome, Integer offsideExtraTimeHome, Integer offsideFirstHalfGuest, Integer offsideSecondHalfGuest, Integer offsideExtraTimeGuest, Integer foulFirstHalfHome, Integer foulSecondHalfHome, Integer foulExtraTimeHome, Integer foulFirstHalfGuest, Integer foulSecondHalfGuest, Integer foulExtraTimeGuest) {
         this.teamHome = teamHome;
         this.teamGuest = teamGuest;
+        this.dateMatch = dateMatch;
+        this.timeMatch = timeMatch;
+        this.scoreHome = scoreHome;
+        this.scoreGuest = scoreGuest;
         this.shotFirstHalfHome = shotFirstHalfHome;
         this.shotSecondHalfHome = shotSecondHalfHome;
         this.shotExtraTimeHome = shotExtraTimeHome;
         this.shotFirstHalfGuest = shotFirstHalfGuest;
         this.shotSecondHalfGuest = shotSecondHalfGuest;
         this.shotExtraTimeGuest = shotExtraTimeGuest;
-        this.scoreHome = scoreHome;
-        this.scoreGuest = scoreGuest;
         this.possessionFirstHalfHome = possessionFirstHalfHome;
         this.possessionSecondHalfHome = possessionSecondHalfHome;
         this.possessionExtraTimeHome = possessionExtraTimeHome;

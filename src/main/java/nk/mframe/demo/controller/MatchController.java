@@ -9,7 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -24,6 +31,11 @@ public class MatchController {
     @GetMapping("/match")
     public String matchMain(Model model) {
         Iterable<match_table> matches = matchRepository.findAll();
+//        for (match_table mt : matches) {
+//            LocalDate getDate = LocalDate.parse(mt.getDateMatch().toString());
+//
+//            System.out.println(getDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+//        }
         model.addAttribute("match", matches);
 
         ArrayList<team> th = new ArrayList<>();
@@ -47,8 +59,11 @@ public class MatchController {
         return "match-add";
     }
     @PostMapping("/match/add")
-    public String matchPostAdd(@RequestParam int team_home, @RequestParam int team_guest, Model model) {
-        match_table matches = new match_table(team_home, team_guest, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0,
+    public String matchPostAdd(@RequestParam String date_match, @RequestParam String time_match, @RequestParam int team_home, @RequestParam int team_guest, Model model) {
+        LocalDate dateStr_match = LocalDate.parse(date_match);
+        LocalTime timeStr_match = LocalTime.parse(time_match);
+
+        match_table matches = new match_table(team_home, team_guest, dateStr_match, timeStr_match,0, 0, -1, 0, 0, -1, 0, 0, 0, 0,
                 -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
                 0, 0, 0, 0, 0, -1, 0, 0, -1, 0,
                 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
@@ -64,12 +79,19 @@ public class MatchController {
             return "redirect:/match";
         }
 
-        //matches match1 = matchRepository.findById(idMatch).orElse(null);
         Optional<match_table> match = matchRepository.findById(idMatch);
-        //Optional<statmatch> statmatch = statMatchRepository.findById(match.get().getId());
         ArrayList<match_table> res = new ArrayList<>();
         match.ifPresent(res::add);
         model.addAttribute("match", res);
+
+        Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        team_home.ifPresent(th::add);
+        team_guest.ifPresent(tg::add);
+        model.addAttribute("team_home", th);
+        model.addAttribute("team_guest", tg);
         return "match-details-0";
     }
 
@@ -79,12 +101,19 @@ public class MatchController {
             return "redirect:/match";
         }
 
-        //matches match1 = matchRepository.findById(idMatch).orElse(null);
         Optional<match_table> match = matchRepository.findById(idMatch);
-        //Optional<statmatch> statmatch = statMatchRepository.findById(match.get().getId());
         ArrayList<match_table> res = new ArrayList<>();
         match.ifPresent(res::add);
         model.addAttribute("match", res);
+
+        Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        team_home.ifPresent(th::add);
+        team_guest.ifPresent(tg::add);
+        model.addAttribute("team_home", th);
+        model.addAttribute("team_guest", tg);
         return "match-details-1";
     }
 
@@ -94,12 +123,19 @@ public class MatchController {
             return "redirect:/match";
         }
 
-        //matches match1 = matchRepository.findById(idMatch).orElse(null);
         Optional<match_table> match = matchRepository.findById(idMatch);
-        //Optional<statmatch> statmatch = statMatchRepository.findById(match.get().getId());
         ArrayList<match_table> res = new ArrayList<>();
         match.ifPresent(res::add);
         model.addAttribute("match", res);
+
+        Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        team_home.ifPresent(th::add);
+        team_guest.ifPresent(tg::add);
+        model.addAttribute("team_home", th);
+        model.addAttribute("team_guest", tg);
         return "match-details-2";
     }
 
@@ -109,12 +145,19 @@ public class MatchController {
             return "redirect:/match";
         }
 
-        //matches match1 = matchRepository.findById(idMatch).orElse(null);
         Optional<match_table> match = matchRepository.findById(idMatch);
-        //Optional<statmatch> statmatch = statMatchRepository.findById(match.get().getId());
         ArrayList<match_table> res = new ArrayList<>();
         match.ifPresent(res::add);
         model.addAttribute("match", res);
+
+        Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        team_home.ifPresent(th::add);
+        team_guest.ifPresent(tg::add);
+        model.addAttribute("team_home", th);
+        model.addAttribute("team_guest", tg);
         return "match-details-3";
     }
 

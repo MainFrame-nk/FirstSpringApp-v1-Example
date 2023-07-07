@@ -10,17 +10,19 @@
 
 <div class="container mt-5">
     <div th:each="m : ${match}">
-        <h1>Матч №<span th:text="${m.idMatch}"></span></h1>
-        <h1><span th:text="${m.teamHome}"></span> - <span th:text="${m.teamGuest}"></span></h1>
-        <h1><span th:text="${m.scoreHome}"></span> : <span th:text="${m.scoreGuest}"></span></h1>
+        <center><h1>Матч №<span th:text="${m.idMatch}"></span></h1>
+            <h2><span th:text="${m.dateMatch}"></span> <span th:text="${m.timeMatch}"></span></h2>
+        <h2>idTeamHome: <span th:text="${m.teamHome}"></span> - idTeamGuest: <span th:text="${m.teamGuest}"></span></h2>
+        <h2><span th:each="th : ${team_home}" th:text="${th.nameTeam}"></span> - <span th:each="tg : ${team_guest}" th:text="${tg.nameTeam}"></span></h2>
+        <h2><span th:text="${m.scoreHome}"></span> : <span th:text="${m.scoreGuest}"></span></h2></center>
         <div class="table-responsive small">
             <table class="table table-striped table-sm">
                 <form method="post">
                     <tbody th:each="m : ${match}">
                     <tr>
                         <th></th>
-                        <th>Manchester City</th>
-                        <th>Arsenal</th>
+                        <th th:each="th : ${team_home}" th:text="${th.nameTeam}"></th>
+                        <th th:each="tg : ${team_guest}" th:text="${tg.nameTeam}"></th>
                         <th>Всего</th>
                     </tr>
                     <tr>
