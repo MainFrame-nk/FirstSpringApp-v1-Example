@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-public class match_table {
+public class match_table implements Comparable<match_table> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -607,5 +607,10 @@ public class match_table {
         this.foulFirstHalfGuest = foulFirstHalfGuest;
         this.foulSecondHalfGuest = foulSecondHalfGuest;
         this.foulExtraTimeGuest = foulExtraTimeGuest;
+    }
+
+    @Override
+    public int compareTo(match_table o) {
+        return o.getDateMatch().compareTo(this.getDateMatch());
     }
 }

@@ -12,6 +12,7 @@
 <div class="container mt-5 mb-5">
   <h1>Новый матч</h1>
   <form action="/match/add" method="post" >
+      <span>Выберите дату и время начала матча:</span>
     <input type="date" name="date_match" class="form-control"><br>
     <input type="time" name="time_match" class="form-control"><br>
     <select name="team_home" size="3" class="form-control">
@@ -20,8 +21,6 @@
     <select size="3" name="team_guest" class="form-control">
       <option th:each="tm : ${team}" th:value="${tm.idTeam}" th:text="${tm.nameTeam}"></option>
     </select><br>
-<!--    <input type="text" name="team_home" placeholder="[WARNING] Выберите команду хозяев" class="form-control"><br>-->
-<!--    <input type="text" name="team_guest" placeholder="[WARNING] Выберите команду гостей" class="form-control"><br>-->
     <button type="submit" class="btn btn-light">Добавить матч</button>
   </form>
 </div>

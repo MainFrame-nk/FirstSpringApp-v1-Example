@@ -12,8 +12,9 @@
     <h1>Редактирование матча</h1>
     <div th:each="m : ${match}">
         <form method="post">
-<!--            <input type="date" name="date_match" class="form-control"><br>-->
-<!--            <input type="time" name="time_match" class="form-control"><br>-->
+            <span>Выберите дату и время начала матча:</span>
+            <input type="date" name="date_match" class="form-control" th:value="${m.dateMatch}"><br>
+            <input type="time" name="time_match" class="form-control" th:value="${m.timeMatch}"><br>
             <span>Выберите команду хозяев:</span>
             <select size="3" name="team_home" class="form-control">
                 <option th:each="tm : ${team}" th:value="${tm.idTeam}" th:name="team_home" th:selected="${tm.idTeam == m.teamHome}" th:text="${tm.nameTeam}"></option>

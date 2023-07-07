@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 
@@ -217,6 +218,8 @@ public class MatchController {
 
     @PostMapping("/match/{id}/edit/0")
     public String matchUpdateMatch(@PathVariable(value = "id") long idMatch, @RequestParam int team_home, @RequestParam int team_guest,
+                              @RequestParam String date_match,
+                              @RequestParam String time_match,
                               @RequestParam int score_home,
                               @RequestParam int score_guest,
                               @RequestParam int shot_first_half_home,
@@ -275,6 +278,10 @@ public class MatchController {
                               @RequestParam int foul_extra_half_guest,
                               Model model) {
         match_table match = matchRepository.findById(idMatch).orElseThrow(RuntimeException::new);
+        LocalDate dateStr_match = LocalDate.parse(date_match);
+        LocalTime timeStr_match = LocalTime.parse(time_match);
+        match.setDateMatch(dateStr_match);
+        match.setTimeMatch(timeStr_match);
         match.setTeamHome(team_home);
         match.setTeamGuest(team_guest);
         match.setScoreHome(score_home);
@@ -476,4 +483,56 @@ public class MatchController {
         return "redirect:/match";
     }
 
+    @GetMapping("/match/{id}/analysis")
+    public String matchAnalisys(@PathVariable(value = "id") long idMatch, Model model) {
+        if(!matchRepository.existsById(idMatch)) {
+            return "redirect:/match";
+        }
+
+        Optional<match_table> match = matchRepository.findById(idMatch);
+        ArrayList<match_table> res = new ArrayList<>();
+        match.ifPresent(res::add);
+        model.addAttribute("match", res);
+
+        Iterable<match_table> matches = matchRepository.findAll();
+
+        ArrayList<match_table> mt = new ArrayList<>();
+        //ArrayList<match_table> mg = new ArrayList<>();
+        //LocalDate today = LocalDate.now();
+        for (match_table m : matches) {
+            if (m.getTeamHome() == match.get().getTeamHome() || m.getTeamGuest() == match.get().getTeamHome()
+                    || m.getTeamHome() == match.get().getTeamGuest() || m.getTeamGuest() == match.get().getTeamGuest()) {
+                //if (m.getDateMatch() ) {
+                    Optional<match_table> mtm = matchRepository.findById(m.getIdMatch());
+
+                    mtm.ifPresent(mt::add);
+                    model.addAttribute("matches", mt);
+                //}
+            }
+        }
+        Collections.sort(mt);
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
+        for (match_table name_teams : mt) {
+            Optional<team> team_home = teamRepository.findById(name_teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(name_teams.getTeamGuest());
+
+            team_home.ifPresent(th::add);
+            team_guest.ifPresent(tg::add);
+            model.addAttribute("team_home", th);
+            model.addAttribute("team_guest", tg);
+        }
+
+        for (match_table mtms : mt) {
+            System.out.println(mtms.getDateMatch());
+        }
+
+//        Collections.sort(mt);
+//        int i = 1;
+//        while(i != 2) {
+//            System.out.println(mt.get(mt.size() - i));
+//            i++;
+//        }
+        return "match-analysis";
+    }
 }
