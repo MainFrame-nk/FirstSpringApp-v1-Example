@@ -497,42 +497,147 @@ public class MatchController {
         Iterable<match_table> matches = matchRepository.findAll();
 
         ArrayList<match_table> mt = new ArrayList<>();
-        //ArrayList<match_table> mg = new ArrayList<>();
+        ArrayList<match_table> mg = new ArrayList<>();
         //LocalDate today = LocalDate.now();
         for (match_table m : matches) {
-            if (m.getTeamHome() == match.get().getTeamHome() || m.getTeamGuest() == match.get().getTeamHome()
-                    || m.getTeamHome() == match.get().getTeamGuest() || m.getTeamGuest() == match.get().getTeamGuest()) {
+            if (m.getTeamHome() == match.get().getTeamHome()) {
                 //if (m.getDateMatch() ) {
-                    Optional<match_table> mtm = matchRepository.findById(m.getIdMatch());
+                    Optional<match_table> mth = matchRepository.findById(m.getIdMatch());
 
-                    mtm.ifPresent(mt::add);
-                    model.addAttribute("matches", mt);
+                    mth.ifPresent(mt::add);
+                    //model.addAttribute("matches_home", mt);
                 //}
+            } else if (m.getTeamGuest() == match.get().getTeamGuest()) {
+                Optional<match_table> mtg = matchRepository.findById(m.getIdMatch());
+
+                mtg.ifPresent(mg::add);
+                //model.addAttribute("matches_guest", mg);
             }
         }
-        Collections.sort(mt);
+        ArrayList<match_table> lastMatchesHomeTeam = new ArrayList<>();
+        int i = 0;
+        int j = Math.min(mt.size(), 9);
+        while(i != j) {
+            if (match.get().getDateMatch().isAfter(mt.get(i).getDateMatch())) {
+                Optional<match_table> mat = matchRepository.findById(mt.get(i).getIdMatch());
+
+                mat.ifPresent(lastMatchesHomeTeam::add);
+                model.addAttribute("last_home", lastMatchesHomeTeam);
+            }
+//            else if (match.get().getDateMatch().compareTo(mt.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
+//                if (match.get().getTimeMatch().compareTo(mt.get(i).getTimeMatch()) > 0) {
+//                    Optional<match_table> mat = matchRepository.findById(mt.get(i).getIdMatch());
+//
+//                    mat.ifPresent(lastMatchesHomeTeam::add);
+//                    model.addAttribute("last_home", lastMatchesHomeTeam);
+//                }
+//            }
+            i++;
+        }
+        ArrayList<match_table> lastMatchesGuestTeam = new ArrayList<>();
+        i = 0;
+        j = Math.min(mg.size(), 9);
+        while(i != j) {
+            if (match.get().getDateMatch().isAfter(mg.get(i).getDateMatch())) {
+                Optional<match_table> mat = matchRepository.findById(mg.get(i).getIdMatch());
+
+                mat.ifPresent(lastMatchesGuestTeam::add);
+                model.addAttribute("last_guest", lastMatchesGuestTeam);
+            }
+//            else if (match.get().getDateMatch().compareTo(mg.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
+//                if (match.get().getTimeMatch().compareTo(mg.get(i).getTimeMatch()) > 0) {
+//                    Optional<match_table> mat = matchRepository.findById(mg.get(i).getIdMatch());
+//
+//                    mat.ifPresent(lastMatchesGuestTeam::add);
+//                    model.addAttribute("last_guest", lastMatchesGuestTeam);
+//                }
+//            }
+            i++;
+        }
+
+        Collections.sort(lastMatchesHomeTeam);
+        Collections.sort(lastMatchesGuestTeam);
+
         ArrayList<team> th = new ArrayList<>();
         ArrayList<team> tg = new ArrayList<>();
-        for (match_table name_teams : mt) {
-            Optional<team> team_home = teamRepository.findById(name_teams.getTeamHome());
-            Optional<team> team_guest = teamRepository.findById(name_teams.getTeamGuest());
+        double shots_home = 0, shots_away = 0;
+        double possession_home = 0, possession_away = 0;
+        double shots_on_target_home = 0, shots_on_target_away = 0;
+        double corners_home = 0, corners_away = 0;
+        double yellow_card_home = 0, yellow_card_away = 0;
+        double red_card_home = 0, red_card_away = 0;
+        double free_kicks_home = 0, free_kicks_away = 0;
+        double offsides_home = 0, offsides_away = 0;
+        double fouls_home = 0, fouls_away = 0;
+
+        for (match_table teams : lastMatchesHomeTeam) {
+            Optional<team> team_home = teamRepository.findById(teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(teams.getTeamGuest());
+
+            shots_home += teams.getShotFirstHalfHome() + teams.getShotSecondHalfHome();//ВАЖНА ДОМАШНЯЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            shots_away += teams.getShotFirstHalfGuest() + teams.getShotSecondHalfGuest();
+            possession_home += teams.getPossessionFirstHalfHome() + teams.getPossessionSecondHalfHome();//ВАЖНА ДОМАШНЯЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            possession_away += teams.getPossessionFirstHalfGuest() + teams.getPossessionSecondHalfGuest();
+            shots_on_target_home += teams.getShotOnTargetFirstHalfHome() + teams.getShotOnTargetSecondHalfHome();
+            shots_on_target_away += teams.getShotOnTargetFirstHalfGuest() + teams.getShotOnTargetSecondHalfGuest();
+            corners_home += teams.getCornerFirstHalfHome() + teams.getCornerSecondHalfHome();
+            corners_away += teams.getCornerFirstHalfGuest() + teams.getCornerSecondHalfGuest();
+            yellow_card_home += teams.getYellowCardFirstHalfHome() + teams.getYellowCardSecondHalfHome();
+            yellow_card_away += teams.getYellowCardFirstHalfGuest() + teams.getYellowCardSecondHalfGuest();
+            red_card_home += teams.getRedCardFirstHalfHome() + teams.getRedCardSecondHalfHome();
+            red_card_away += teams.getRedCardFirstHalfGuest() + teams.getRedCardSecondHalfGuest();
+            free_kicks_home += teams.getFreeKickFirstHalfHome() + teams.getFreeKickSecondHalfHome();
+            free_kicks_away += teams.getFreeKickFirstHalfGuest() + teams.getFreeKickSecondHalfGuest();
+            offsides_home += teams.getOffsideFirstHalfHome() + teams.getOffsideSecondHalfHome();
+            offsides_away += teams.getOffsideFirstHalfGuest() + teams.getOffsideSecondHalfGuest();
+            fouls_home += teams.getFoulFirstHalfHome() + teams.getFoulSecondHalfHome();
+            fouls_away += teams.getFoulFirstHalfGuest() + teams.getFoulSecondHalfGuest();
 
             team_home.ifPresent(th::add);
             team_guest.ifPresent(tg::add);
-            model.addAttribute("team_home", th);
-            model.addAttribute("team_guest", tg);
+            model.addAttribute("home_table_home", th);
+            model.addAttribute("home_table_guest", tg);
+        }
+        model.addAttribute("shots_home_stat_table_home", shots_home / lastMatchesHomeTeam.size());
+        model.addAttribute("shots_away_stat_table_home", shots_away / lastMatchesHomeTeam.size());
+        model.addAttribute("possession_home_stat_table_home", possession_home / lastMatchesHomeTeam.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
+        model.addAttribute("possession_away_stat_table_home", possession_away / lastMatchesHomeTeam.size());
+        model.addAttribute("shots_on_target_home_stat_table_home", shots_on_target_home / lastMatchesHomeTeam.size());
+        model.addAttribute("shots_on_target_away_stat_table_home", shots_on_target_away / lastMatchesHomeTeam.size());
+        model.addAttribute("corners_home_stat_table_home", corners_home / lastMatchesHomeTeam.size());
+        model.addAttribute("corners_away_stat_table_home", corners_away / lastMatchesHomeTeam.size());
+        model.addAttribute("yellow_card_home_stat_table_home", yellow_card_home / lastMatchesHomeTeam.size());
+        model.addAttribute("yellow_card_away_stat_table_home", yellow_card_away / lastMatchesHomeTeam.size());
+        model.addAttribute("red_card_home_stat_table_home", red_card_home / lastMatchesHomeTeam.size());
+        model.addAttribute("red_card_away_stat_table_home", red_card_away / lastMatchesHomeTeam.size());
+        model.addAttribute("free_kicks_home_stat_table_home", free_kicks_home / lastMatchesHomeTeam.size());
+        model.addAttribute("free_kicks_away_stat_table_home", free_kicks_away / lastMatchesHomeTeam.size());
+        model.addAttribute("offsides_home_stat_table_home", offsides_home / lastMatchesHomeTeam.size());
+        model.addAttribute("offsides_away_stat_table_home", offsides_away / lastMatchesHomeTeam.size());
+        model.addAttribute("fouls_home_stat_table_home", fouls_home / lastMatchesHomeTeam.size());
+        model.addAttribute("fouls_away_stat_table_home", fouls_away / lastMatchesHomeTeam.size());
+
+
+        ArrayList<team> th2 = new ArrayList<>();
+        ArrayList<team> tg2 = new ArrayList<>();
+        for (match_table name_teams : lastMatchesGuestTeam) {
+            Optional<team> team_home = teamRepository.findById(name_teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(name_teams.getTeamGuest());
+
+            team_home.ifPresent(th2::add);
+            team_guest.ifPresent(tg2::add);
+            model.addAttribute("guest_table_home", th2);
+            model.addAttribute("guest_table_guest", tg2);
         }
 
-        for (match_table mtms : mt) {
-            System.out.println(mtms.getDateMatch());
-        }
-
-//        Collections.sort(mt);
-//        int i = 1;
-//        while(i != 2) {
-//            System.out.println(mt.get(mt.size() - i));
-//            i++;
-//        }
+        Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
+        ArrayList<team> thm = new ArrayList<>();
+        ArrayList<team> tgm = new ArrayList<>();
+        team_home.ifPresent(thm::add);
+        team_guest.ifPresent(tgm::add);
+        model.addAttribute("team_home", thm);
+        model.addAttribute("team_guest", tgm);
         return "match-analysis";
     }
 }
