@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class match_table implements Comparable<match_table> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long idMatch;
 
     private int teamHome;

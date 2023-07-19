@@ -498,6 +498,9 @@ public class MatchController {
 
         ArrayList<match_table> mt = new ArrayList<>();
         ArrayList<match_table> mg = new ArrayList<>();
+
+        Optional<team> teamHome = teamRepository.findById(match.get().getTeamHome());
+        Optional<team> teamGuest = teamRepository.findById(match.get().getTeamGuest());
         //LocalDate today = LocalDate.now();
         for (match_table m : matches) {
             if (m.getTeamHome() == match.get().getTeamHome()) {
@@ -515,14 +518,28 @@ public class MatchController {
             }
         }
         ArrayList<match_table> lastMatchesHomeTeam = new ArrayList<>();
+        ArrayList<match_table> lastMatchesHomeTeambyLevel = new ArrayList<>();
         int i = 0;
         int j = Math.min(mt.size(), 9);
+//        while(lastMatchesHomeTeam.size() != 10) { -- лучшее решение
+//            if (mt.get(i) == null) {
+//                break;
+//            }
         while(i != j) {
             if (match.get().getDateMatch().isAfter(mt.get(i).getDateMatch())) {
                 Optional<match_table> mat = matchRepository.findById(mt.get(i).getIdMatch());
 
                 mat.ifPresent(lastMatchesHomeTeam::add);
                 model.addAttribute("last_home", lastMatchesHomeTeam);
+
+                Optional<team> byLevelGuest = teamRepository.findById(mt.get(i).getTeamGuest());
+
+                if (teamHome.get().getLevelTeam() == byLevelGuest.get().getLevelTeam()) {
+                    Optional<match_table> lvlh = matchRepository.findById(mt.get(i).getIdMatch());
+
+                    lvlh.ifPresent(lastMatchesHomeTeambyLevel::add);
+                    model.addAttribute("level_home", lastMatchesHomeTeambyLevel);
+                }
             }
 //            else if (match.get().getDateMatch().compareTo(mt.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
 //                if (match.get().getTimeMatch().compareTo(mt.get(i).getTimeMatch()) > 0) {
@@ -543,6 +560,15 @@ public class MatchController {
 
                 mat.ifPresent(lastMatchesGuestTeam::add);
                 model.addAttribute("last_guest", lastMatchesGuestTeam);
+
+                Optional<team> byLevelHome = teamRepository.findById(mg.get(i).getTeamHome());
+
+                if (teamGuest.get().getLevelTeam() == byLevelHome.get().getLevelTeam()) {
+                    Optional<match_table> lvlh = matchRepository.findById(mg.get(i).getIdMatch());
+
+                    lvlh.ifPresent(lastMatchesHomeTeambyLevel::add);
+                    model.addAttribute("level_guest", lastMatchesHomeTeambyLevel);
+                }
             }
 //            else if (match.get().getDateMatch().compareTo(mg.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
 //                if (match.get().getTimeMatch().compareTo(mg.get(i).getTimeMatch()) > 0) {
@@ -620,15 +646,61 @@ public class MatchController {
 
         ArrayList<team> th2 = new ArrayList<>();
         ArrayList<team> tg2 = new ArrayList<>();
-        for (match_table name_teams : lastMatchesGuestTeam) {
-            Optional<team> team_home = teamRepository.findById(name_teams.getTeamHome());
-            Optional<team> team_guest = teamRepository.findById(name_teams.getTeamGuest());
+        shots_home = 0; shots_away = 0;
+        possession_home = 0; possession_away = 0;
+        shots_on_target_home = 0; shots_on_target_away = 0;
+        corners_home = 0; corners_away = 0;
+        yellow_card_home = 0; yellow_card_away = 0;
+        red_card_home = 0; red_card_away = 0;
+        free_kicks_home = 0; free_kicks_away = 0;
+        offsides_home = 0; offsides_away = 0;
+        fouls_home = 0; fouls_away = 0;
+        for (match_table teams : lastMatchesGuestTeam) {
+            Optional<team> team_home = teamRepository.findById(teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(teams.getTeamGuest());
+
+            shots_home += teams.getShotFirstHalfHome() + teams.getShotSecondHalfHome();//ВАЖНА ГОСТЕВАЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            shots_away += teams.getShotFirstHalfGuest() + teams.getShotSecondHalfGuest();
+            possession_home += teams.getPossessionFirstHalfHome() + teams.getPossessionSecondHalfHome();//ВАЖНА ГОСТЕВАЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            possession_away += teams.getPossessionFirstHalfGuest() + teams.getPossessionSecondHalfGuest();
+            shots_on_target_home += teams.getShotOnTargetFirstHalfHome() + teams.getShotOnTargetSecondHalfHome();
+            shots_on_target_away += teams.getShotOnTargetFirstHalfGuest() + teams.getShotOnTargetSecondHalfGuest();
+            corners_home += teams.getCornerFirstHalfHome() + teams.getCornerSecondHalfHome();
+            corners_away += teams.getCornerFirstHalfGuest() + teams.getCornerSecondHalfGuest();
+            yellow_card_home += teams.getYellowCardFirstHalfHome() + teams.getYellowCardSecondHalfHome();
+            yellow_card_away += teams.getYellowCardFirstHalfGuest() + teams.getYellowCardSecondHalfGuest();
+            red_card_home += teams.getRedCardFirstHalfHome() + teams.getRedCardSecondHalfHome();
+            red_card_away += teams.getRedCardFirstHalfGuest() + teams.getRedCardSecondHalfGuest();
+            free_kicks_home += teams.getFreeKickFirstHalfHome() + teams.getFreeKickSecondHalfHome();
+            free_kicks_away += teams.getFreeKickFirstHalfGuest() + teams.getFreeKickSecondHalfGuest();
+            offsides_home += teams.getOffsideFirstHalfHome() + teams.getOffsideSecondHalfHome();
+            offsides_away += teams.getOffsideFirstHalfGuest() + teams.getOffsideSecondHalfGuest();
+            fouls_home += teams.getFoulFirstHalfHome() + teams.getFoulSecondHalfHome();
+            fouls_away += teams.getFoulFirstHalfGuest() + teams.getFoulSecondHalfGuest();
 
             team_home.ifPresent(th2::add);
             team_guest.ifPresent(tg2::add);
             model.addAttribute("guest_table_home", th2);
             model.addAttribute("guest_table_guest", tg2);
         }
+        model.addAttribute("shots_home_stat_table_away", shots_home / lastMatchesGuestTeam.size());
+        model.addAttribute("shots_away_stat_table_away", shots_away / lastMatchesGuestTeam.size());
+        model.addAttribute("possession_home_stat_table_away", possession_home / lastMatchesGuestTeam.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
+        model.addAttribute("possession_away_stat_table_away", possession_away / lastMatchesGuestTeam.size());
+        model.addAttribute("shots_on_target_home_stat_table_away", shots_on_target_home / lastMatchesGuestTeam.size());
+        model.addAttribute("shots_on_target_away_stat_table_away", shots_on_target_away / lastMatchesGuestTeam.size());
+        model.addAttribute("corners_home_stat_table_away", corners_home / lastMatchesGuestTeam.size());
+        model.addAttribute("corners_away_stat_table_away", corners_away / lastMatchesGuestTeam.size());
+        model.addAttribute("yellow_card_home_stat_table_away", yellow_card_home / lastMatchesGuestTeam.size());
+        model.addAttribute("yellow_card_away_stat_table_away", yellow_card_away / lastMatchesGuestTeam.size());
+        model.addAttribute("red_card_home_stat_table_away", red_card_home / lastMatchesGuestTeam.size());
+        model.addAttribute("red_card_away_stat_table_away", red_card_away / lastMatchesGuestTeam.size());
+        model.addAttribute("free_kicks_home_stat_table_away", free_kicks_home / lastMatchesGuestTeam.size());
+        model.addAttribute("free_kicks_away_stat_table_away", free_kicks_away / lastMatchesGuestTeam.size());
+        model.addAttribute("offsides_home_stat_table_away", offsides_home / lastMatchesGuestTeam.size());
+        model.addAttribute("offsides_away_stat_table_away", offsides_away / lastMatchesGuestTeam.size());
+        model.addAttribute("fouls_home_stat_table_away", fouls_home / lastMatchesGuestTeam.size());
+        model.addAttribute("fouls_away_stat_table_away", fouls_away / lastMatchesGuestTeam.size());
 
         Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
         Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());

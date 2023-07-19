@@ -149,6 +149,75 @@
                 </form>
             </table>
         </div>
+    </div><br><br>
+    <h2>Статистика последних 10 матчей <span th:each="tg : ${team_guest}" th:text="${tg.nameTeam}"></span></h2>
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+            <form method="post">
+                <tbody>
+                <tr>
+                    <th class="w-75"></th>
+                    <th>Против <span th:each="th : ${team_guest}" th:text="${th.nameTeam}"></span></th>
+                    <th th:each="th : ${team_guest}" th:text="${th.nameTeam}"></th>
+                    <th>Всего</th>
+                </tr>
+                <tr>
+                    <th>Владение</th>
+                    <td th:text="${possession_home_stat_table_away}"></td>
+                    <td th:text="${possession_away_stat_table_away}"></td>
+                    <td th:text="${possession_home_stat_table_away} + ${possession_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Удары</th>
+                    <td th:text="${shots_home_stat_table_away}"></td>
+                    <td th:text="${shots_away_stat_table_away}"></td>
+                    <td th:text="${shots_home_stat_table_away} + ${shots_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Удары в створ</th>
+                    <td th:text="${shots_on_target_home_stat_table_away}"></td>
+                    <td th:text="${shots_on_target_away_stat_table_away}"></td>
+                    <td th:text="${shots_on_target_home_stat_table_away} + ${shots_on_target_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Угловые</th>
+                    <td th:text="${corners_home_stat_table_away}"></td>
+                    <td th:text="${corners_away_stat_table_away}"></td>
+                    <td th:text="${corners_home_stat_table_away} + ${corners_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Штрафные удары</th>
+                    <td th:text="${free_kicks_home_stat_table_away}"></td>
+                    <td th:text="${free_kicks_away_stat_table_away}"></td>
+                    <td th:text="${free_kicks_home_stat_table_away} + ${free_kicks_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Оффсайды</th>
+                    <td th:text="${offsides_home_stat_table_away}"></td>
+                    <td th:text="${offsides_away_stat_table_away}"></td>
+                    <td th:text="${offsides_home_stat_table_away} + ${offsides_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Жёлтые карточки</th>
+                    <td th:text="${yellow_card_home_stat_table_away}"></td>
+                    <td th:text="${yellow_card_away_stat_table_away}"></td>
+                    <td th:text="${yellow_card_home_stat_table_away} + ${yellow_card_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Красные карточки</th>
+                    <td th:text="${red_card_home_stat_table_away}"></td>
+                    <td th:text="${red_card_away_stat_table_away}"></td>
+                    <td th:text="${red_card_home_stat_table_away} + ${red_card_away_stat_table_away}"></td>
+                </tr>
+                <tr>
+                    <th>Фолы</th>
+                    <td th:text="${fouls_home_stat_table_away}"></td>
+                    <td th:text="${fouls_away_stat_table_away}"></td>
+                    <td th:text="${fouls_home_stat_table_away} + ${fouls_away_stat_table_away}"></td>
+                </tr>
+                </tbody>
+            </form>
+        </table>
     </div>
 <!--        <a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-warning">Матч</a>-->
 <!--        <a th:href="'/match/' + ${m.idMatch} + '/1'" class="btn btn-warning">1-й тайм</a>-->
