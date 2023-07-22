@@ -19,6 +19,7 @@
         <th scope="col">id_league</th>
         <th scope="col">Лига</th>
         <th scope="col">Уровень команды</th>
+        <th scope="col">Форма команды</th>
         <th scope="col">Данные</th>
         <th scope="col">Матчи</th>
       </tr>
@@ -30,6 +31,7 @@
         <td th:text="${tm.leagueTeam}"></td>
         <td th:each="l : ${league_team[__${itemStat.index}__]}" th:text="${l.nameLeague}"></td>
         <td th:text="${tm.levelTeam}"></td>
+        <td th:text="${tm.formTeam}"></td>
         <td><a th:href="'/team/' + ${tm.idTeam}" class="btn btn-light">Подробнее</a></td>
         <td><a th:href="'/team/' + ${tm.idTeam} + '/matches'" class="btn btn-light">Календарь</a></td>
       </tr>

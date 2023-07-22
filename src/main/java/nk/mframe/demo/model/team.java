@@ -21,6 +21,8 @@ public class team {
 
     private Byte levelTeam;
 
+    private Byte formTeam;
+
     public int getIdTeam() {
         return idTeam;
     }
@@ -53,10 +55,27 @@ public class team {
         this.leagueTeam = league;
     }
 
-    public team(String nameTeam, Integer leagueTeam, Byte levelTeam) {
+    public String getLogotypeTeam() {
+        return logotypeTeam;
+    }
+
+    public void setLogotypeTeam(String logotypeTeam) {
+        this.logotypeTeam = logotypeTeam;
+    }
+
+    public Byte getFormTeam() {
+        return formTeam;
+    }
+
+    public void setFormTeam(Byte formTeam) {
+        this.formTeam = formTeam;
+    }
+
+    public team(String nameTeam, Integer leagueTeam, Byte levelTeam, Byte formTeam) {
         this.nameTeam = nameTeam;
         this.leagueTeam = leagueTeam;
         this.levelTeam = levelTeam;
+        this.formTeam = formTeam;
     }
 
     public team() {

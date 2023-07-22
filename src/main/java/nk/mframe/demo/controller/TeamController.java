@@ -52,7 +52,7 @@ public class TeamController {
 
     @PostMapping("/team/add")
     public String teamAdd(@RequestParam String name_team, @RequestParam Integer league_team, @RequestParam Byte level_team, Model model) {
-        team team = new team(name_team, league_team, level_team);
+        team team = new team(name_team, league_team, level_team, (byte) 0);
         teamRepository.save(team);
         return "redirect:/team";
     }
@@ -119,11 +119,12 @@ public class TeamController {
     }
 
     @PostMapping("/team/{id}/edit")
-    public String teamUpdate(@PathVariable(value = "id") int idTeam, @RequestParam String name_team, @RequestParam Integer team_league, @RequestParam Byte level_team, Model model) {
+    public String teamUpdate(@PathVariable(value = "id") int idTeam, @RequestParam String name_team, @RequestParam Integer team_league, @RequestParam Byte level_team, @RequestParam Byte form_team, Model model) {
         team team = teamRepository.findById(idTeam).orElseThrow(RuntimeException::new);
         team.setNameTeam(name_team);
         team.setLeagueTeam(team_league);
         team.setLevelTeam(level_team);
+        team.setFormTeam(form_team);
         teamRepository.save(team);
         return "redirect:/team";
     }

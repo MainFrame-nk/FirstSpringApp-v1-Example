@@ -12,125 +12,125 @@
     <h1>Редактирование сезона</h1>
     <div th:each="s : ${season}">
         <form method="post">
-            <span>Введите количество очков 1 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team1}" th:text="${tm.nameTeam}"></span> (1 место):</span>
             <input type="text" name="score_first_place"  class="form-control" th:value="${s.scoreFirstPlace}"><br>
-            <span>Введите количество очков 2 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team2}" th:text="${tm.nameTeam}"></span> (2 место):</span>
             <input type="text" name="score_second_place"  class="form-control" th:value="${s.scoreSecondPlace}"><br>
-            <span>Введите количество очков 3 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team3}" th:text="${tm.nameTeam}"></span> (3 место):</span>
             <input type="text" name="score_third_place"  class="form-control" th:value="${s.scoreThirdPlace}"><br>
-            <span>Введите количество очков 4 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team4}" th:text="${tm.nameTeam}"></span> (4 место):</span>
             <input type="text" name="score_fouth_place"  class="form-control" th:value="${s.scoreFouthPlace}"><br>
-            <span>Введите количество очков 5 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team5}" th:text="${tm.nameTeam}"></span> (5 место):</span>
             <input type="text" name="score_fifth_place"  class="form-control" th:value="${s.scoreFifthPlace}"><br>
-            <span>Введите количество очков 6 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team6}" th:text="${tm.nameTeam}"></span> (6 место):</span>
             <input type="text" name="score_sixth_place"  class="form-control" th:value="${s.scoreSixthPlace}"><br>
-            <span>Введите количество очков 7 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team7}" th:text="${tm.nameTeam}"></span> (7 место):</span>
             <input type="text" name="score_seventh_place"  class="form-control" th:value="${s.scoreSeventhPlace}"><br>
-            <span>Введите количество очков 8 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team8}" th:text="${tm.nameTeam}"></span> (8 место):</span>
             <input type="text" name="score_eighth_place"  class="form-control" th:value="${s.scoreEighthPlace}"><br>
-            <span>Введите количество очков 9 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team9}" th:text="${tm.nameTeam}"></span> (9 место):</span>
             <input type="text" name="score_ninth_place"  class="form-control" th:value="${s.scoreNinthPlace}"><br>
-            <span>Введите количество очков 10 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team10}" th:text="${tm.nameTeam}"></span> (10 место):</span>
             <input type="text" name="score_tenth_place"  class="form-control" th:value="${s.scoreTenthPlace}"><br>
-            <span>Введите количество очков 11 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team11}" th:text="${tm.nameTeam}"></span> (11 место):</span>
             <input type="text" name="score_eleventh_place"  class="form-control" th:value="${s.scoreEleventhPlace}"><br>
-            <span>Введите количество очков 12 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team12}" th:text="${tm.nameTeam}"></span> (12 место):</span>
             <input type="text" name="score_twelfth_place"  class="form-control" th:value="${s.scoreTwelfthPlace}"><br>
-            <span>Введите количество очков 13 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team13}" th:text="${tm.nameTeam}"></span> (13 место):</span>
             <input type="text" name="score_thirteenth_place"  class="form-control" th:value="${s.scoreThirteenthPlace}"><br>
-            <span>Введите количество очков 14 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team14}" th:text="${tm.nameTeam}"></span> (14 место):</span>
             <input type="text" name="score_fourteenth_place"  class="form-control" th:value="${s.scoreFourteenthPlace}"><br>
-            <span>Введите количество очков 15 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team15}" th:text="${tm.nameTeam}"></span> (15 место):</span>
             <input type="text" name="score_fifteenth_place"  class="form-control" th:value="${s.scoreFifteenthPlace}"><br>
-            <span>Введите количество очков 16 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team16}" th:text="${tm.nameTeam}"></span> (16 место):</span>
             <input type="text" name="score_sixteenth_place"  class="form-control" th:value="${s.scoreSixteenthPlace}"><br>
-            <span>Введите количество очков 17 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team17}" th:text="${tm.nameTeam}"></span> (17 место):</span>
             <input type="text" name="score_seventeenth_place"  class="form-control" th:value="${s.scoreSeventeenthPlace}"><br>
-            <span>Введите количество очков 18 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team18}" th:text="${tm.nameTeam}"></span> (18 место):</span>
             <input type="text" name="score_eighteenth_place"  class="form-control" th:value="${s.scoreEighteenthPlace}"><br>
-            <span>Введите количество очков 19 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team19}" th:text="${tm.nameTeam}"></span> (19 место):</span>
             <input type="text" name="score_nineteenth_place"  class="form-control" th:value="${s.scoreNineteenthPlace}"><br>
-            <span>Введите количество очков 20 команды:</span>
+            <span>Введите количество очков <span th:each="tm : ${team20}" th:text="${tm.nameTeam}"></span> (20 место):</span>
             <input type="text" name="score_twentieth_place"  class="form-control" th:value="${s.scoreTwentiethPlace}"><br>
-            <span>Введите уровень 1 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team1}" th:text="${tm.nameTeam}"></span> (1 место):</span>
             <input type="text" name="level_first_place"  class="form-control" th:value="${s.levelFirstPlace}"><br>
-            <span>Введите уровень 2 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team2}" th:text="${tm.nameTeam}"></span> (2 место):</span>
             <input type="text" name="level_second_place"  class="form-control" th:value="${s.levelSecondPlace}"><br>
-            <span>Введите уровень 3 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team3}" th:text="${tm.nameTeam}"></span> (3 место):</span>
             <input type="text" name="level_third_place"  class="form-control" th:value="${s.levelThirdPlace}"><br>
-            <span>Введите уровень 4 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team4}" th:text="${tm.nameTeam}"></span> (4 место):</span>
             <input type="text" name="level_fouth_place"  class="form-control" th:value="${s.levelFouthPlace}"><br>
-            <span>Введите уровень 5 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team5}" th:text="${tm.nameTeam}"></span> (5 место):</span>
             <input type="text" name="level_fifth_place"  class="form-control" th:value="${s.levelFifthPlace}"><br>
-            <span>Введите уровень 6 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team6}" th:text="${tm.nameTeam}"></span> (6 место):</span>
             <input type="text" name="level_sixth_place"  class="form-control" th:value="${s.levelSixthPlace}"><br>
-            <span>Введите уровень 7 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team7}" th:text="${tm.nameTeam}"></span> (7 место):</span>
             <input type="text" name="level_seventh_place"  class="form-control" th:value="${s.levelSeventhPlace}"><br>
-            <span>Введите уровень 8 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team8}" th:text="${tm.nameTeam}"></span> (8 место):</span>
             <input type="text" name="level_eighth_place"  class="form-control" th:value="${s.levelEighthPlace}"><br>
-            <span>Введите уровень 9 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team9}" th:text="${tm.nameTeam}"></span> (9 место):</span>
             <input type="text" name="level_ninth_place"  class="form-control" th:value="${s.levelNinthPlace}"><br>
-            <span>Введите уровень 10 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team10}" th:text="${tm.nameTeam}"></span> (10 место):</span>
             <input type="text" name="level_tenth_place"  class="form-control" th:value="${s.levelTenthPlace}"><br>
-            <span>Введите уровень 11 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team11}" th:text="${tm.nameTeam}"></span> (11 место):</span>
             <input type="text" name="level_eleventh_place"  class="form-control" th:value="${s.levelEleventhPlace}"><br>
-            <span>Введите уровень 12 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team12}" th:text="${tm.nameTeam}"></span> (12 место):</span>
             <input type="text" name="level_twelfth_place"  class="form-control" th:value="${s.levelTwelfthPlace}"><br>
-            <span>Введите уровень 13 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team13}" th:text="${tm.nameTeam}"></span> (13 место):</span>
             <input type="text" name="level_thirteenth_place"  class="form-control" th:value="${s.levelThirteenthPlace}"><br>
-            <span>Введите уровень 14 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team14}" th:text="${tm.nameTeam}"></span> (14 место):</span>
             <input type="text" name="level_fourteenth_place"  class="form-control" th:value="${s.levelFourteenthPlace}"><br>
-            <span>Введите уровень 15 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team15}" th:text="${tm.nameTeam}"></span> (15 место):</span>
             <input type="text" name="level_fifteenth_place"  class="form-control" th:value="${s.levelFifteenthPlace}"><br>
-            <span>Введите уровень 16 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team16}" th:text="${tm.nameTeam}"></span> (16 место):</span>
             <input type="text" name="level_sixteenth_place"  class="form-control" th:value="${s.levelSixteenthPlace}"><br>
-            <span>Введите уровень 17 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team17}" th:text="${tm.nameTeam}"></span> (17 место):</span>
             <input type="text" name="level_seventeenth_place"  class="form-control" th:value="${s.levelSeventeenthPlace}"><br>
-            <span>Введите уровень 18 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team18}" th:text="${tm.nameTeam}"></span> (18 место):</span>
             <input type="text" name="level_eighteenth_place"  class="form-control" th:value="${s.levelEighteenthPlace}"><br>
-            <span>Введите уровень 19 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team19}" th:text="${tm.nameTeam}"></span> (19 место):</span>
             <input type="text" name="level_nineteenth_place"  class="form-control" th:value="${s.levelNineteenthPlace}"><br>
-            <span>Введите уровень 20 команды:</span>
+            <span>Введите уровень <span th:each="tm : ${team20}" th:text="${tm.nameTeam}"></span> (20 место):</span>
             <input type="text" name="level_twentieth_place"  class="form-control" th:value="${s.levelTwentiethPlace}"><br>
-            <span>Введите текущую форму 1 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team1}" th:text="${tm.nameTeam}"></span> (1 место):</span>
             <input type="text" name="form_first_place"  class="form-control" th:value="${s.formFirstPlace}"><br>
-            <span>Введите текущую форму 2 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team2}" th:text="${tm.nameTeam}"></span> (2 место):</span>
             <input type="text" name="form_second_place"  class="form-control" th:value="${s.formSecondPlace}"><br>
-            <span>Введите текущую форму 3 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team3}" th:text="${tm.nameTeam}"></span> (3 место):</span>
             <input type="text" name="form_third_place"  class="form-control" th:value="${s.formThirdPlace}"><br>
-            <span>Введите текущую форму 4 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team4}" th:text="${tm.nameTeam}"></span> (4 место):</span>
             <input type="text" name="form_fouth_place"  class="form-control" th:value="${s.formFouthPlace}"><br>
-            <span>Введите текущую форму 5 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team5}" th:text="${tm.nameTeam}"></span> (5 место):</span>
             <input type="text" name="form_fifth_place"  class="form-control" th:value="${s.formFifthPlace}"><br>
-            <span>Введите текущую форму 6 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team6}" th:text="${tm.nameTeam}"></span> (6 место):</span>
             <input type="text" name="form_sixth_place"  class="form-control" th:value="${s.formSixthPlace}"><br>
-            <span>Введите текущую форму 7 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team7}" th:text="${tm.nameTeam}"></span> (7 место):</span>
             <input type="text" name="form_seventh_place"  class="form-control" th:value="${s.formSeventhPlace}"><br>
-            <span>Введите текущую форму 8 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team8}" th:text="${tm.nameTeam}"></span> (8 место):</span>
             <input type="text" name="form_eighth_place"  class="form-control" th:value="${s.formEighthPlace}"><br>
-            <span>Введите текущую форму 9 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team9}" th:text="${tm.nameTeam}"></span> (9 место):</span>
             <input type="text" name="form_ninth_place"  class="form-control" th:value="${s.formNinthPlace}"><br>
-            <span>Введите текущую форму 10 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team10}" th:text="${tm.nameTeam}"></span> (10 место):</span>
             <input type="text" name="form_tenth_place"  class="form-control" th:value="${s.formTenthPlace}"><br>
-            <span>Введите текущую форму 11 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team11}" th:text="${tm.nameTeam}"></span> (11 место):</span>
             <input type="text" name="form_eleventh_place"  class="form-control" th:value="${s.formEleventhPlace}"><br>
-            <span>Введите текущую форму 12 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team12}" th:text="${tm.nameTeam}"></span> (12 место):</span>
             <input type="text" name="form_twelfth_place"  class="form-control" th:value="${s.formTwelfthPlace}"><br>
-            <span>Введите текущую форму 13 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team13}" th:text="${tm.nameTeam}"></span> (13 место):</span>
             <input type="text" name="form_thirteenth_place"  class="form-control" th:value="${s.formThirteenthPlace}"><br>
-            <span>Введите текущую форму 14 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team14}" th:text="${tm.nameTeam}"></span> (14 место):</span>
             <input type="text" name="form_fourteenth_place"  class="form-control" th:value="${s.formFourteenthPlace}"><br>
-            <span>Введите текущую форму 15 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team15}" th:text="${tm.nameTeam}"></span> (15 место):</span>
             <input type="text" name="form_fifteenth_place"  class="form-control" th:value="${s.formFifteenthPlace}"><br>
-            <span>Введите текущую форму 16 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team16}" th:text="${tm.nameTeam}"></span> (16 место):</span>
             <input type="text" name="form_sixteenth_place"  class="form-control" th:value="${s.formSixteenthPlace}"><br>
-            <span>Введите текущую форму 17 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team17}" th:text="${tm.nameTeam}"></span> (17 место):</span>
             <input type="text" name="form_seventeenth_place"  class="form-control" th:value="${s.formSeventeenthPlace}"><br>
-            <span>Введите текущую форму 18 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team18}" th:text="${tm.nameTeam}"></span> (18 место):</span>
             <input type="text" name="form_eighteenth_place"  class="form-control" th:value="${s.formEighteenthPlace}"><br>
-            <span>Введите текущую форму 19 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team19}" th:text="${tm.nameTeam}"></span> (19 место):</span>
             <input type="text" name="form_nineteenth_place"  class="form-control" th:value="${s.formNineteenthPlace}"><br>
-            <span>Введите текущую форму 20 команды:</span>
+            <span>Введите текущую форму <span th:each="tm : ${team20}" th:text="${tm.nameTeam}"></span> (20 место):</span>
             <input type="text" name="form_twentieth_place"  class="form-control" th:value="${s.formTwentiethPlace}"><br>
             <button type="submit" class="btn btn-light">Обновить</button>
         </form>

@@ -10,11 +10,13 @@
 
 <div class="container mt-5">
   <h1>Админ-панель</h1>
-  <a href="/league/add" class="btn btn-light" >Добавить лигу</a>
-  <a href="/team/add" class="btn btn-light" >Добавить клуб</a>
-  <a href="/match/add" class="btn btn-light" >Добавить матч</a>
-  <a href="/season/add" class="btn btn-light" >Добавить сезон</a>
-
+  <a href="/league/add" class="btn btn-light">Добавить лигу</a>
+  <a href="/team/add" class="btn btn-light">Добавить клуб</a>
+  <a href="/match/add" class="btn btn-light">Добавить матч</a>
+  <a href="/season/add" class="btn btn-light">Добавить сезон</a><br><br>
+  <div th:each="l : ${league}">
+      <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}" th:text="${l.countryLeague}" class="btn btn-light"></a>
+  </div>
 </div>
 
 <div th:insert="index/footer :: footer"></div>

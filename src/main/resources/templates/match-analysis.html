@@ -57,9 +57,9 @@
                     <th scope="col">Время</th>
                     <th scope="col">id team_home</th>
                     <th scope="col">Хозяева</th>
+                    <th scope="col">Счёт матча</th>
                     <th scope="col">id team_guest</th>
                     <th scope="col">Гости</th>
-                    <th scope="col">Счёт матча</th>
                     <th scope="col">Данные матча</th>
                 </tr>
                 </thead>
@@ -71,9 +71,9 @@
                         <td th:text="${m.timeMatch}"></td>
                         <td th:text="${m.teamHome}"></td>
                         <td th:each="tm : ${guest_table_home[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
+                        <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                         <td th:text="${m.teamGuest}"></td>
                         <td th:each="tm : ${guest_table_guest[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
-                        <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                         <td><a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-light">Подробнее</a></td>
                     </tr>
                     </tbody>
@@ -229,9 +229,9 @@
                 <th scope="col">Время</th>
                 <th scope="col">id team_home</th>
                 <th scope="col">Хозяева</th>
+                <th scope="col">Счёт матча</th>
                 <th scope="col">id team_guest</th>
                 <th scope="col">Гости</th>
-                <th scope="col">Счёт матча</th>
                 <th scope="col">Данные матча</th>
             </tr>
             </thead>
@@ -243,9 +243,9 @@
                     <td th:text="${m.timeMatch}"></td>
                     <td th:text="${m.teamHome}"></td>
                     <td th:each="tm : ${home_table_home[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
+                    <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                     <td th:text="${m.teamGuest}"></td>
                     <td th:each="tm : ${home_table_guest[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
-                    <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                     <td><a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-light">Подробнее</a></td>
                 </tr>
                 </tbody>
@@ -262,9 +262,9 @@
                 <th scope="col">Время</th>
                 <th scope="col">id team_home</th>
                 <th scope="col">Хозяева</th>
+                <th scope="col">Счёт матча</th>
                 <th scope="col">id team_guest</th>
                 <th scope="col">Гости</th>
-                <th scope="col">Счёт матча</th>
                 <th scope="col">Данные матча</th>
             </tr>
             </thead>
@@ -276,9 +276,9 @@
                     <td th:text="${m.timeMatch}"></td>
                     <td th:text="${m.teamHome}"></td>
                     <td th:each="tm : ${guest_table_home[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
+                    <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                     <td th:text="${m.teamGuest}"></td>
                     <td th:each="tm : ${guest_table_guest[__${itemStat.index}__]}" th:text="${tm.nameTeam}"></td>
-                    <td th:text="${m.scoreHome} + ' : ' + ${m.scoreGuest}"></td>
                     <td><a th:href="'/match/' + ${m.idMatch} + '/0'" class="btn btn-light">Подробнее</a></td>
                 </tr>
                 </tbody>
