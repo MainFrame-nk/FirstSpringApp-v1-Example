@@ -1,16 +1,16 @@
 package nk.mframe.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
+@Table(name = "team")
 @Entity
 public class team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_seq")
+    @SequenceGenerator(name="team_seq", sequenceName="SEQ_TEAM")
+    @Column(name = "idTeam", nullable = false)
     private int idTeam;
 
     private String nameTeam;

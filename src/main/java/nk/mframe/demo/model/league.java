@@ -1,14 +1,14 @@
 package nk.mframe.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(name = "league")
 @Entity
 public class league {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "league_seq")
+    @SequenceGenerator(name="league_seq", sequenceName="SEQ_LEAGUE")
+    @Column(name = "idLeague", nullable = false)
     private Integer idLeague;
 
     private String nameLeague;

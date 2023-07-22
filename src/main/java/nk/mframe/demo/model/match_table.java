@@ -2,19 +2,19 @@ package nk.mframe.demo.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+@Table(name = "match_table")
 @Entity
 public class match_table implements Comparable<match_table> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_table_seq")
+    @SequenceGenerator(name="match_table_seq", sequenceName="SEQ_MATCH_TABLE")
+    @Column(name = "idMatch", nullable = false)
     private Long idMatch;
 
     private int teamHome;

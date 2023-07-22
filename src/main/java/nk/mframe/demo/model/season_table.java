@@ -1,15 +1,15 @@
 package nk.mframe.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(name = "season_table")
 @Entity
 public class season_table {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="season_table_seq")
+    @SequenceGenerator(name="season_table_seq", sequenceName="SEQ_SEASON_TABLE")
+    @Column(name = "idSeason", nullable = false)
     private Integer idSeason;
 
     private Integer idLeague;

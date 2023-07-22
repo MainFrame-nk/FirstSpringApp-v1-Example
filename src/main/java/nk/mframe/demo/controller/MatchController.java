@@ -32,12 +32,16 @@ public class MatchController {
     @GetMapping("/match")
     public String matchMain(Model model) {
         Iterable<match_table> matches = matchRepository.findAll();
-//        for (match_table mt : matches) {
-//            LocalDate getDate = LocalDate.parse(mt.getDateMatch().toString());
-//
-//            System.out.println(getDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-//        }
-        model.addAttribute("match", matches);
+        ArrayList<match_table> allMatches = new ArrayList<>();
+        for (match_table mt : matches) {
+            if (LocalDate.now().equals(mt.getDateMatch())) {
+                Optional<match_table> todayMatch = matchRepository.findById(mt.getIdMatch());
+
+                todayMatch.ifPresent(allMatches::add);
+                model.addAttribute("match", allMatches);
+            }
+
+        }
 
         ArrayList<team> th = new ArrayList<>();
         ArrayList<team> tg = new ArrayList<>();
@@ -552,6 +556,7 @@ public class MatchController {
             i++;
         }
         ArrayList<match_table> lastMatchesGuestTeam = new ArrayList<>();
+        ArrayList<match_table> lastMatchesGuestTeambyLevel = new ArrayList<>();
         i = 0;
         j = Math.min(mg.size(), 9);
         while(i != j) {
@@ -564,10 +569,10 @@ public class MatchController {
                 Optional<team> byLevelHome = teamRepository.findById(mg.get(i).getTeamHome());
 
                 if (teamGuest.get().getLevelTeam() == byLevelHome.get().getLevelTeam()) {
-                    Optional<match_table> lvlh = matchRepository.findById(mg.get(i).getIdMatch());
+                    Optional<match_table> lvlg = matchRepository.findById(mg.get(i).getIdMatch());
 
-                    lvlh.ifPresent(lastMatchesHomeTeambyLevel::add);
-                    model.addAttribute("level_guest", lastMatchesHomeTeambyLevel);
+                    lvlg.ifPresent(lastMatchesGuestTeambyLevel::add);
+                    model.addAttribute("level_guest", lastMatchesGuestTeambyLevel);
                 }
             }
 //            else if (match.get().getDateMatch().compareTo(mg.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
@@ -583,6 +588,8 @@ public class MatchController {
 
         Collections.sort(lastMatchesHomeTeam);
         Collections.sort(lastMatchesGuestTeam);
+        Collections.sort(lastMatchesHomeTeambyLevel);
+        Collections.sort(lastMatchesGuestTeambyLevel);
 
         ArrayList<team> th = new ArrayList<>();
         ArrayList<team> tg = new ArrayList<>();
@@ -632,8 +639,9 @@ public class MatchController {
         model.addAttribute("shots_on_target_away_stat_table_home", shots_on_target_away / lastMatchesHomeTeam.size());
         model.addAttribute("corners_home_stat_table_home", corners_home / lastMatchesHomeTeam.size());
         model.addAttribute("corners_away_stat_table_home", corners_away / lastMatchesHomeTeam.size());
-        model.addAttribute("yellow_card_home_stat_table_home", yellow_card_home / lastMatchesHomeTeam.size());
-        model.addAttribute("yellow_card_away_stat_table_home", yellow_card_away / lastMatchesHomeTeam.size());
+        model.addAttribute("yellow_card_home_stat_table_home", String.format("%.2f", yellow_card_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("yellow_card_away_stat_table_home", String.format("%.2f", yellow_card_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("yellow_card_away_stat_table_home_all", String.format("%.2f", yellow_card_home / lastMatchesHomeTeam.size() + yellow_card_away / lastMatchesHomeTeam.size()));
         model.addAttribute("red_card_home_stat_table_home", red_card_home / lastMatchesHomeTeam.size());
         model.addAttribute("red_card_away_stat_table_home", red_card_away / lastMatchesHomeTeam.size());
         model.addAttribute("free_kicks_home_stat_table_home", free_kicks_home / lastMatchesHomeTeam.size());
@@ -691,8 +699,9 @@ public class MatchController {
         model.addAttribute("shots_on_target_away_stat_table_away", shots_on_target_away / lastMatchesGuestTeam.size());
         model.addAttribute("corners_home_stat_table_away", corners_home / lastMatchesGuestTeam.size());
         model.addAttribute("corners_away_stat_table_away", corners_away / lastMatchesGuestTeam.size());
-        model.addAttribute("yellow_card_home_stat_table_away", yellow_card_home / lastMatchesGuestTeam.size());
-        model.addAttribute("yellow_card_away_stat_table_away", yellow_card_away / lastMatchesGuestTeam.size());
+        model.addAttribute("yellow_card_home_stat_table_away", String.format("%.2f", yellow_card_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("yellow_card_away_stat_table_away", String.format("%.2f", yellow_card_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("yellow_card_away_stat_table_away_all", String.format("%.2f", yellow_card_home / lastMatchesGuestTeam.size() + yellow_card_away / lastMatchesGuestTeam.size()));
         model.addAttribute("red_card_home_stat_table_away", red_card_home / lastMatchesGuestTeam.size());
         model.addAttribute("red_card_away_stat_table_away", red_card_away / lastMatchesGuestTeam.size());
         model.addAttribute("free_kicks_home_stat_table_away", free_kicks_home / lastMatchesGuestTeam.size());
@@ -701,6 +710,125 @@ public class MatchController {
         model.addAttribute("offsides_away_stat_table_away", offsides_away / lastMatchesGuestTeam.size());
         model.addAttribute("fouls_home_stat_table_away", fouls_home / lastMatchesGuestTeam.size());
         model.addAttribute("fouls_away_stat_table_away", fouls_away / lastMatchesGuestTeam.size());
+
+        ArrayList<team> th3 = new ArrayList<>();
+        ArrayList<team> tg3 = new ArrayList<>();
+        shots_home = 0; shots_away = 0;
+        possession_home = 0; possession_away = 0;
+        shots_on_target_home = 0; shots_on_target_away = 0;
+        corners_home = 0; corners_away = 0;
+        yellow_card_home = 0; yellow_card_away = 0;
+        red_card_home = 0; red_card_away = 0;
+        free_kicks_home = 0; free_kicks_away = 0;
+        offsides_home = 0; offsides_away = 0;
+        fouls_home = 0; fouls_away = 0;
+
+        for (match_table teams : lastMatchesHomeTeambyLevel) {
+            Optional<team> team_home = teamRepository.findById(teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(teams.getTeamGuest());
+
+            shots_home += teams.getShotFirstHalfHome() + teams.getShotSecondHalfHome();//ВАЖНА ДОМАШНЯЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            shots_away += teams.getShotFirstHalfGuest() + teams.getShotSecondHalfGuest();
+            possession_home += teams.getPossessionFirstHalfHome() + teams.getPossessionSecondHalfHome();//ВАЖНА ДОМАШНЯЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            possession_away += teams.getPossessionFirstHalfGuest() + teams.getPossessionSecondHalfGuest();
+            shots_on_target_home += teams.getShotOnTargetFirstHalfHome() + teams.getShotOnTargetSecondHalfHome();
+            shots_on_target_away += teams.getShotOnTargetFirstHalfGuest() + teams.getShotOnTargetSecondHalfGuest();
+            corners_home += teams.getCornerFirstHalfHome() + teams.getCornerSecondHalfHome();
+            corners_away += teams.getCornerFirstHalfGuest() + teams.getCornerSecondHalfGuest();
+            yellow_card_home += teams.getYellowCardFirstHalfHome() + teams.getYellowCardSecondHalfHome();
+            yellow_card_away += teams.getYellowCardFirstHalfGuest() + teams.getYellowCardSecondHalfGuest();
+            red_card_home += teams.getRedCardFirstHalfHome() + teams.getRedCardSecondHalfHome();
+            red_card_away += teams.getRedCardFirstHalfGuest() + teams.getRedCardSecondHalfGuest();
+            free_kicks_home += teams.getFreeKickFirstHalfHome() + teams.getFreeKickSecondHalfHome();
+            free_kicks_away += teams.getFreeKickFirstHalfGuest() + teams.getFreeKickSecondHalfGuest();
+            offsides_home += teams.getOffsideFirstHalfHome() + teams.getOffsideSecondHalfHome();
+            offsides_away += teams.getOffsideFirstHalfGuest() + teams.getOffsideSecondHalfGuest();
+            fouls_home += teams.getFoulFirstHalfHome() + teams.getFoulSecondHalfHome();
+            fouls_away += teams.getFoulFirstHalfGuest() + teams.getFoulSecondHalfGuest();
+
+            team_home.ifPresent(th3::add);
+            team_guest.ifPresent(tg3::add);
+            model.addAttribute("home_table_home_level", th3);
+            model.addAttribute("home_table_guest_level", tg3);
+        }
+        model.addAttribute("shots_home_stat_table_home_level", shots_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("shots_away_stat_table_home_level", shots_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("possession_home_stat_table_home_level", possession_home / lastMatchesHomeTeambyLevel.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
+        model.addAttribute("possession_away_stat_table_home_level", possession_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("shots_on_target_home_stat_table_home_level", shots_on_target_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("shots_on_target_away_stat_table_home_level", shots_on_target_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("corners_home_stat_table_home_level", corners_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("corners_away_stat_table_home_level", corners_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("yellow_card_home_stat_table_home_level", String.format("%.2f", yellow_card_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("yellow_card_away_stat_table_home_level", String.format("%.2f", yellow_card_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("yellow_card_away_stat_table_home_level_all", String.format("%.2f", yellow_card_home / lastMatchesHomeTeambyLevel.size() + yellow_card_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("red_card_home_stat_table_home_level", red_card_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("red_card_away_stat_table_home_level", red_card_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("free_kicks_home_stat_table_home_level", free_kicks_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("free_kicks_away_stat_table_home_level", free_kicks_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("offsides_home_stat_table_home_level", offsides_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("offsides_away_stat_table_home_level", offsides_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("fouls_home_stat_table_home_level", fouls_home / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("fouls_away_stat_table_home_level", fouls_away / lastMatchesHomeTeambyLevel.size());
+
+        ArrayList<team> th4 = new ArrayList<>();
+        ArrayList<team> tg4 = new ArrayList<>();
+        shots_home = 0; shots_away = 0;
+        possession_home = 0; possession_away = 0;
+        shots_on_target_home = 0; shots_on_target_away = 0;
+        corners_home = 0; corners_away = 0;
+        yellow_card_home = 0; yellow_card_away = 0;
+        red_card_home = 0; red_card_away = 0;
+        free_kicks_home = 0; free_kicks_away = 0;
+        offsides_home = 0; offsides_away = 0;
+        fouls_home = 0; fouls_away = 0;
+        for (match_table teams : lastMatchesGuestTeambyLevel) {
+            Optional<team> team_home = teamRepository.findById(teams.getTeamHome());
+            Optional<team> team_guest = teamRepository.findById(teams.getTeamGuest());
+
+            shots_home += teams.getShotFirstHalfHome() + teams.getShotSecondHalfHome();//ВАЖНА ГОСТЕВАЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            shots_away += teams.getShotFirstHalfGuest() + teams.getShotSecondHalfGuest();
+            possession_home += teams.getPossessionFirstHalfHome() + teams.getPossessionSecondHalfHome();//ВАЖНА ГОСТЕВАЯ СТАТИСТИКА!!!!!!!!!!!!!!!!!!!!!!!
+            possession_away += teams.getPossessionFirstHalfGuest() + teams.getPossessionSecondHalfGuest();
+            shots_on_target_home += teams.getShotOnTargetFirstHalfHome() + teams.getShotOnTargetSecondHalfHome();
+            shots_on_target_away += teams.getShotOnTargetFirstHalfGuest() + teams.getShotOnTargetSecondHalfGuest();
+            corners_home += teams.getCornerFirstHalfHome() + teams.getCornerSecondHalfHome();
+            corners_away += teams.getCornerFirstHalfGuest() + teams.getCornerSecondHalfGuest();
+            yellow_card_home += teams.getYellowCardFirstHalfHome() + teams.getYellowCardSecondHalfHome();
+            yellow_card_away += teams.getYellowCardFirstHalfGuest() + teams.getYellowCardSecondHalfGuest();
+            red_card_home += teams.getRedCardFirstHalfHome() + teams.getRedCardSecondHalfHome();
+            red_card_away += teams.getRedCardFirstHalfGuest() + teams.getRedCardSecondHalfGuest();
+            free_kicks_home += teams.getFreeKickFirstHalfHome() + teams.getFreeKickSecondHalfHome();
+            free_kicks_away += teams.getFreeKickFirstHalfGuest() + teams.getFreeKickSecondHalfGuest();
+            offsides_home += teams.getOffsideFirstHalfHome() + teams.getOffsideSecondHalfHome();
+            offsides_away += teams.getOffsideFirstHalfGuest() + teams.getOffsideSecondHalfGuest();
+            fouls_home += teams.getFoulFirstHalfHome() + teams.getFoulSecondHalfHome();
+            fouls_away += teams.getFoulFirstHalfGuest() + teams.getFoulSecondHalfGuest();
+
+            team_home.ifPresent(th4::add);
+            team_guest.ifPresent(tg4::add);
+            model.addAttribute("guest_table_home_level", th4);
+            model.addAttribute("guest_table_guest_level", tg4);
+        }
+        model.addAttribute("shots_home_stat_table_away_level", shots_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("shots_away_stat_table_away_level", shots_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("possession_home_stat_table_away_level", possession_home / lastMatchesGuestTeambyLevel.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
+        model.addAttribute("possession_away_stat_table_away_level", possession_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("shots_on_target_home_stat_table_away_level", shots_on_target_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("shots_on_target_away_stat_table_away_level", shots_on_target_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("corners_home_stat_table_away_level", corners_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("corners_away_stat_table_away_level", corners_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("yellow_card_home_stat_table_away_level", String.format("%.2f", yellow_card_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("yellow_card_away_stat_table_away_level", String.format("%.2f", yellow_card_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("yellow_card_away_stat_table_away_level_all", String.format("%.2f", yellow_card_home / lastMatchesGuestTeambyLevel.size() + yellow_card_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("red_card_home_stat_table_away_level", red_card_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("red_card_away_stat_table_away_level", red_card_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("free_kicks_home_stat_table_away_level", free_kicks_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("free_kicks_away_stat_table_away_level", free_kicks_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("offsides_home_stat_table_away_level", offsides_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("offsides_away_stat_table_away_level", offsides_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("fouls_home_stat_table_away_level", fouls_home / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("fouls_away_stat_table_away_level", fouls_away / lastMatchesGuestTeambyLevel.size());
 
         Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
         Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());
