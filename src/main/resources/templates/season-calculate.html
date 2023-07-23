@@ -18,293 +18,139 @@
                 <tr>
                     <th scope="col">Позиция</th>
                     <th scope="col">Команда</th>
-                    <th scope="col">Очки</th>
-                    <th scope="col">Форма</th>
-                    <th scope="col">Уровень команды</th>
+                    <th scope="col">Средняя позиция</th>
+                    <th scope="col">Среднее кол-во очков</th>
                 </tr>
                 </thead>
                 <form method="post">
                     <tbody>
-                        <div th:if="${s.levelFirstPlace < 6}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelFirstPlace > 5}">
-                            <tr bgcolor="#FFAE00">
-                        </div>
+                        <tr>
                             <td>1</td>
                             <td th:each="tm : ${team1}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreFirstPlace}"></td>
-                            <td th:text="${s.formFirstPlace}"></td>
-                            <td th:text="${s.levelFirstPlace}"></td>
+                            <td th:text="${positionTeam1}"></td>
+                            <td th:text="${scoreTeam1}"></td>
                         </tr>
-                        <div th:if="${s.levelSecondPlace < 6}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelSecondPlace > 5}">
-                            <tr bgcolor="#FFAE00">
-                        </div>
+                        <tr>
                             <td>2</td>
-                            <td th:each="tm2 : ${team2}" th:text="${tm2.nameTeam}"></td>
-                            <td th:text="${s.scoreSecondPlace}"></td>
-                            <td th:text="${s.formSecondPlace}"></td>
-                            <td th:text="${s.levelSecondPlace}"></td>
+                            <td th:each="tm : ${team2}" th:text="${tm.nameTeam}"></td>
+                            <td th:text="${positionTeam2}"></td>
+                            <td th:text="${scoreTeam2}"></td>
                         </tr>
-                        <div th:if="${s.levelThirdPlace < 6}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelThirdPlace > 5}">
-                            <tr bgcolor="#FFAE00">
-                        </div>
+                        <tr>
                             <td>3</td>
                             <td th:each="tm : ${team3}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreThirdPlace}"></td>
-                            <td th:text="${s.formThirdPlace}"></td>
-                            <td th:text="${s.levelThirdPlace}"></td>
+                            <td th:text="${positionTeam3}"></td>
+                            <td th:text="${scoreTeam3}"></td>
                         </tr>
-                        <div th:if="${s.levelFouthPlace < 6}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelFouthPlace == 6}">
-                            <tr bgcolor="#FFAE00">
-                        </div>
+                        <tr>
                             <td>4</td>
                             <td th:each="tm : ${team4}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreFouthPlace}"></td>
-                            <td th:text="${s.formFouthPlace}"></td>
-                            <td th:text="${s.levelFouthPlace}"></td>
+                            <td th:text="${positionTeam4}"></td>
+                            <td th:text="${scoreTeam4}"></td>
                         </tr>
-                        <div th:if="${s.levelFifthPlace < 5}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelFifthPlace > 5}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelFifthPlace == 5}">
-                            <tr bgcolor="#DF67FF">
-                        </div>
+                        <tr>
                             <td>5</td>
                             <td th:each="tm : ${team5}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreFifthPlace}"></td>
-                            <td th:text="${s.formFifthPlace}"></td>
-                            <td th:text="${s.levelFifthPlace}"></td>
+                            <td th:text="${positionTeam5}"></td>
+                            <td th:text="${scoreTeam5}"></td>
                         </tr>
-                        <div th:if="${s.levelSixthPlace < 5}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelSixthPlace > 5}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelSixthPlace == 5}">
-                            <tr bgcolor="#DF67FF">
-                        </div>
+                        <tr>
                             <td>6</td>
                             <td th:each="tm : ${team6}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreSixthPlace}"></td>
-                            <td th:text="${s.formSixthPlace}"></td>
-                            <td th:text="${s.levelSixthPlace}"></td>
+                            <td th:text="${positionTeam6}"></td>
+                            <td th:text="${scoreTeam6}"></td>
                         </tr>
-                        <div th:if="${s.levelSeventhPlace < 5}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelSeventhPlace > 5}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelSeventhPlace == 5}">
-                            <tr bgcolor="#DF67FF">
-                        </div>
+                        <tr>
                             <td>7</td>
                             <td th:each="tm : ${team7}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreSeventhPlace}"></td>
-                            <td th:text="${s.formSeventhPlace}"></td>
-                            <td th:text="${s.levelSeventhPlace}"></td>
+                            <td th:text="${positionTeam7}"></td>
+                            <td th:text="${scoreTeam7}"></td>
                         </tr>
-                        <div th:if="${s.levelEighthPlace < 4}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelEighthPlace > 4}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelEighthPlace == 4}">
-                            <tr bgcolor="#78CBD8">
-                        </div>
+                        <tr>
                             <td>8</td>
                             <td th:each="tm : ${team8}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreEighthPlace}"></td>
-                            <td th:text="${s.formEighthPlace}"></td>
-                            <td th:text="${s.levelEighthPlace}"></td>
+                            <td th:text="${positionTeam8}"></td>
+                            <td th:text="${scoreTeam8}"></td>
                         </tr>
-                        <div th:if="${s.levelNinthPlace < 4}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelNinthPlace > 4}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelNinthPlace == 4}">
-                            <tr bgcolor="#78CBD8">
-                        </div>
+                        <tr>
                             <td>9</td>
                             <td th:each="tm : ${team9}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreNinthPlace}"></td>
-                            <td th:text="${s.formNinthPlace}"></td>
-                            <td th:text="${s.levelNinthPlace}"></td>
+                            <td th:text="${positionTeam9}"></td>
+                            <td th:text="${scoreTeam9}"></td>
                         </tr>
-                        <div th:if="${s.levelTenthPlace < 4}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelTenthPlace > 4}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelTenthPlace == 4}">
-                            <tr bgcolor="#78CBD8">
-                        </div>
+                        <tr>
                             <td>10</td>
                             <td th:each="tm : ${team10}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreTenthPlace}"></td>
-                            <td th:text="${s.formTenthPlace}"></td>
-                            <td th:text="${s.levelTenthPlace}"></td>
+                            <td th:text="${positionTeam10}"></td>
+                            <td th:text="${scoreTeam10}"></td>
                         </tr>
-                        <div th:if="${s.levelEleventhPlace < 3}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelEleventhPlace > 3}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelEleventhPlace == 3}">
-                            <tr bgcolor="#B8FFA1">
-                        </div>
+                        <tr>
                             <td>11</td>
                             <td th:each="tm : ${team11}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreEleventhPlace}"></td>
-                            <td th:text="${s.formEleventhPlace}"></td>
-                            <td th:text="${s.levelEleventhPlace}"></td>
+                            <td th:text="${positionTeam11}"></td>
+                            <td th:text="${scoreTeam11}"></td>
                         </tr>
-                        <div th:if="${s.levelTwelfthPlace < 3}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelTwelfthPlace > 3}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelTwelfthPlace == 3}">
-                            <tr bgcolor="#B8FFA1">
-                        </div>
+                        <tr>
                             <td>12</td>
                             <td th:each="tm : ${team12}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreTwelfthPlace}"></td>
-                            <td th:text="${s.formTwelfthPlace}"></td>
-                            <td th:text="${s.levelTwelfthPlace}"></td>
+                            <td th:text="${positionTeam12}"></td>
+                            <td th:text="${scoreTeam12}"></td>
                         </tr>
-                        <div th:if="${s.levelThirteenthPlace < 3}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelThirteenthPlace > 3}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelThirteenthPlace == 3}">
-                            <tr bgcolor="#B8FFA1">
-                        </div>
+                        <tr>
                             <td>13</td>
                             <td th:each="tm : ${team13}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreThirteenthPlace}"></td>
-                            <td th:text="${s.formThirteenthPlace}"></td>
-                            <td th:text="${s.levelThirteenthPlace}"></td>
+                            <td th:text="${positionTeam13}"></td>
+                            <td th:text="${scoreTeam13}"></td>
                         </tr>
-                        <div th:if="${s.levelFourteenthPlace < 2}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelFourteenthPlace > 2}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelFourteenthPlace == 2}">
-                            <tr bgcolor="#D5DB56">
-                        </div>
+                        <tr>
                             <td>14</td>
                             <td th:each="tm : ${team14}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreFourteenthPlace}"></td>
-                            <td th:text="${s.formFourteenthPlace}"></td>
-                            <td th:text="${s.levelFourteenthPlace}"></td>
+                            <td th:text="${positionTeam14}"></td>
+                            <td th:text="${scoreTeam14}"></td>
                         </tr>
-                        <div th:if="${s.levelFifteenthPlace < 2}">
-                            <tr bgcolor="#00F3FF">
-                        </div>
-                        <div th:if="${s.levelFifteenthPlace > 2}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelFifteenthPlace == 2}">
-                            <tr bgcolor="#D5DB56">
-                        </div>
+                        <tr>
                             <td>15</td>
                             <td th:each="tm : ${team15}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreFifteenthPlace}"></td>
-                            <td th:text="${s.formFifteenthPlace}"></td>
-                            <td th:text="${s.levelFifteenthPlace}"></td>
+                            <td th:text="${positionTeam15}"></td>
+                            <td th:text="${scoreTeam15}"></td>
                         </tr>
-                        <div th:if="${s.levelSixteenthPlace > 1}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelSixteenthPlace == 1}">
-                            <tr bgcolor="#FF8888">
-                        </div>
+                        <tr>
                             <td>16</td>
                             <td th:each="tm : ${team16}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreSixteenthPlace}"></td>
-                            <td th:text="${s.formSixteenthPlace}"></td>
-                            <td th:text="${s.levelSixteenthPlace}"></td>
+                            <td th:text="${positionTeam16}"></td>
+                            <td th:text="${scoreTeam16}"></td>
                         </tr>
-                        <div th:if="${s.levelSeventeenthPlace > 1}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelSeventeenthPlace == 1}">
-                            <tr bgcolor="#FF8888">
-                        </div>
+                        <tr>
                             <td>17</td>
                             <td th:each="tm : ${team17}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreSeventeenthPlace}"></td>
-                            <td th:text="${s.formSeventeenthPlace}"></td>
-                            <td th:text="${s.levelSeventeenthPlace}"></td>
+                            <td th:text="${positionTeam17}"></td>
+                            <td th:text="${scoreTeam17}"></td>
                         </tr>
-                        <div th:if="${s.levelEighteenthPlace > 1}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelEighteenthPlace <= 1}">
-                            <tr bgcolor="#FF8888">
-                        </div>
+                        <tr>
                             <td>18</td>
                             <td th:each="tm : ${team18}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreEighteenthPlace}"></td>
-                            <td th:text="${s.formEighteenthPlace}"></td>
-                            <td th:text="${s.levelEighteenthPlace}"></td>
+                            <td th:text="${positionTeam18}"></td>
+                            <td th:text="${scoreTeam18}"></td>
                         </tr>
-                        <div th:if="${s.levelNineteenthPlace > 1}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelNineteenthPlace <= 1}">
-                            <tr bgcolor="#FF8888">
-                        </div>
+                        <tr>
                             <td>19</td>
                             <td th:each="tm : ${team19}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreNineteenthPlace}"></td>
-                            <td th:text="${s.formNineteenthPlace}"></td>
-                            <td th:text="${s.levelNineteenthPlace}"></td>
+                            <td th:text="${positionTeam19}"></td>
+                            <td th:text="${scoreTeam19}"></td>
                         </tr>
-                        <div th:if="${s.levelTwentiethPlace > 1}">
-                            <tr bgcolor="#BABABA">
-                        </div>
-                        <div th:if="${s.levelTwentiethPlace <= 1}">
-                            <tr bgcolor="#FF8888">
-                        </div>
+                        <tr>
                             <td>20</td>
                             <td th:each="tm : ${team20}" th:text="${tm.nameTeam}"></td>
-                            <td th:text="${s.scoreTwentiethPlace}"></td>
-                            <td th:text="${s.formTwentiethPlace}"></td>
-                            <td th:text="${s.levelTwentiethPlace}"></td>
+                            <td th:text="${positionTeam20}"></td>
+                            <td th:text="${scoreTeam20}"></td>
                         </tr>
                     </tbody>
                 </form>
             </table>
         </div>
-    <a th:href="'/season/' + ${s.idSeason} + '/edit'" class="btn btn-light">Редактировать сезон</a><br><br>
+<!--    <a th:href="'/season/' + ${s.idSeason} + '/edit'" class="btn btn-light">Редактировать сезон</a><br><br>-->
 <!--    <form th:action="'/season/' + ${s.idSeason} + '/delete'" method="post">-->
-        <button class="btn btn-light" type="submit">Удалить сезон</button>
+<!--        <button class="btn btn-light" type="submit">Удалить сезон</button>-->
 <!--    </form>-->
     </div>
 </div>
