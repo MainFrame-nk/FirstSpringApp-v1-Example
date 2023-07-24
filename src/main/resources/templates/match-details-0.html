@@ -29,7 +29,7 @@
                         <th>Владение</th>
                         <td th:text="(${m.possessionFirstHalfHome} + ${m.possessionSecondHalfHome}) / 2"></td>
                         <td th:text="(${m.possessionFirstHalfGuest} + ${m.possessionSecondHalfGuest}) / 2"></td>
-                        <td th:text="${m.possessionFirstHalfHome} + ${m.possessionSecondHalfHome} + ${m.possessionFirstHalfGuest} + ${m.possessionSecondHalfGuest}"></td>
+                        <td>100</td>
                     </tr>
                     <tr>
                         <th>Удары</th>
@@ -77,7 +77,7 @@
                         <th>Фолы</th>
                         <td th:text="${m.foulFirstHalfHome} + ${m.foulSecondHalfHome}"></td>
                         <td th:text="${m.foulFirstHalfGuest} + ${m.foulSecondHalfGuest}"></td>
-                        <td th:text="${m.foulFirstHalfHome} + ${m.foulSecondHalfHome} + ${m.foulFirstHalfGuest} + ${m.foulSecondHalfGuest}"></td>
+                        <td th:text="${m.foulFirstHalfHome} + ${m.foulSecondHalfHome} + ${m.foulFirstHalfGuest} + ${m.foulSecondHalfGuest}">
                     </tr>
                     </tbody>
                 </form>

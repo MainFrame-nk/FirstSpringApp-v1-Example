@@ -17,6 +17,9 @@
   <div th:each="l : ${league}">
       <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}" th:text="${l.countryLeague}" class="btn btn-light"></a><br><br>
   </div>
+  <form method="post">
+      <button type="submit" class="btn btn-light">Импорт матчей</button><br><br>
+  </form>
 </div>
 
 <div th:insert="index/footer :: footer"></div>
