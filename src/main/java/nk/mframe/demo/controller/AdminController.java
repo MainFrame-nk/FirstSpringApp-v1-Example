@@ -115,7 +115,7 @@ public class AdminController {
         String fouls = "Фолы";
         String yellowCards = "Желтые карточки";
         String redCards = "Красные карточки";
-        int i = 1;
+        String matchSuccess = "Матч ";
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
@@ -136,11 +136,12 @@ public class AdminController {
 
                     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm");
                     timeMatch = LocalTime.parse(time, timeFormat);
-                    i++;
+                    matchSuccess += dateMatch + " " + timeMatch;
                     continue;
                 }
                 if (cell.getColumnIndex() == 1) {
                     teamHome = parseTeam(cell.toString());
+                    matchSuccess += " " + cell.toString();
                     continue;
                 }
                 if (cell.getColumnIndex() == 2) {
@@ -150,6 +151,20 @@ public class AdminController {
                 }
                 if (cell.getColumnIndex() == 3) {
                     teamGuest = parseTeam(cell.toString());
+                    matchSuccess += " - " + cell.toString();
+                    continue;
+                }
+                Iterable<match_table> matches = matchRepository.findAll();
+                boolean dubleMatch = false;
+                for (match_table mt: matches) {
+                    if (dateMatch.equals(mt.getDateMatch()) && timeMatch.equals(mt.getTimeMatch()) && teamHome == mt.getTeamHome() && teamGuest == mt.getTeamGuest()) {
+                        System.out.println("Попытка дублирования " + matchSuccess + "!");
+                        dubleMatch = true;
+                        break;
+                        //throw new RuntimeException(matchSuccess + "уже есть в базе данных!");
+                    }
+                }
+                if(dubleMatch) {
                     continue;
                 }
                 int indexPossession = cell.toString().lastIndexOf(possession);
@@ -359,15 +374,17 @@ public class AdminController {
                     redCardSecondHalfHome = redCardsSecondHalfHome;
                     redCardSecondHalfGuest = redCardsSecondHalfAway;
                 }
+                System.out.println(matchSuccess  + " добавлен в Базу данных!");
+                match_table addedMatches = new match_table(teamHome, teamGuest, dateMatch, timeMatch,shotFirstHalfHome, shotSecondHalfHome, -1, shotFirstHalfGuest, shotSecondHalfGuest, -1, scoreHome, scoreGuest, possessionFirstHalfHome, possessionSecondHalfHome,
+                        -1, possessionFirstHalfGuest, possessionSecondHalfGuest, -1, shotOnTargetFirstHalfHome, shotOnTargetSecondHalfHome, -1, shotOnTargetFirstHalfGuest, shotOnTargetSecondHalfGuest, -1,
+                        cornerFirstHalfHome, cornerSecondHalfHome, -1, cornerFirstHalfGuest, cornerSecondHalfGuest, -1, yellowCardFirstHalfHome, yellowCardSecondHalfHome, -1, yellowCardFirstHalfGuest,
+                        yellowCardSecondHalfGuest, -1, redCardFirstHalfHome, redCardSecondHalfHome, -1, redCardFirstHalfGuest, redCardSecondHalfGuest, -1, freeKickFirstHalfHome, freeKickSecondHalfHome,
+                        -1, freeKickFirstHalfGuest, freeKickSecondHalfGuest, -1, offsideFirstHalfHome, offsideSecondHalfHome, -1, offsideFirstHalfGuest, offsideSecondHalfGuest, -1,
+                        foulFirstHalfHome, foulSecondHalfHome, -1, foulFirstHalfGuest, foulSecondHalfGuest, -1);
+                matchRepository.save(addedMatches);
+                matchSuccess = "";
             }
         }
-        match_table matches = new match_table(teamHome, teamGuest, dateMatch, timeMatch,shotFirstHalfHome, shotSecondHalfHome, -1, shotFirstHalfGuest, shotSecondHalfGuest, -1, scoreHome, scoreGuest, possessionFirstHalfHome, possessionSecondHalfHome,
-                -1, possessionFirstHalfGuest, possessionSecondHalfGuest, -1, shotOnTargetFirstHalfHome, shotOnTargetSecondHalfHome, -1, shotOnTargetFirstHalfGuest, shotOnTargetSecondHalfGuest, -1,
-                cornerFirstHalfHome, cornerSecondHalfHome, -1, cornerFirstHalfGuest, cornerSecondHalfGuest, -1, yellowCardFirstHalfHome, yellowCardSecondHalfHome, -1, yellowCardFirstHalfGuest,
-                yellowCardSecondHalfGuest, -1, redCardFirstHalfHome, redCardSecondHalfHome, -1, redCardFirstHalfGuest, redCardSecondHalfGuest, -1, freeKickFirstHalfHome, freeKickSecondHalfHome,
-                -1, freeKickFirstHalfGuest, freeKickSecondHalfGuest, -1, offsideFirstHalfHome, offsideSecondHalfHome, -1, offsideFirstHalfGuest, offsideSecondHalfGuest, -1,
-                foulFirstHalfHome, foulSecondHalfHome, -1, foulFirstHalfGuest, foulSecondHalfGuest, -1);
-        matchRepository.save(matches);
     }
     public int parseTeam(String team) {
         int idTeam = -1;
