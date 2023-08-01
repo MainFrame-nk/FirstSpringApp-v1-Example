@@ -1,20 +1,23 @@
 package nk.mframe.demo.controller;
 
-import nk.mframe.demo.dao.LeagueRepository;
-import nk.mframe.demo.dao.MatchRepository;
-import nk.mframe.demo.dao.TeamRepository;
+import nk.mframe.demo.dao.*;
+import nk.mframe.demo.model.coefficient_table;
+import nk.mframe.demo.model.event;
 import nk.mframe.demo.model.league;
+import nk.mframe.demo.model.team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -29,15 +32,39 @@ public class CoefficientController {
     @Autowired
     private TeamRepository teamRepository;
 
-    @PostMapping("/coefsadd")
-    public String coefMain(Model model) throws IOException, InterruptedException {
-        ArrayList<Integer> matchesId = FindIdMatches(); // Найти все id на матчи на день
-        ArrayList<String> todayMatches = FindMatches(); // Найти все доступные матчи на день
-        FindCoefficients(matchesId, 4, 2, (byte) 0);
-        return "redirect:/admin";
+    @Autowired
+    private CoefficientRepository coefficientRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    @GetMapping("/import/coefs")
+    public String coefMain(Model model) {
+        return "import-index";
     }
 
-    public static StringBuilder ConnectSite(String url, String findData) throws IOException {
+    @PostMapping("/import/coefs")
+    public String coefImport(@RequestParam String day_matches, Model model) throws IOException, InterruptedException {
+        ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
+       // ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
+        for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
+            for (int marketId = 3; marketId < 7; marketId++) {
+                FindCoefficients(matchesId, marketId, 2, gamePeriod);
+                Thread.sleep(1000);
+                FindCoefficients(matchesId, marketId, 8, gamePeriod);
+                Thread.sleep(1000);
+                FindCoefficients(matchesId, marketId, 12, gamePeriod);
+                Thread.sleep(1000);
+                FindCoefficients(matchesId, marketId, 13, gamePeriod);
+                Thread.sleep(1000);
+                FindCoefficients(matchesId, marketId, 14, gamePeriod);
+                Thread.sleep(1000);
+            }
+        }
+        return "redirect:/import/coefs";
+    }
+
+    public StringBuilder ConnectSite(String url, String findData) throws IOException {
         // url - ссылка сайта, с которого забирать данные
         // findData - текст, полученный с сайта, от которого обрезать искомые данные
         URL obj = new URL(url);
@@ -61,8 +88,8 @@ public class CoefficientController {
         return new StringBuilder(response.substring(response.indexOf(findData)));
     }
 
-    public static ArrayList<String> FindMatches() throws IOException {
-        StringBuilder response = ConnectSite("https://odds.ru/football/", "ListMatchesFootballStore"); //Взять данные с сайта
+    public ArrayList<String> FindMatches(String dayMathes) throws IOException {
+        StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMathes + "/", "ListMatchesFootballStore"); //Взять данные с сайта
 
         String start = "/match";
         String end = "\\\",\\\"status";
@@ -85,8 +112,8 @@ public class CoefficientController {
         return findData;
     }
 
-    public static ArrayList<Integer> FindIdMatches() throws IOException {
-        StringBuilder response = ConnectSite("https://odds.ru/football/", "ListMatchesFootballStore"); //Взять данные с сайта
+    public ArrayList<Integer> FindIdMatches(String dayMathes) throws IOException {
+        StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMathes + "/", "ListMatchesFootballStore"); //Взять данные с сайта
 
         String events = "events";
         String forecasts = "/forecasts";
@@ -114,7 +141,7 @@ public class CoefficientController {
         return matchesId;
     }
 
-    public static void FindCoefficients(StringBuilder response, Integer marketId) {
+    public void FindCoefficients(StringBuilder response, Integer marketId, Long eventId) {
         String[] str = response.toString().split("outcome_value");
         int bookmaker = 0;
         double coefficient_more = 0.0;
@@ -126,8 +153,9 @@ public class CoefficientController {
                 outcome_value = FindValue(str2[0], "\",\"rows");
                 for (String st : str2) {
                     bookmaker = FindValue(st, ",\"odds", true);
+                    System.out.println(st);
                     //if (bookmaker != 1 && bookmaker != 17) {
-                    if (bookmaker != 0) {
+                    if (bookmaker == 0) {
                         continue;
                     }
                     // outcome_value:
@@ -156,15 +184,15 @@ public class CoefficientController {
                         coefficient_more = FindValue(st, "13\":{\"value\":\"", "\",\"direction", false, true);
                         coefficient_less = FindValue(st, "14\":{\"value\":\"", "\",\"direction", true, true);
                     }
-
-
+                    coefAdd(eventId, bookmaker, marketId, outcome_value, coefficient_more);
+                    coefAdd(eventId, bookmaker, marketId, outcome_value, coefficient_less);
                     System.out.println("Cтавка: " + outcome_value + " Букмекер: " + bookmaker + " КФ 1: " + coefficient_more + " КФ 2: " + coefficient_less);
                 }
             }
         }
     }
 
-    public static void FindCoefficients(ArrayList<Integer> matchId, Integer marketId, Integer gameTypeId, Byte gamePeriod) throws IOException, InterruptedException {
+    public void FindCoefficients(ArrayList<Integer> matchId, Integer marketId, Integer gameTypeId, Byte gamePeriod) throws IOException, InterruptedException {
         //https://odds.ru/api/event/table/rate?marketId=1&gameTypeId=2&gamePeriod=0&matchId=2279293&sport=1
 //        marketId=1 - 1Х2
 //                 3 - Фора
@@ -186,13 +214,19 @@ public class CoefficientController {
         for (Integer mt: matchId) {
             String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + gameTypeId + "&gamePeriod=" + gamePeriod + "&matchId=" + mt;
             StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
-            FindCoefficients(response, marketId);
-            System.out.println("Коэффициенты матча id: " + idMatchesGet + "успешно занесён в базу данных!");
-            Thread.sleep(10000); // Задержка для безопасности потоков
+
+            if (!response.toString().isEmpty()) {
+                event event = new event(mt, gamePeriod, gameTypeId, marketId); // ПРОВЕРИТЬ!
+                eventRepository.save(event);
+
+                FindCoefficients(response, marketId, event.getIdEvent());
+            }
+            System.out.println("Коэффициенты матча id: " + idMatchesGet + " успешно занесён в базу данных!");
+            Thread.sleep(1000); // Задержка для безопасности потоков
         }
     }
 
-    public static int FindValue(String str, String end, boolean book) {
+    public int FindValue(String str, String end, boolean book) {
         int value = 0;
         if (str.contains(end)) {
             value = Integer.parseInt(str.substring(str.indexOf(0) + 3, str.indexOf(end)));
@@ -200,7 +234,7 @@ public class CoefficientController {
         return value;
     }
 
-    public static double FindValue(String str, String start, String end, boolean lastFind, boolean moreindex) {
+    public double FindValue(String str, String start, String end, boolean lastFind, boolean moreindex) {
         double value = 0.0;
         if (str.contains(start)) {
             if (str.contains(end)) {
@@ -218,11 +252,16 @@ public class CoefficientController {
         return value;
     }
 
-    public static double FindValue(String str, String end) {
+    public double FindValue(String str, String end) {
         double value = 0.0;
         if (str.contains(end)) {
             value = Double.parseDouble(str.substring(str.indexOf(0) + 4, str.lastIndexOf(end)));
         }
         return value;
+    }
+
+    public void coefAdd(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficient) {
+        coefficient_table coef = new coefficient_table(idEvent, bookmakerId, outcomeId, outcomeValue, coefficient);
+        coefficientRepository.save(coef);
     }
 }

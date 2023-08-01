@@ -11,10 +11,10 @@ public class coefficient_table {
     @Column(name = "idCoefficient", nullable = false)
     private Long idCoefficient;
 
-    private Integer idEvent;
+    private Long idEvent;
     private Integer bookmakerId;
     private Integer outcomeId;
-    private Integer outcomeValue;
+    private Double outcomeValue;
     private Double coefficient;
 
     public Long getIdCoefficient() {
@@ -25,11 +25,11 @@ public class coefficient_table {
         this.idCoefficient = idCoefficient;
     }
 
-    public Integer getIdEvent() {
+    public Long getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(Integer idEvent) {
+    public void setIdEvent(Long idEvent) {
         this.idEvent = idEvent;
     }
 
@@ -49,11 +49,11 @@ public class coefficient_table {
         this.outcomeId = outcomeId;
     }
 
-    public Integer getOutcomeValue() {
+    public Double getOutcomeValue() {
         return outcomeValue;
     }
 
-    public void setOutcomeValue(Integer outcomeValue) {
+    public void setOutcomeValue(Double outcomeValue) {
         this.outcomeValue = outcomeValue;
     }
 
@@ -68,7 +68,7 @@ public class coefficient_table {
     public coefficient_table() {
     }
 
-    public coefficient_table(Integer idEvent, Integer bookmakerId, Integer outcomeId, Integer outcomeValue, Double coefficient) {
+    public coefficient_table(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficient) {
         this.idEvent = idEvent;
         this.bookmakerId = bookmakerId;
         this.outcomeId = outcomeId;
