@@ -5,6 +5,7 @@ import nk.mframe.demo.model.coefficient_table;
 import nk.mframe.demo.model.event;
 import nk.mframe.demo.model.league;
 import nk.mframe.demo.model.team;
+import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,20 +48,7 @@ public class CoefficientController {
     public String coefImport(@RequestParam String day_matches, Model model) throws IOException, InterruptedException {
         ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
        // ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
-        for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
-            for (int marketId = 3; marketId < 7; marketId++) {
-                FindCoefficients(matchesId, marketId, 2, gamePeriod);
-                Thread.sleep(1000);
-                FindCoefficients(matchesId, marketId, 8, gamePeriod);
-                Thread.sleep(1000);
-                FindCoefficients(matchesId, marketId, 12, gamePeriod);
-                Thread.sleep(1000);
-                FindCoefficients(matchesId, marketId, 13, gamePeriod);
-                Thread.sleep(1000);
-                FindCoefficients(matchesId, marketId, 14, gamePeriod);
-                Thread.sleep(1000);
-            }
-        }
+        FindCoefficients(matchesId);
         return "redirect:/import/coefs";
     }
 
@@ -75,16 +63,23 @@ public class CoefficientController {
                 "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
         connection.setRequestMethod("GET");
+        int statusCode = connection.getResponseCode();
+        StringBuilder response = new StringBuilder("");
+        if (statusCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        } else {
+            System.out.println("Ошибка при подключении к серверу сайта!");
+            return new StringBuilder();
         }
-        in.close();
-
+        if (response.toString().equals("[]")) {
+            return new StringBuilder();
+        }
         return new StringBuilder(response.substring(response.indexOf(findData)));
     }
 
@@ -153,7 +148,6 @@ public class CoefficientController {
                 outcome_value = FindValue(str2[0], "\",\"rows");
                 for (String st : str2) {
                     bookmaker = FindValue(st, ",\"odds", true);
-                    System.out.println(st);
                     //if (bookmaker != 1 && bookmaker != 17) {
                     if (bookmaker == 0) {
                         continue;
@@ -192,7 +186,7 @@ public class CoefficientController {
         }
     }
 
-    public void FindCoefficients(ArrayList<Integer> matchId, Integer marketId, Integer gameTypeId, Byte gamePeriod) throws IOException, InterruptedException {
+    public void FindCoefficients(ArrayList<Integer> matchId) throws IOException, InterruptedException {
         //https://odds.ru/api/event/table/rate?marketId=1&gameTypeId=2&gamePeriod=0&matchId=2279293&sport=1
 //        marketId=1 - 1Х2
 //                 3 - Фора
@@ -212,24 +206,68 @@ public class CoefficientController {
 //                                       1 - 1 тайм
 //                                       2 - 2 тайм
         for (Integer mt: matchId) {
-            String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + gameTypeId + "&gamePeriod=" + gamePeriod + "&matchId=" + mt;
-            StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
-
-            if (!response.toString().isEmpty()) {
-                event event = new event(mt, gamePeriod, gameTypeId, marketId); // ПРОВЕРИТЬ!
-                eventRepository.save(event);
-
-                FindCoefficients(response, marketId, event.getIdEvent());
+            for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
+                for (int marketId = 3; marketId < 7; marketId++) {
+                    String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 2 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
+                    StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
+                    if (!response.toString().isEmpty()) {
+                        event event = new event(mt, gamePeriod, 2, marketId);
+                        eventRepository.save(event);
+                        FindCoefficients(response, marketId, event.getIdEvent());
+                        System.out.println("gameTypeId=2 marketId= " + marketId);
+                        Thread.sleep(101);
+                    }
+                    String idMatchesGet2 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 8 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
+                    StringBuilder response2 = ConnectSite(idMatchesGet2, "odds_info");
+                    if (!response2.toString().isEmpty()) {
+                        event event = new event(mt, gamePeriod, 8, marketId);
+                        eventRepository.save(event);
+                        FindCoefficients(response2, marketId, event.getIdEvent());
+                        System.out.println("gameTypeId=8 marketId= " + marketId);
+                        Thread.sleep(101);
+                    }
+                    String idMatchesGet3 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 12 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
+                    StringBuilder response3 = ConnectSite(idMatchesGet3, "odds_info");
+                    if (!response3.toString().isEmpty()) {
+                        event event = new event(mt, gamePeriod, 12, marketId);
+                        eventRepository.save(event);
+                        FindCoefficients(response3, marketId, event.getIdEvent());
+                        System.out.println("gameTypeId=12 marketId= " + marketId);
+                        Thread.sleep(101);
+                    }
+                    String idMatchesGet4 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 13 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
+                    StringBuilder response4 = ConnectSite(idMatchesGet4, "odds_info");
+                    if (!response4.toString().isEmpty()) {
+                        event event = new event(mt, gamePeriod, 13, marketId);
+                        eventRepository.save(event);
+                        FindCoefficients(response4, marketId, event.getIdEvent());
+                        System.out.println("gameTypeId=13 marketId= " + marketId);
+                        Thread.sleep(101);
+                    }
+                    String idMatchesGet5 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 14 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
+                    StringBuilder response5 = ConnectSite(idMatchesGet5, "odds_info");
+                    if (!response5.toString().isEmpty()) {
+                        event event = new event(mt, gamePeriod, 12, marketId);
+                        eventRepository.save(event);
+                        FindCoefficients(response5, marketId, event.getIdEvent());
+                        System.out.println("gameTypeId=14 marketId= " + marketId);
+                        Thread.sleep(101);
+                    }
+                    System.out.println("Коэффициенты матча id: " + mt + " успешно занесён в базу данных! Тайм: " + gamePeriod);
+                    Thread.sleep(101); // Задержка для безопасности потоков
+                }
             }
-            System.out.println("Коэффициенты матча id: " + idMatchesGet + " успешно занесён в базу данных!");
-            Thread.sleep(1000); // Задержка для безопасности потоков
         }
     }
 
     public int FindValue(String str, String end, boolean book) {
         int value = 0;
         if (str.contains(end)) {
-            value = Integer.parseInt(str.substring(str.indexOf(0) + 3, str.indexOf(end)));
+            try {
+                value = Integer.parseInt(str.substring(str.indexOf(0) + 3, str.indexOf(end)));
+            } catch (NumberFormatException ex) {
+                System.out.println("Неверные данные с запроса!");
+            }
         }
         return value;
     }
@@ -240,12 +278,32 @@ public class CoefficientController {
             if (str.contains(end)) {
                 if (lastFind) {
                     if(moreindex) {
-                        value = Double.parseDouble(str.substring(str.lastIndexOf(start) + 14, str.lastIndexOf(end)));
+                        try {
+                            value = Double.parseDouble(str.substring(str.lastIndexOf(start) + 14, str.lastIndexOf(end)));
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверные данные с запроса!");
+                        }
                     } else {
-                        value = Double.parseDouble(str.substring(str.lastIndexOf(start) + 13, str.lastIndexOf(end)));
+                        try {
+                            value = Double.parseDouble(str.substring(str.lastIndexOf(start) + 13, str.lastIndexOf(end)));
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверные данные с запроса!");
+                        }
                     }
                 } else {
-                    value = Double.parseDouble(str.substring(str.indexOf(start) + 13, str.indexOf(end)));
+                    if(moreindex) {
+                        try {
+                            value = Double.parseDouble(str.substring(str.indexOf(start) + 14, str.indexOf(end)));
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверные данные с запроса!");
+                        }
+                    } else {
+                        try {
+                            value = Double.parseDouble(str.substring(str.indexOf(start) + 13, str.indexOf(end)));
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверные данные с запроса!");
+                        }
+                    }
                 }
             }
         }
@@ -255,7 +313,11 @@ public class CoefficientController {
     public double FindValue(String str, String end) {
         double value = 0.0;
         if (str.contains(end)) {
-            value = Double.parseDouble(str.substring(str.indexOf(0) + 4, str.lastIndexOf(end)));
+            try {
+                value = Double.parseDouble(str.substring(str.indexOf(0) + 4, str.lastIndexOf(end)));
+            } catch (NumberFormatException ex) {
+                System.out.println("Неверные данные с запроса!");
+            }
         }
         return value;
     }
