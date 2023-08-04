@@ -14,8 +14,10 @@
         <form method="post">
             <span>Введите название лиги:</span><br>
             <input type="text" name="name_league" th:value="${l.nameLeague}" class="form-control"><br>
-            <span>Введите страну лиги:</span><br>
-            <input type="text" name="country_league" th:value="${l.countryLeague}" class="form-control"><br>
+            <span>Выберите страну лиги:</span><br>
+            <select size="15" name="country_league" class="form-control">
+                <option th:each="c : ${country}" th:value="${c.idCountry}" th:name="country_league" th:selected="${l.countryLeague == c.idCountry}" th:text="${c.nameCountry}"></option>
+            </select><br>
             <button type="submit" class="btn btn-light">Обновить</button>
         </form>
     </div>

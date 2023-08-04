@@ -10,12 +10,13 @@
 
 <div class="container mt-5">
   <h1>Админ-панель</h1>
+  <a href="/country/add" class="btn btn-light">Добавить страну</a><br><br>
   <a href="/league/add" class="btn btn-light">Добавить лигу</a>
   <a href="/team/add" class="btn btn-light">Добавить клуб</a>
   <a href="/match/add" class="btn btn-light">Добавить матч</a>
   <a href="/season/add" class="btn btn-light">Добавить сезон</a><br><br>
   <div th:each="l : ${league}">
-      <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}" th:text="${l.countryLeague}" class="btn btn-light"></a><br><br>
+      <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}" th:each="c : ${country}" th:text="${c.nameCountry}" class="btn btn-light"></a><br><br>
   </div>
   <h1>Импорт данных</h1>
   <form method="post">

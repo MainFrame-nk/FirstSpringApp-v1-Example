@@ -12,7 +12,7 @@ public class league {
     private Integer idLeague;
 
     private String nameLeague;
-    private String countryLeague;
+    private Integer countryLeague;
     private String logotypeLeague;
 
     public Integer getIdLeague() {
@@ -31,18 +31,18 @@ public class league {
         this.nameLeague = nameLeague;
     }
 
-    public String getCountryLeague() {
+    public Integer getCountryLeague() {
         return countryLeague;
     }
 
-    public void setCountryLeague(String countryLeague) {
+    public void setCountryLeague(Integer countryLeague) {
         this.countryLeague = countryLeague;
     }
 
     public league() {
     }
 
-    public league(String nameLeague, String countryLeague) {
+    public league(String nameLeague, Integer countryLeague) {
         this.nameLeague = nameLeague;
         this.countryLeague = countryLeague;
     }

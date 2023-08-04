@@ -13,7 +13,8 @@
         <h1>Лига №<span th:text="${l.idLeague}"></span></h1>
         <ul>
             <li><b>Название лиги: </b><span th:text="${l.nameLeague}"></span></li>
-            <li><b>Страна лиги: </b><span th:text="${l.countryLeague}"></span></li>
+            <li><b>idCountry: </b><span th:text="${l.countryLeague}"></span></li>
+            <li><b>Страна лиги: </b><span th:each="c : ${country}" th:text="${c.nameCountry}"></span></li>
         </ul>
         <a th:href="'/league/' + ${l.idLeague} + '/edit'" class="btn btn-light">Редактировать</a><br><br>
         <form th:action="'/league/' + ${l.idLeague} + '/delete'" method="post">

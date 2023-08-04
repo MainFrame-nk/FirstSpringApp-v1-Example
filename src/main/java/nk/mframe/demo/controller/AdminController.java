@@ -1,9 +1,7 @@
 package nk.mframe.demo.controller;
 
-import nk.mframe.demo.dao.LeagueRepository;
-import nk.mframe.demo.dao.MatchRepository;
-import nk.mframe.demo.dao.SeasonRepository;
-import nk.mframe.demo.dao.TeamRepository;
+import nk.mframe.demo.dao.*;
+import nk.mframe.demo.model.country;
 import nk.mframe.demo.model.league;
 import nk.mframe.demo.model.match_table;
 import nk.mframe.demo.model.team;
@@ -43,10 +41,19 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private CountryRepository countryRepository;
+
     @GetMapping("/admin")
     public String adminMain(Model model) {
         Iterable<league> league = leagueRepository.findAll();
         model.addAttribute("league", league);
+        ArrayList<country> ct = new ArrayList<>();
+        for (league lg : league) {
+            Optional<country> country = countryRepository.findById(lg.getCountryLeague());
+            country.ifPresent(ct::add);
+            model.addAttribute("country", ct);
+        }
         return "admin-index";
     }
 

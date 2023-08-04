@@ -64,11 +64,11 @@ public class TeamController {
         }
 
         Optional<team> team = teamRepository.findById(idTeam);
-        Optional<league> league = leagueRepository.findById(team.get().getLeagueTeam());
         ArrayList<team> res = new ArrayList<>();
         team.ifPresent(res::add);
         model.addAttribute("team", res);
 
+        Optional<league> league = leagueRepository.findById(team.get().getLeagueTeam());
         ArrayList<league> lg = new ArrayList<>();
         league.ifPresent(lg::add);
         model.addAttribute("league", lg);

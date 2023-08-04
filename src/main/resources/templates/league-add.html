@@ -13,8 +13,10 @@
   <form action="/league/add" method="post">
     <span>Введите название лиги: </span>
     <input type="text" name="name_league" class="form-control"><br>
-    <span>Введите страну лиги: </span>
-    <input type="text" name="country_league" class="form-control"><br>
+    <span>Выберите страну лиги: </span>
+    <select size="15" name="country_league" class="form-control">
+      <option th:each="c : ${country}" th:value="${c.idCountry}" th:text="${c.nameCountry}"></option>
+    </select><br>
     <button type="submit" class="btn btn-light">Добавить лигу</button>
   </form>
 </div>
