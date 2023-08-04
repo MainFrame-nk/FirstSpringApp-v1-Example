@@ -1,10 +1,7 @@
 package nk.mframe.demo.controller;
 
 import nk.mframe.demo.dao.*;
-import nk.mframe.demo.model.coefficient_table;
-import nk.mframe.demo.model.event;
-import nk.mframe.demo.model.league;
-import nk.mframe.demo.model.team;
+import nk.mframe.demo.model.*;
 import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Controller
 public class CoefficientController {
@@ -49,6 +47,7 @@ public class CoefficientController {
         ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
        // ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
         FindCoefficients(matchesId);
+        System.out.println("Импорт успешно завершён! :)");
         return "redirect:/import/coefs";
     }
 
@@ -136,7 +135,7 @@ public class CoefficientController {
         return matchesId;
     }
 
-    public void FindCoefficients(StringBuilder response, Integer marketId, Long eventId) {
+    public void FindCoefficients(StringBuilder response, Integer marketId, Long eventId) throws InterruptedException {
         String[] str = response.toString().split("outcome_value");
         int bookmaker = 0;
         double coefficient_more = 0.0;
@@ -178,15 +177,16 @@ public class CoefficientController {
                         coefficient_more = FindValue(st, "13\":{\"value\":\"", "\",\"direction", false, true);
                         coefficient_less = FindValue(st, "14\":{\"value\":\"", "\",\"direction", true, true);
                     }
-                    coefAdd(eventId, bookmaker, marketId, outcome_value, coefficient_more);
-                    coefAdd(eventId, bookmaker, marketId, outcome_value, coefficient_less);
-                    System.out.println("Cтавка: " + outcome_value + " Букмекер: " + bookmaker + " КФ 1: " + coefficient_more + " КФ 2: " + coefficient_less);
+                    coefficientAdd(eventId, bookmaker, marketId, outcome_value, coefficient_more);
+                    Thread.sleep(5);
+                    coefficientAdd(eventId, bookmaker, marketId, outcome_value, coefficient_less);
                 }
             }
         }
     }
 
     public void FindCoefficients(ArrayList<Integer> matchId) throws IOException, InterruptedException {
+        Iterable<event> events = eventRepository.findAll();
         //https://odds.ru/api/event/table/rate?marketId=1&gameTypeId=2&gamePeriod=0&matchId=2279293&sport=1
 //        marketId=1 - 1Х2
 //                 3 - Фора
@@ -205,56 +205,75 @@ public class CoefficientController {
 //                            gamePeriod=0 - весь матч
 //                                       1 - 1 тайм
 //                                       2 - 2 тайм
+        boolean isFind;
         for (Integer mt: matchId) {
             for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
                 for (int marketId = 3; marketId < 7; marketId++) {
+                    isFind = false;
+                    for (event es : events) {
+                        if (es.getIdMatch().equals(mt) && es.getBettingLine() == 1 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                                es.getIdMatch().equals(mt) && es.getBettingLine() == 2 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                                es.getIdMatch().equals(mt) && es.getBettingLine() == 3 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                                es.getIdMatch().equals(mt) && es.getBettingLine() == 4 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod) {
+                            System.out.println("Такое событие уже существует в БД!");
+                            isFind = true;
+                            break;
+                        }
+                    }
+                    if (isFind) {
+                        continue;
+                    }
                     String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 2 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
                     StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
                     if (!response.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 2, marketId);
+                        event event = new event(mt, gamePeriod, 1, marketId);
                         eventRepository.save(event);
                         FindCoefficients(response, marketId, event.getIdEvent());
-                        System.out.println("gameTypeId=2 marketId= " + marketId);
-                        Thread.sleep(101);
+                        Thread.sleep(11);
                     }
                     String idMatchesGet2 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 8 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
                     StringBuilder response2 = ConnectSite(idMatchesGet2, "odds_info");
                     if (!response2.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 8, marketId);
+                        event event = new event(mt, gamePeriod, 2, marketId);
                         eventRepository.save(event);
                         FindCoefficients(response2, marketId, event.getIdEvent());
-                        System.out.println("gameTypeId=8 marketId= " + marketId);
-                        Thread.sleep(101);
+                        Thread.sleep(11);
                     }
                     String idMatchesGet3 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 12 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
                     StringBuilder response3 = ConnectSite(idMatchesGet3, "odds_info");
                     if (!response3.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 12, marketId);
+                        event event = new event(mt, gamePeriod, 3, marketId);
                         eventRepository.save(event);
                         FindCoefficients(response3, marketId, event.getIdEvent());
-                        System.out.println("gameTypeId=12 marketId= " + marketId);
-                        Thread.sleep(101);
+                        Thread.sleep(11);
                     }
                     String idMatchesGet4 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 13 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
                     StringBuilder response4 = ConnectSite(idMatchesGet4, "odds_info");
                     if (!response4.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 13, marketId);
+                        event event = new event(mt, gamePeriod, 4, marketId);
                         eventRepository.save(event);
                         FindCoefficients(response4, marketId, event.getIdEvent());
-                        System.out.println("gameTypeId=13 marketId= " + marketId);
-                        Thread.sleep(101);
+                        Thread.sleep(11);
                     }
                     String idMatchesGet5 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 14 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
                     StringBuilder response5 = ConnectSite(idMatchesGet5, "odds_info");
                     if (!response5.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 12, marketId);
+                        event event = new event(mt, gamePeriod, 5, marketId);
                         eventRepository.save(event);
                         FindCoefficients(response5, marketId, event.getIdEvent());
-                        System.out.println("gameTypeId=14 marketId= " + marketId);
-                        Thread.sleep(101);
+                        Thread.sleep(11);
                     }
-                    System.out.println("Коэффициенты матча id: " + mt + " успешно занесён в базу данных! Тайм: " + gamePeriod);
-                    Thread.sleep(101); // Задержка для безопасности потоков
+                    if (!response.toString().isEmpty() &&
+                            !response2.toString().isEmpty() &&
+                            !response3.toString().isEmpty() &&
+                            !response4.toString().isEmpty() &&
+                            !response5.toString().isEmpty()) {
+                        System.out.println("Коэффициенты матча id: " + mt + " успешно занесён в базу данных! Тайм: " + gamePeriod);
+                        Thread.sleep(11); // Задержка для безопасности потоков
+                    } else  {
+                        System.out.println("Коэффициенты матча id: " + mt + " не добавились в базу данных! Тайм: " + gamePeriod);
+                        Thread.sleep(11); // Задержка для безопасности потоков
+                    }
                 }
             }
         }
@@ -322,8 +341,9 @@ public class CoefficientController {
         return value;
     }
 
-    public void coefAdd(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficient) {
-        coefficient_table coef = new coefficient_table(idEvent, bookmakerId, outcomeId, outcomeValue, coefficient);
-        coefficientRepository.save(coef);
+    public void coefficientAdd(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficientValue) {
+        coefficient_table coefficient = new coefficient_table(idEvent, bookmakerId, outcomeId, outcomeValue, coefficientValue);
+        coefficientRepository.save(coefficient);
+        System.out.println("Линия: " + outcomeId + " " + outcomeValue + " Букмекер: " + bookmakerId + " КФ: " + coefficientValue + " успешно добавлена!");
     }
 }
