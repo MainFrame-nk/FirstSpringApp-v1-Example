@@ -47,9 +47,10 @@ public class CoefficientController {
 
     @PostMapping("/import/coefs")
     public String coefImport(@RequestParam String day_matches, Model model) throws IOException, InterruptedException {
-        ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
-       // ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
-        FindCoefficients(matchesId);
+        //ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
+        Scrapper(day_matches);
+        //ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
+        //FindCoefficients(matchesId);
         System.out.println("Импорт успешно завершён! :)");
         return "redirect:/import/coefs";
     }
@@ -109,26 +110,34 @@ public class CoefficientController {
         return findData;
     }
 
-    public void FindMatches(StringBuilder response) throws IOException {
-        response = new StringBuilder(response.substring(response.indexOf("ListMatchesFootball")));
+    public void Scrapper(String dayMathes) throws IOException {
+        StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMathes + "/","ListMatchesFootball\"");
         String start = "ournament";
         String end = "</a>";
+        String startTeam = "bt92PPZyA3Px";
+        String endTeam = "</b><img";
         String[] str = response.toString().split("/football/t");
         for (String mt : str) {
             //Поиск всех ссылок на матчи
             if (mt.contains(start)) {
-                if (mt.contains(end)) {
-                    String res;
-                    res = mt.substring(mt.indexOf(start), mt.indexOf(end));
+                if (mt.contains(end) && !mt.contains("Таблица")) {
+                    String res = mt.substring(mt.indexOf(start), mt.indexOf(end));
                     String star = "\">";
                     res = res.substring(res.indexOf(star) + 2);
                     String[] str2 = res.split("\\. ");
 
                     countryAdd(str2[0]);
-                    System.out.println(str2[0]);
 
                     leagueAdd(str2[1], str2[0]);
-                    System.out.println(str2[1]);
+
+                    String[] str3 = mt.split("bt92PPZyA3Px");
+                    for (String tm : str3) {
+                        if (tm.contains("5pX82PH4")) {
+                            String resHome = tm.substring(10, tm.indexOf(endTeam));
+                            System.out.println(resHome);
+                            teamAdd(resHome, str2[1], str2[0]);
+                        }
+                    }
                 }
             }
         }
@@ -377,33 +386,76 @@ public class CoefficientController {
 
     public void countryAdd(String nameCountry) {
         Iterable<country> countries = countryRepository.findAll();
+        boolean isFind = false;
         for (country cts : countries) {
-            if (!cts.getNameCountry().equals(nameCountry)) {
-                country country = new country(nameCountry);
-                countryRepository.save(country);
-                System.out.println("Страна: " + nameCountry + " успешно добавлена!");
-            } else {
-                System.out.println("Ошибка! Страна: " + nameCountry + " уже есть в базе данных!");
+            if (cts.getNameCountry().trim().equals(nameCountry.trim())) {
+                isFind = true;
+                break;
             }
+        }
+        if (!isFind) {
+            country country = new country(nameCountry);
+            countryRepository.save(country);
+            System.out.println("Страна: " + nameCountry + " успешно добавлена!");
+        } else {
+            System.out.println("Ошибка! Страна: " + nameCountry + " уже есть в базе данных!");
         }
     }
 
     public void leagueAdd(String nameLeague, String nameCountry) {
         Iterable<country> countries = countryRepository.findAll();
         Iterable<league> leagues = leagueRepository.findAll();
+        boolean isFind = false;
+        int idCountry = -1;
         for (country cts : countries) {
-            if (cts.getNameCountry().equals(nameCountry)) {
+            if (cts.getNameCountry().trim().equals(nameCountry.trim())) {
                 Optional<country> countryId = countryRepository.findById(cts.getIdCountry());
+                idCountry = countryId.get().getIdCountry();
                 for (league lgs : leagues) {
-                    if (!lgs.getNameLeague().equals(nameLeague)) {
-                        league league = new league(nameLeague, countryId.get().getIdCountry());
-                        leagueRepository.save(league);
-                        System.out.println("Лига: " + nameLeague + "[Страна: " + nameCountry + "] успешно добавлена!");
-                    } else {
-                        System.out.println("Ошибка! Лига: " + nameLeague + "[Страна: " + nameCountry + "] уже есть в базе данных!");
+                    if (lgs.getNameLeague().trim().equals(nameLeague.trim())) {
+                        isFind = true;
+                        break;
                     }
                 }
             }
+        }
+        if (!isFind) {
+            league league = new league(nameLeague, idCountry);
+            leagueRepository.save(league);
+            System.out.println("Лига: " + nameLeague + " [Страна: " + nameCountry + "] успешно добавлена!");
+        } else {
+            System.out.println("Ошибка! Лига: " + nameLeague + " [Страна: " + nameCountry + "] уже есть в базе данных!");
+        }
+    }
+
+    public void teamAdd(String nameTeam, String nameLeague, String nameCountry) {
+        Iterable<country> countries = countryRepository.findAll();
+        Iterable<league> leagues = leagueRepository.findAll();
+        Iterable<team> teams = teamRepository.findAll();
+        boolean isFind = false;
+        int idLeague = -1;
+        for (country cts : countries) {
+            if (cts.getNameCountry().trim().equals(nameCountry.trim())) {
+                for (league lgs : leagues) {
+                    if (lgs.getNameLeague().trim().equals(nameLeague.trim())) {
+                        Optional<league> leagueId = leagueRepository.findById(lgs.getIdLeague());
+                        idLeague = leagueId.get().getIdLeague();
+                        for (team tms : teams) {
+                            if (tms.getNameTeam().trim().equals(nameTeam.trim())) {
+                                isFind = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!isFind) {
+            team team = new team(nameTeam, idLeague, (byte) -1, (byte) -1);
+            teamRepository.save(team);
+            System.out.println("Клуб: " + nameTeam + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] успешно добавлена!");
+        } else {
+            System.out.println("Ошибка! Клуб: " + nameTeam + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
         }
     }
 }
