@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -130,12 +131,27 @@ public class CoefficientController {
 
                     leagueAdd(str2[1], str2[0]);
 
+                    String[] str4 = mt.split("HOzoqLwPT5hh");
+                    String[] str5 = mt.split("TsO2oIVMd9kb");
                     String[] str3 = mt.split("bt92PPZyA3Px");
                     for (String tm : str3) {
                         if (tm.contains("5pX82PH4")) {
                             String resHome = tm.substring(10, tm.indexOf(endTeam));
                             System.out.println(resHome);
                             teamAdd(resHome, str2[1], str2[0]);
+                            String resAway = tm.substring(10, tm.indexOf(endTeam));
+                            System.out.println(resAway);
+                            teamAdd(resHome, str2[1], str2[0]);
+                        }
+                    }
+                    for (String date : str4) {
+                        if (date.contains("EmBZhm2v")) {
+
+                        }
+                    }
+                    for (String time : str4) {
+                        if (time.contains("ad7gJlGW ")) {
+
                         }
                     }
                 }
@@ -456,6 +472,57 @@ public class CoefficientController {
             System.out.println("Клуб: " + nameTeam + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] успешно добавлена!");
         } else {
             System.out.println("Ошибка! Клуб: " + nameTeam + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
+        }
+    }
+
+    public void matchAdd(String dateM, String timeM, String nameTeamHome, String nameTeamAway, String nameLeague, String nameCountry) {
+        Iterable<country> countries = countryRepository.findAll();
+        Iterable<league> leagues = leagueRepository.findAll();
+        Iterable<team> teams = teamRepository.findAll();
+        Iterable<match_table> matches = matchRepository.findAll();
+        LocalDate dateMatch = LocalDate.parse(dateM);
+        LocalTime timeMatch = LocalTime.parse(timeM);
+        boolean isFind = false;
+        int idLeague = -1;
+        int idTeamHome = -1;
+        int idTeamAway = -1;
+        for (country cts : countries) {
+            if (cts.getNameCountry().trim().equals(nameCountry.trim())) {
+                for (league lgs : leagues) {
+                    if (lgs.getNameLeague().trim().equals(nameLeague.trim())) {
+                        Optional<league> leagueId = leagueRepository.findById(lgs.getIdLeague());
+                        idLeague = leagueId.get().getIdLeague();
+                        for (team tms : teams) {
+                            if (tms.getNameTeam().trim().equals(nameTeamHome.trim())) {
+                                Optional<team> teamHome = teamRepository.findById(tms.getIdTeam());
+                                idTeamHome = teamHome.get().getIdTeam();
+                            }
+                            if (tms.getNameTeam().trim().equals(nameTeamAway.trim())) {
+                                Optional<team> teamAway = teamRepository.findById(tms.getIdTeam());
+                                idTeamAway = teamAway.get().getIdTeam();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (match_table mts : matches) {
+            if (mts.getDateMatch().equals(dateMatch) && mts.getTimeMatch().equals(timeMatch) && mts.getTeamHome() == idTeamHome && mts.getTeamGuest() == idTeamAway) {
+                isFind = true;
+                break;
+            }
+        }
+        if (!isFind) {
+            match_table match = new match_table(idTeamHome, idTeamAway, dateMatch, timeMatch,0, 0, -1, 0, 0, -1, 0, 0, 0, 0,
+                    -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+                    0, 0, 0, 0, 0, -1, 0, 0, -1, 0,
+                    0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
+                    -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+                    0, 0, -1, 0, 0, -1);
+            matchRepository.save(match);
+            System.out.println("Матч" + dateMatch + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] успешно добавлен!");
+        } else {
+            System.out.println("Ошибка! Матч: " + dateMatch + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
         }
     }
 }
