@@ -49,9 +49,9 @@ public class ScrapperController {
     @PostMapping("/import/coefs")
     public String coefImport(@RequestParam String day_matches, Model model) throws IOException, InterruptedException {
         //ArrayList<String> todayMatches = FindMatches(day_matches); // Найти все доступные матчи на день
-        Scrapper(day_matches);
-        //ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
-        //FindCoefficients(matchesId);
+
+        ArrayList<Integer> matchesId = FindIdMatches(day_matches); // Найти все id на матчи на день
+        Scrapper(day_matches, matchesId);
         System.out.println("Импорт успешно завершён! :)");
         return "redirect:/import/coefs";
     }
@@ -111,13 +111,14 @@ public class ScrapperController {
         return findData;
     }
 
-    public void Scrapper(String dayMathes) throws IOException {
-        StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMathes + "/","ListMatchesFootball\"");
+    public void Scrapper(String dayMatches, ArrayList<Integer> marketId) throws IOException, InterruptedException {
+        StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMatches + "/","ListMatchesFootball\"");
         String start = "ournament";
         String end = "</a>";
         String startTeam = "bt92PPZyA3Px";
         String endTeam = "</b><img";
         String[] str = response.toString().split("/football/t");
+        int m = 0;
         for (String mt : str) {
             //Поиск всех ссылок на матчи
             if (mt.contains(start)) {
@@ -138,7 +139,6 @@ public class ScrapperController {
                         if (time.contains("EmBZhm2v")) {
                             if(time.contains(timeDateEnd)) {
                                 String timeMatch = time.substring(10, time.indexOf(timeDateEnd));
-                                System.out.println(timeMatch);
                                 timeMatches.add(timeMatch);
                             }
                         }
@@ -150,7 +150,6 @@ public class ScrapperController {
                         if (date.contains("ad7gJlGW ")) {
                             if(date.contains(timeDateEnd)) {
                                 String dateMatch = date.substring(11, date.indexOf(timeDateEnd));
-                                System.out.println(dateMatch);
                                 dateMatches.add(dateMatch);
                             }
                         }
@@ -162,7 +161,6 @@ public class ScrapperController {
                         if (tm.contains("5pX82PH4")) {
                             if (tm.contains(endTeam)) {
                                 String team = tm.substring(10, tm.indexOf(endTeam));
-                                System.out.println(team);
                                 teamAdd(team, str2[1], str2[0]);
                                 teamsMatches.add(team);
                             }
@@ -170,8 +168,10 @@ public class ScrapperController {
                     }
                     int j = 0;
                     for (int i = 0; i != timeMatches.size(); i++) {
-                        matchAdd(dateMatches.get(i), timeMatches.get(i), teamsMatches.get(j), teamsMatches.get(j + 1), str2[1], str2[0]);
+                        matchAdd(dateMatches.get(i), timeMatches.get(i), teamsMatches.get(j), teamsMatches.get(j + 1), str2[1], str2[0], marketId.get(m));
+                        System.out.println(marketId.get(m));
                         j += 2;
+                        m++;
                     }
                 }
             }
@@ -207,7 +207,7 @@ public class ScrapperController {
         return matchesId;
     }
 
-    public void FindCoefficients(StringBuilder response, Integer marketId, Long eventId) throws InterruptedException {
+    private void FindCoefficients(StringBuilder response, Integer marketId, Long eventId) throws InterruptedException {
         String[] str = response.toString().split("outcome_value");
         int bookmaker = 0;
         double coefficient_more = 0.0;
@@ -257,7 +257,7 @@ public class ScrapperController {
         }
     }
 
-    public void FindCoefficients(ArrayList<Integer> matchId) throws IOException, InterruptedException {
+    private void FindCoefficients(Integer matchId, Integer mtId) throws IOException, InterruptedException {
         Iterable<event> events = eventRepository.findAll();
         //https://odds.ru/api/event/table/rate?marketId=1&gameTypeId=2&gamePeriod=0&matchId=2279293&sport=1
 //        marketId=1 - 1Х2
@@ -278,74 +278,72 @@ public class ScrapperController {
 //                                       1 - 1 тайм
 //                                       2 - 2 тайм
         boolean isFind;
-        for (Integer mt: matchId) {
-            for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
-                for (int marketId = 3; marketId < 7; marketId++) {
-                    isFind = false;
-                    for (event es : events) {
-                        if (es.getIdMatch().equals(mt) && es.getBettingLine() == 1 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
-                                es.getIdMatch().equals(mt) && es.getBettingLine() == 2 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
-                                es.getIdMatch().equals(mt) && es.getBettingLine() == 3 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
-                                es.getIdMatch().equals(mt) && es.getBettingLine() == 4 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod) {
-                            System.out.println("Такое событие уже существует в БД!");
-                            isFind = true;
-                            break;
-                        }
+        for (byte gamePeriod = 0; gamePeriod < 3; gamePeriod++) {
+            for (int marketId = 3; marketId < 7; marketId++) {
+                isFind = false;
+                for (event es : events) {
+                    if (es.getIdMatch().equals(mtId) && es.getBettingLine() == 1 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                            es.getIdMatch().equals(mtId) && es.getBettingLine() == 2 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                            es.getIdMatch().equals(mtId) && es.getBettingLine() == 3 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod ||
+                            es.getIdMatch().equals(mtId) && es.getBettingLine() == 4 && es.getOccasion() == marketId && es.getGamePeriod() == gamePeriod) {
+                        System.out.println("Такое событие уже существует в БД!");
+                        isFind = true;
+                        break;
                     }
-                    if (isFind) {
-                        continue;
-                    }
-                    String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 2 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
-                    StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
-                    if (!response.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 1, marketId);
-                        eventRepository.save(event);
-                        FindCoefficients(response, marketId, event.getIdEvent());
-                        Thread.sleep(11);
-                    }
-                    String idMatchesGet2 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 8 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
-                    StringBuilder response2 = ConnectSite(idMatchesGet2, "odds_info");
-                    if (!response2.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 2, marketId);
-                        eventRepository.save(event);
-                        FindCoefficients(response2, marketId, event.getIdEvent());
-                        Thread.sleep(11);
-                    }
-                    String idMatchesGet3 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 12 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
-                    StringBuilder response3 = ConnectSite(idMatchesGet3, "odds_info");
-                    if (!response3.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 3, marketId);
-                        eventRepository.save(event);
-                        FindCoefficients(response3, marketId, event.getIdEvent());
-                        Thread.sleep(11);
-                    }
-                    String idMatchesGet4 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 13 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
-                    StringBuilder response4 = ConnectSite(idMatchesGet4, "odds_info");
-                    if (!response4.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 4, marketId);
-                        eventRepository.save(event);
-                        FindCoefficients(response4, marketId, event.getIdEvent());
-                        Thread.sleep(11);
-                    }
-                    String idMatchesGet5 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 14 + "&gamePeriod=" + gamePeriod + "&matchId=" + mt + "&sport=1";
-                    StringBuilder response5 = ConnectSite(idMatchesGet5, "odds_info");
-                    if (!response5.toString().isEmpty()) {
-                        event event = new event(mt, gamePeriod, 5, marketId);
-                        eventRepository.save(event);
-                        FindCoefficients(response5, marketId, event.getIdEvent());
-                        Thread.sleep(11);
-                    }
-                    if (!response.toString().isEmpty() &&
-                            !response2.toString().isEmpty() &&
-                            !response3.toString().isEmpty() &&
-                            !response4.toString().isEmpty() &&
-                            !response5.toString().isEmpty()) {
-                        System.out.println("Коэффициенты матча id: " + mt + " успешно занесён в базу данных! Тайм: " + gamePeriod);
-                        Thread.sleep(11); // Задержка для безопасности потоков
-                    } else  {
-                        System.out.println("Коэффициенты матча id: " + mt + " не добавились в базу данных! Тайм: " + gamePeriod);
-                        Thread.sleep(11); // Задержка для безопасности потоков
-                    }
+                }
+                if (isFind) {
+                    continue;
+                }
+                String idMatchesGet = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 2 + "&gamePeriod=" + gamePeriod + "&matchId=" + matchId + "&sport=1";
+                StringBuilder response = ConnectSite(idMatchesGet, "odds_info");
+                if (!response.toString().isEmpty()) {
+                    event event = new event(mtId, gamePeriod, 1, marketId);
+                    eventRepository.save(event);
+                    FindCoefficients(response, marketId, event.getIdEvent());
+                    Thread.sleep(11);
+                }
+                String idMatchesGet2 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 8 + "&gamePeriod=" + gamePeriod + "&matchId=" + matchId + "&sport=1";
+                StringBuilder response2 = ConnectSite(idMatchesGet2, "odds_info");
+                if (!response2.toString().isEmpty()) {
+                    event event = new event(mtId, gamePeriod, 2, marketId);
+                    eventRepository.save(event);
+                    FindCoefficients(response2, marketId, event.getIdEvent());
+                    Thread.sleep(11);
+                }
+                String idMatchesGet3 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 12 + "&gamePeriod=" + gamePeriod + "&matchId=" + matchId + "&sport=1";
+                StringBuilder response3 = ConnectSite(idMatchesGet3, "odds_info");
+                if (!response3.toString().isEmpty()) {
+                    event event = new event(mtId, gamePeriod, 3, marketId);
+                    eventRepository.save(event);
+                    FindCoefficients(response3, marketId, event.getIdEvent());
+                    Thread.sleep(11);
+                }
+                String idMatchesGet4 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 13 + "&gamePeriod=" + gamePeriod + "&matchId=" + matchId + "&sport=1";
+                StringBuilder response4 = ConnectSite(idMatchesGet4, "odds_info");
+                if (!response4.toString().isEmpty()) {
+                    event event = new event(mtId, gamePeriod, 4, marketId);
+                    eventRepository.save(event);
+                    FindCoefficients(response4, marketId, event.getIdEvent());
+                    Thread.sleep(11);
+                }
+                String idMatchesGet5 = "https://odds.ru/api/event/table/rate?marketId=" + marketId + "&gameTypeId=" + 14 + "&gamePeriod=" + gamePeriod + "&matchId=" + matchId + "&sport=1";
+                StringBuilder response5 = ConnectSite(idMatchesGet5, "odds_info");
+                if (!response5.toString().isEmpty()) {
+                    event event = new event(mtId, gamePeriod, 5, marketId);
+                    eventRepository.save(event);
+                    FindCoefficients(response5, marketId, event.getIdEvent());
+                    Thread.sleep(11);
+                }
+                if (!response.toString().isEmpty() &&
+                        !response2.toString().isEmpty() &&
+                        !response3.toString().isEmpty() &&
+                        !response4.toString().isEmpty() &&
+                        !response5.toString().isEmpty()) {
+                    System.out.println("Коэффициенты матча id: " + mtId + " успешно занесён в базу данных! Тайм: " + gamePeriod);
+                    Thread.sleep(11); // Задержка для безопасности потоков
+                } else  {
+                    System.out.println("Коэффициенты матча id: " + mtId + " не добавились в базу данных! Тайм: " + gamePeriod);
+                    Thread.sleep(11); // Задержка для безопасности потоков
                 }
             }
         }
@@ -494,7 +492,7 @@ public class ScrapperController {
         }
     }
 
-    public void matchAdd(String dateM, String timeM, String nameTeamHome, String nameTeamAway, String nameLeague, String nameCountry) {
+    public void matchAdd(String dateM, String timeM, String nameTeamHome, String nameTeamAway, String nameLeague, String nameCountry, Integer marketId) throws IOException, InterruptedException {
         Iterable<country> countries = countryRepository.findAll();
         Iterable<league> leagues = leagueRepository.findAll();
         Iterable<team> teams = teamRepository.findAll();
@@ -541,9 +539,10 @@ public class ScrapperController {
                     -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
                     0, 0, -1, 0, 0, -1);
             matchRepository.save(match);
+            FindCoefficients(marketId, match.getIdMatch());
             System.out.println("Матч" + dateMatch + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] успешно добавлен!");
         } else {
-            System.out.println("Ошибка! Матч: " + dateMatch + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
+            System.out.println("Ошибка! Матч: " + dateMatch + " " + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
         }
     }
 }

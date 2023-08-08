@@ -15,7 +15,7 @@ public class match_table implements Comparable<match_table> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_table_seq")
     @SequenceGenerator(name="match_table_seq", sequenceName="SEQ_MATCH_TABLE")
     @Column(name = "idMatch", nullable = false)
-    private Long idMatch;
+    private Integer idMatch;
 
     private int teamHome;
 
@@ -54,11 +54,11 @@ public class match_table implements Comparable<match_table> {
     private Integer foulFirstHalfHome, foulSecondHalfHome, foulExtraTimeHome;
     private Integer foulFirstHalfGuest, foulSecondHalfGuest, foulExtraTimeGuest;
 
-    public Long getIdMatch() {
+    public Integer getIdMatch() {
         return idMatch;
     }
 
-    public void setIdMatch(Long id) {
+    public void setIdMatch(Integer id) {
         this.idMatch = id;
     }
 

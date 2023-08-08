@@ -79,7 +79,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/0")
-    public String matchDetailsMatch(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchDetailsMatch(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -101,7 +101,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/1")
-    public String matchDetailsFirst(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchDetailsFirst(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -123,7 +123,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/2")
-    public String matchDetailsSecond(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchDetailsSecond(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -145,7 +145,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/3")
-    public String matchDetailsExtra(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchDetailsExtra(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -167,7 +167,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/edit/0")
-    public String matchEditMatch(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchEditMatch(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -182,7 +182,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/edit/1")
-    public String matchEditFirst(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchEditFirst(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -195,7 +195,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/edit/2")
-    public String matchEditSecond(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchEditSecond(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -208,7 +208,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{id}/edit/3")
-    public String matchEditExtra(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchEditExtra(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }
@@ -221,7 +221,7 @@ public class MatchController {
     }
 
     @PostMapping("/match/{id}/edit/0")
-    public String matchUpdateMatch(@PathVariable(value = "id") long idMatch, @RequestParam int team_home, @RequestParam int team_guest,
+    public String matchUpdateMatch(@PathVariable(value = "id") int idMatch, @RequestParam int team_home, @RequestParam int team_guest,
                               @RequestParam String date_match,
                               @RequestParam String time_match,
                               @RequestParam int score_home,
@@ -349,7 +349,7 @@ public class MatchController {
     }
 
     @PostMapping("/match/{id}/edit/1")
-    public String matchUpdateFirst(@PathVariable(value = "id") long idMatch,
+    public String matchUpdateFirst(@PathVariable(value = "id") int idMatch,
                               @RequestParam int shot_first_half_home,
                               @RequestParam int shot_first_half_guest,
                               @RequestParam int possession_first_half_home,
@@ -393,7 +393,7 @@ public class MatchController {
     }
 
     @PostMapping("/match/{id}/edit/2")
-    public String matchUpdateSecond(@PathVariable(value = "id") long idMatch,
+    public String matchUpdateSecond(@PathVariable(value = "id") int idMatch,
                               @RequestParam int shot_second_half_home,
                               @RequestParam int shot_second_half_guest,
                               @RequestParam int possession_second_half_home,
@@ -437,7 +437,7 @@ public class MatchController {
     }
 
     @PostMapping("/match/{id}/edit/3")
-    public String matchUpdateExtra(@PathVariable(value = "id") long idMatch,
+    public String matchUpdateExtra(@PathVariable(value = "id") int idMatch,
                               @RequestParam int shot_extra_half_home,
                               @RequestParam int shot_extra_half_guest,
                               @RequestParam int possession_extra_half_home,
@@ -481,14 +481,14 @@ public class MatchController {
     }
 
     @PostMapping("/match/{id}/delete")
-    public String matchDelete(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchDelete(@PathVariable(value = "id") int idMatch, Model model) {
         match_table match = matchRepository.findById(idMatch).orElseThrow(RuntimeException::new);
         matchRepository.delete(match);
         return "redirect:/match";
     }
 
     @GetMapping("/match/{id}/analysis")
-    public String matchAnalisys(@PathVariable(value = "id") long idMatch, Model model) {
+    public String matchAnalisys(@PathVariable(value = "id") int idMatch, Model model) {
         if(!matchRepository.existsById(idMatch)) {
             return "redirect:/match";
         }

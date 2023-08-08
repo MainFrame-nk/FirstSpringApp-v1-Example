@@ -15,10 +15,8 @@
   <a href="/team/add" class="btn btn-light">Добавить клуб</a>
   <a href="/match/add" class="btn btn-light">Добавить матч</a>
   <a href="/season/add" class="btn btn-light">Добавить сезон</a><br><br>
-  <div th:each="l : ${league}">
-      <div th:each="c : ${country}">
-          <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}"  th:text="${c.nameCountry}" class="btn btn-light"></a><br><br>
-      </div>
+  <div th:each="l, itemStat : ${league}">
+      <a th:href="'/season/' + ${l.countryLeague} + '/' + ${l.nameLeague}" th:each="c : ${country[__${itemStat.index}__]}" th:text="${c.nameCountry}" class="btn btn-light"></a><br><br>
   </div>
   <h1>Импорт данных</h1>
   <form method="post">

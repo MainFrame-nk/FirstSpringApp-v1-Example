@@ -26,7 +26,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -395,46 +394,11 @@ public class AdminController {
     }
     public int parseTeam(String team) {
         int idTeam = -1;
-        if (Objects.equals(team, "Арсенал")) {
-            idTeam = 1;
-        } else if (Objects.equals(team, "Вулверхэмптон")){
-            idTeam = 13;
-        } else if (Objects.equals(team, "Брайтон")){
-            idTeam = 8;
-        } else if (Objects.equals(team, "Саутгемптон")){
-            idTeam = 58;
-        } else if (Objects.equals(team, "Лидс")){
-            idTeam = 158;
-        } else if (Objects.equals(team, "Челси")){
-            idTeam = 6;
-        } else if (Objects.equals(team, "Кристал Пэлас")){
-            idTeam = 12;
-        } else if (Objects.equals(team, "Борнмут")){
-            idTeam = 16;
-        } else if (Objects.equals(team, "Эвертон")){
-            idTeam = 15;
-        } else if (Objects.equals(team, "Манчестер Сити")){
-            idTeam = 2;
-        } else if (Objects.equals(team, "Брентфорд")){
-            idTeam = 10;
-        } else if (Objects.equals(team, "Манчестер Юнайтед")){
-            idTeam = 3;
-        } else if (Objects.equals(team, "Ньюкасл Юнайтед")){
-            idTeam = 5;
-        } else if (Objects.equals(team, "Вест Хэм")){
-            idTeam = 14;
-        } else if (Objects.equals(team, "Ноттингем Форест")){
-            idTeam = 17;
-        } else if (Objects.equals(team, "Ливерпуль")){
-            idTeam = 4;
-        } else if (Objects.equals(team, "Астон Вилла")){
-            idTeam = 9;
-        } else if (Objects.equals(team, "Тоттенхэм")){
-            idTeam = 7;
-        } else if (Objects.equals(team, "Фулхэм")){
-            idTeam = 11;
-        } else if (Objects.equals(team, "Лестер")){
-            idTeam = 153;
+        Iterable<team> teams = teamRepository.findAll();
+        for (team tm : teams) {
+            if (tm.getNameTeam().equals(team)) {
+                idTeam = tm.getIdTeam();
+            }
         }
         Optional<team> teamM = teamRepository.findById(idTeam);
         if(!teamRepository.existsById(idTeam)) {
