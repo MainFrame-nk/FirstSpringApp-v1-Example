@@ -2,7 +2,6 @@ package nk.mframe.demo.controller;
 
 import nk.mframe.demo.dao.*;
 import nk.mframe.demo.model.*;
-import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +16,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
-public class CoefficientController {
+public class ScrapperController {
 
     @Autowired
     private LeagueRepository leagueRepository;
@@ -131,28 +131,47 @@ public class CoefficientController {
 
                     leagueAdd(str2[1], str2[0]);
 
-                    String[] str4 = mt.split("HOzoqLwPT5hh");
-                    String[] str5 = mt.split("TsO2oIVMd9kb");
-                    String[] str3 = mt.split("bt92PPZyA3Px");
-                    for (String tm : str3) {
-                        if (tm.contains("5pX82PH4")) {
-                            String resHome = tm.substring(10, tm.indexOf(endTeam));
-                            System.out.println(resHome);
-                            teamAdd(resHome, str2[1], str2[0]);
-                            String resAway = tm.substring(10, tm.indexOf(endTeam));
-                            System.out.println(resAway);
-                            teamAdd(resHome, str2[1], str2[0]);
+                    ArrayList<String> timeMatches = new ArrayList<>();
+                    String timeDateEnd = "</div><div";
+                    String[] str3 = mt.split("HOzoqLwPT5hh");
+                    for (String time : str3) {
+                        if (time.contains("EmBZhm2v")) {
+                            if(time.contains(timeDateEnd)) {
+                                String timeMatch = time.substring(10, time.indexOf(timeDateEnd));
+                                System.out.println(timeMatch);
+                                timeMatches.add(timeMatch);
+                            }
                         }
                     }
+
+                    ArrayList<String> dateMatches = new ArrayList<>();
+                    String[] str4 = mt.split("TsO2oIVMd9kb");
                     for (String date : str4) {
-                        if (date.contains("EmBZhm2v")) {
-
+                        if (date.contains("ad7gJlGW ")) {
+                            if(date.contains(timeDateEnd)) {
+                                String dateMatch = date.substring(11, date.indexOf(timeDateEnd));
+                                System.out.println(dateMatch);
+                                dateMatches.add(dateMatch);
+                            }
                         }
                     }
-                    for (String time : str4) {
-                        if (time.contains("ad7gJlGW ")) {
 
+                    ArrayList<String> teamsMatches = new ArrayList<>();
+                    String[] str5 = mt.split("bt92PPZyA3Px");
+                    for (String tm : str5) {
+                        if (tm.contains("5pX82PH4")) {
+                            if (tm.contains(endTeam)) {
+                                String team = tm.substring(10, tm.indexOf(endTeam));
+                                System.out.println(team);
+                                teamAdd(team, str2[1], str2[0]);
+                                teamsMatches.add(team);
+                            }
                         }
+                    }
+                    int j = 0;
+                    for (int i = 0; i != timeMatches.size(); i++) {
+                        matchAdd(dateMatches.get(i), timeMatches.get(i), teamsMatches.get(j), teamsMatches.get(j + 1), str2[1], str2[0]);
+                        j += 2;
                     }
                 }
             }
@@ -480,18 +499,20 @@ public class CoefficientController {
         Iterable<league> leagues = leagueRepository.findAll();
         Iterable<team> teams = teamRepository.findAll();
         Iterable<match_table> matches = matchRepository.findAll();
-        LocalDate dateMatch = LocalDate.parse(dateM);
+
+        LocalDate current_date = LocalDate.now();
+        int current_Year = current_date.getYear();
+        dateM += "." + current_Year;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate dateMatch = LocalDate.parse(dateM, dateFormatter);
         LocalTime timeMatch = LocalTime.parse(timeM);
         boolean isFind = false;
-        int idLeague = -1;
         int idTeamHome = -1;
         int idTeamAway = -1;
         for (country cts : countries) {
             if (cts.getNameCountry().trim().equals(nameCountry.trim())) {
                 for (league lgs : leagues) {
                     if (lgs.getNameLeague().trim().equals(nameLeague.trim())) {
-                        Optional<league> leagueId = leagueRepository.findById(lgs.getIdLeague());
-                        idLeague = leagueId.get().getIdLeague();
                         for (team tms : teams) {
                             if (tms.getNameTeam().trim().equals(nameTeamHome.trim())) {
                                 Optional<team> teamHome = teamRepository.findById(tms.getIdTeam());
