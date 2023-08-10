@@ -611,6 +611,26 @@ public class match_table implements Comparable<match_table> {
 
     @Override
     public int compareTo(match_table o) {
-        return o.getDateMatch().compareTo(this.getDateMatch());
+        int res = o.getDateMatch().compareTo(this.getDateMatch());
+        if (res == 0) {
+            res = o.getTimeMatch().compareTo(this.getTimeMatch());
+            if (res == 0) {
+                res = o.getIdMatch().compareTo(this.getIdMatch());
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return "match_table{" +
+                "idMatch=" + idMatch +
+                ", teamHome=" + teamHome +
+                ", teamGuest=" + teamGuest +
+                ", scoreHome=" + scoreHome +
+                ", scoreGuest=" + scoreGuest +
+                ", dateMatch=" + dateMatch +
+                ", timeMatch=" + timeMatch +
+                '}';
     }
 }

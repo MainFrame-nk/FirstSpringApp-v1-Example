@@ -33,26 +33,23 @@ public class MatchController {
     public String matchMain(Model model) {
         Iterable<match_table> matches = matchRepository.findAll();
         ArrayList<match_table> allMatches = new ArrayList<>();
+        ArrayList<team> th = new ArrayList<>();
+        ArrayList<team> tg = new ArrayList<>();
         for (match_table mt : matches) {
             if (LocalDate.now().equals(mt.getDateMatch())) {
                 Optional<match_table> todayMatch = matchRepository.findById(mt.getIdMatch());
 
                 todayMatch.ifPresent(allMatches::add);
                 model.addAttribute("match", allMatches);
+
+                Optional<team> team_home = teamRepository.findById(mt.getTeamHome());
+                Optional<team> team_guest = teamRepository.findById(mt.getTeamGuest());
+
+                team_home.ifPresent(th::add);
+                team_guest.ifPresent(tg::add);
+                model.addAttribute("team_home", th);
+                model.addAttribute("team_guest", tg);
             }
-
-        }
-
-        ArrayList<team> th = new ArrayList<>();
-        ArrayList<team> tg = new ArrayList<>();
-        for (match_table mt : matches) {
-            Optional<team> team_home = teamRepository.findById(mt.getTeamHome());
-            Optional<team> team_guest = teamRepository.findById(mt.getTeamGuest());
-
-            team_home.ifPresent(th::add);
-            team_guest.ifPresent(tg::add);
-            model.addAttribute("team_home", th);
-            model.addAttribute("team_guest", tg);
         }
         return "match-index";
     }
@@ -523,6 +520,8 @@ public class MatchController {
         }
         ArrayList<match_table> lastMatchesHomeTeam = new ArrayList<>();
         ArrayList<match_table> lastMatchesHomeTeambyLevel = new ArrayList<>();
+        ArrayList<team> lastMatchesHomeTeamHName = new ArrayList<>();
+        ArrayList<team> lastMatchesHomeTeamGName = new ArrayList<>();
         int i = 0;
         int j = Math.min(mt.size(), 9);
 //        while(lastMatchesHomeTeam.size() != 10) { -- лучшее решение
@@ -540,23 +539,23 @@ public class MatchController {
 
                 if (teamHome.get().getLevelTeam() == byLevelGuest.get().getLevelTeam()) {
                     Optional<match_table> lvlh = matchRepository.findById(mt.get(i).getIdMatch());
+                    Optional<team> team_home = teamRepository.findById(mt.get(i).getTeamHome());
+                    Optional<team> team_guest = teamRepository.findById(mt.get(i).getTeamGuest());
 
+                    team_home.ifPresent(lastMatchesHomeTeamHName::add);
+                    team_guest.ifPresent(lastMatchesHomeTeamGName::add);
                     lvlh.ifPresent(lastMatchesHomeTeambyLevel::add);
                     model.addAttribute("level_home", lastMatchesHomeTeambyLevel);
+                    model.addAttribute("home_table_home_level", lastMatchesHomeTeamHName);
+                    model.addAttribute("home_table_guest_level", lastMatchesHomeTeamGName);
                 }
             }
-//            else if (match.get().getDateMatch().compareTo(mt.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
-//                if (match.get().getTimeMatch().compareTo(mt.get(i).getTimeMatch()) > 0) {
-//                    Optional<match_table> mat = matchRepository.findById(mt.get(i).getIdMatch());
-//
-//                    mat.ifPresent(lastMatchesHomeTeam::add);
-//                    model.addAttribute("last_home", lastMatchesHomeTeam);
-//                }
-//            }
             i++;
         }
         ArrayList<match_table> lastMatchesGuestTeam = new ArrayList<>();
         ArrayList<match_table> lastMatchesGuestTeambyLevel = new ArrayList<>();
+        ArrayList<team> lastMatchesGuestTeamHName = new ArrayList<>();
+        ArrayList<team> lastMatchesGuestTeamGName = new ArrayList<>();
         i = 0;
         j = Math.min(mg.size(), 9);
         while(i != j) {
@@ -570,19 +569,17 @@ public class MatchController {
 
                 if (teamGuest.get().getLevelTeam() == byLevelHome.get().getLevelTeam()) {
                     Optional<match_table> lvlg = matchRepository.findById(mg.get(i).getIdMatch());
+                    Optional<team> team_home = teamRepository.findById(mt.get(i).getTeamHome());
+                    Optional<team> team_guest = teamRepository.findById(mt.get(i).getTeamGuest());
 
+                    team_home.ifPresent(lastMatchesGuestTeamHName::add);
+                    team_guest.ifPresent(lastMatchesGuestTeamGName::add);
                     lvlg.ifPresent(lastMatchesGuestTeambyLevel::add);
                     model.addAttribute("level_guest", lastMatchesGuestTeambyLevel);
+                    model.addAttribute("guest_table_home_level", lastMatchesGuestTeamHName);
+                    model.addAttribute("guest_table_guest_level", lastMatchesGuestTeamGName);
                 }
             }
-//            else if (match.get().getDateMatch().compareTo(mg.get(i).getDateMatch()) == 0) { // compareTo Time нужно переопределить
-//                if (match.get().getTimeMatch().compareTo(mg.get(i).getTimeMatch()) > 0) {
-//                    Optional<match_table> mat = matchRepository.findById(mg.get(i).getIdMatch());
-//
-//                    mat.ifPresent(lastMatchesGuestTeam::add);
-//                    model.addAttribute("last_guest", lastMatchesGuestTeam);
-//                }
-//            }
             i++;
         }
 
@@ -631,25 +628,32 @@ public class MatchController {
             model.addAttribute("home_table_home", th);
             model.addAttribute("home_table_guest", tg);
         }
-        model.addAttribute("shots_home_stat_table_home", shots_home / lastMatchesHomeTeam.size());
-        model.addAttribute("shots_away_stat_table_home", shots_away / lastMatchesHomeTeam.size());
-        model.addAttribute("possession_home_stat_table_home", possession_home / lastMatchesHomeTeam.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
-        model.addAttribute("possession_away_stat_table_home", possession_away / lastMatchesHomeTeam.size());
-        model.addAttribute("shots_on_target_home_stat_table_home", shots_on_target_home / lastMatchesHomeTeam.size());
-        model.addAttribute("shots_on_target_away_stat_table_home", shots_on_target_away / lastMatchesHomeTeam.size());
-        model.addAttribute("corners_home_stat_table_home", corners_home / lastMatchesHomeTeam.size());
-        model.addAttribute("corners_away_stat_table_home", corners_away / lastMatchesHomeTeam.size());
+        model.addAttribute("shots_home_stat_table_home", String.format("%.2f", shots_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("shots_away_stat_table_home", String.format("%.2f", shots_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("shots_away_stat_table_home_all", String.format("%.2f", shots_home / lastMatchesHomeTeam.size() + shots_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("possession_home_stat_table_home", String.format("%.0f", possession_home / lastMatchesHomeTeam.size() / 2));
+        model.addAttribute("possession_away_stat_table_home", String.format("%.0f", possession_away / lastMatchesHomeTeam.size() / 2));
+        model.addAttribute("shots_on_target_home_stat_table_home", String.format("%.2f", shots_on_target_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("shots_on_target_away_stat_table_home", String.format("%.2f", shots_on_target_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("shots_on_target_away_stat_table_home_all", String.format("%.2f", shots_on_target_home / lastMatchesHomeTeam.size() + shots_on_target_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("corners_home_stat_table_home", String.format("%.2f", corners_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("corners_away_stat_table_home", String.format("%.2f", corners_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("corners_away_stat_table_home_all", String.format("%.2f", corners_home / lastMatchesHomeTeam.size() + corners_away / lastMatchesHomeTeam.size()));
         model.addAttribute("yellow_card_home_stat_table_home", String.format("%.2f", yellow_card_home / lastMatchesHomeTeam.size()));
         model.addAttribute("yellow_card_away_stat_table_home", String.format("%.2f", yellow_card_away / lastMatchesHomeTeam.size()));
         model.addAttribute("yellow_card_away_stat_table_home_all", String.format("%.2f", yellow_card_home / lastMatchesHomeTeam.size() + yellow_card_away / lastMatchesHomeTeam.size()));
-        model.addAttribute("red_card_home_stat_table_home", red_card_home / lastMatchesHomeTeam.size());
-        model.addAttribute("red_card_away_stat_table_home", red_card_away / lastMatchesHomeTeam.size());
-        model.addAttribute("free_kicks_home_stat_table_home", free_kicks_home / lastMatchesHomeTeam.size());
-        model.addAttribute("free_kicks_away_stat_table_home", free_kicks_away / lastMatchesHomeTeam.size());
-        model.addAttribute("offsides_home_stat_table_home", offsides_home / lastMatchesHomeTeam.size());
-        model.addAttribute("offsides_away_stat_table_home", offsides_away / lastMatchesHomeTeam.size());
-        model.addAttribute("fouls_home_stat_table_home", fouls_home / lastMatchesHomeTeam.size());
-        model.addAttribute("fouls_away_stat_table_home", fouls_away / lastMatchesHomeTeam.size());
+        model.addAttribute("red_card_home_stat_table_home", String.format("%.2f", red_card_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("red_card_away_stat_table_home", String.format("%.2f", red_card_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("red_card_away_stat_table_home_all", String.format("%.2f", red_card_home / lastMatchesHomeTeam.size() + red_card_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("free_kicks_home_stat_table_home", String.format("%.2f", free_kicks_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("free_kicks_away_stat_table_home", String.format("%.2f", free_kicks_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("free_kicks_away_stat_table_home_all", String.format("%.2f", free_kicks_home / lastMatchesHomeTeam.size() + free_kicks_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("offsides_home_stat_table_home", String.format("%.2f", offsides_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("offsides_away_stat_table_home", String.format("%.2f", offsides_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("offsides_home_stat_table_home_all", String.format("%.2f", offsides_home / lastMatchesHomeTeam.size() + offsides_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("fouls_home_stat_table_home", String.format("%.2f", fouls_home / lastMatchesHomeTeam.size()));
+        model.addAttribute("fouls_away_stat_table_home", String.format("%.2f", fouls_away / lastMatchesHomeTeam.size()));
+        model.addAttribute("fouls_home_stat_table_home_all", String.format("%.2f", fouls_home / lastMatchesHomeTeam.size() + fouls_away / lastMatchesHomeTeam.size()));
 
 
         ArrayList<team> th2 = new ArrayList<>();
@@ -691,25 +695,32 @@ public class MatchController {
             model.addAttribute("guest_table_home", th2);
             model.addAttribute("guest_table_guest", tg2);
         }
-        model.addAttribute("shots_home_stat_table_away", shots_home / lastMatchesGuestTeam.size());
-        model.addAttribute("shots_away_stat_table_away", shots_away / lastMatchesGuestTeam.size());
-        model.addAttribute("possession_home_stat_table_away", possession_home / lastMatchesGuestTeam.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
-        model.addAttribute("possession_away_stat_table_away", possession_away / lastMatchesGuestTeam.size());
-        model.addAttribute("shots_on_target_home_stat_table_away", shots_on_target_home / lastMatchesGuestTeam.size());
-        model.addAttribute("shots_on_target_away_stat_table_away", shots_on_target_away / lastMatchesGuestTeam.size());
-        model.addAttribute("corners_home_stat_table_away", corners_home / lastMatchesGuestTeam.size());
-        model.addAttribute("corners_away_stat_table_away", corners_away / lastMatchesGuestTeam.size());
+        model.addAttribute("shots_home_stat_table_away", String.format("%.2f",shots_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("shots_away_stat_table_away", String.format("%.2f",shots_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("shots_away_stat_table_away_all", String.format("%.2f", shots_home / lastMatchesGuestTeam.size() + shots_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("possession_home_stat_table_away", String.format("%.0f",possession_home / lastMatchesGuestTeam.size() / 2));
+        model.addAttribute("possession_away_stat_table_away", String.format("%.0f",possession_away / lastMatchesGuestTeam.size() / 2));
+        model.addAttribute("shots_on_target_home_stat_table_away", String.format("%.2f",shots_on_target_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("shots_on_target_away_stat_table_away", String.format("%.2f",shots_on_target_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("shots_on_target_away_stat_table_away_all", String.format("%.2f", shots_on_target_home / lastMatchesGuestTeam.size() + shots_on_target_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("corners_home_stat_table_away", String.format("%.2f", corners_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("corners_away_stat_table_away", String.format("%.2f", corners_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("corners_away_stat_table_away_all", String.format("%.2f", corners_home / lastMatchesGuestTeam.size() + corners_away / lastMatchesGuestTeam.size()));
         model.addAttribute("yellow_card_home_stat_table_away", String.format("%.2f", yellow_card_home / lastMatchesGuestTeam.size()));
         model.addAttribute("yellow_card_away_stat_table_away", String.format("%.2f", yellow_card_away / lastMatchesGuestTeam.size()));
         model.addAttribute("yellow_card_away_stat_table_away_all", String.format("%.2f", yellow_card_home / lastMatchesGuestTeam.size() + yellow_card_away / lastMatchesGuestTeam.size()));
-        model.addAttribute("red_card_home_stat_table_away", red_card_home / lastMatchesGuestTeam.size());
-        model.addAttribute("red_card_away_stat_table_away", red_card_away / lastMatchesGuestTeam.size());
-        model.addAttribute("free_kicks_home_stat_table_away", free_kicks_home / lastMatchesGuestTeam.size());
-        model.addAttribute("free_kicks_away_stat_table_away", free_kicks_away / lastMatchesGuestTeam.size());
-        model.addAttribute("offsides_home_stat_table_away", offsides_home / lastMatchesGuestTeam.size());
-        model.addAttribute("offsides_away_stat_table_away", offsides_away / lastMatchesGuestTeam.size());
-        model.addAttribute("fouls_home_stat_table_away", fouls_home / lastMatchesGuestTeam.size());
-        model.addAttribute("fouls_away_stat_table_away", fouls_away / lastMatchesGuestTeam.size());
+        model.addAttribute("red_card_home_stat_table_away", String.format("%.2f",red_card_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("red_card_away_stat_table_away", String.format("%.2f",red_card_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("red_card_away_stat_table_away_all", String.format("%.2f", red_card_home / lastMatchesGuestTeam.size() + red_card_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("free_kicks_home_stat_table_away", String.format("%.2f",free_kicks_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("free_kicks_away_stat_table_away", String.format("%.2f",free_kicks_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("free_kicks_away_stat_table_away_all", String.format("%.2f", free_kicks_home / lastMatchesGuestTeam.size() + free_kicks_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("offsides_home_stat_table_away", String.format("%.2f",offsides_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("offsides_away_stat_table_away", String.format("%.2f",offsides_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("offsides_home_stat_table_away_all", String.format("%.2f", offsides_home / lastMatchesGuestTeam.size() + offsides_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("fouls_home_stat_table_away", String.format("%.2f",fouls_home / lastMatchesGuestTeam.size()));
+        model.addAttribute("fouls_away_stat_table_away", String.format("%.2f",fouls_away / lastMatchesGuestTeam.size()));
+        model.addAttribute("fouls_away_stat_table_away_all", String.format("%.2f", fouls_home / lastMatchesGuestTeam.size() + fouls_away / lastMatchesGuestTeam.size()));
 
         ArrayList<team> th3 = new ArrayList<>();
         ArrayList<team> tg3 = new ArrayList<>();
@@ -751,25 +762,32 @@ public class MatchController {
             model.addAttribute("home_table_home_level", th3);
             model.addAttribute("home_table_guest_level", tg3);
         }
-        model.addAttribute("shots_home_stat_table_home_level", shots_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("shots_away_stat_table_home_level", shots_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("possession_home_stat_table_home_level", possession_home / lastMatchesHomeTeambyLevel.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
-        model.addAttribute("possession_away_stat_table_home_level", possession_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("shots_on_target_home_stat_table_home_level", shots_on_target_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("shots_on_target_away_stat_table_home_level", shots_on_target_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("corners_home_stat_table_home_level", corners_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("corners_away_stat_table_home_level", corners_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("shots_home_stat_table_home_level", String.format("%.2f", shots_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("shots_away_stat_table_home_level", String.format("%.2f", shots_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("shots_away_stat_table_home_level_all", String.format("%.2f", shots_home / lastMatchesHomeTeambyLevel.size() + shots_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("possession_home_stat_table_home_level", String.format("%.0f", possession_home / lastMatchesHomeTeambyLevel.size() / 2));
+        model.addAttribute("possession_away_stat_table_home_level", String.format("%.0f", possession_away / lastMatchesHomeTeambyLevel.size() / 2));
+        model.addAttribute("shots_on_target_home_stat_table_home_level", String.format("%.2f", shots_on_target_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("shots_on_target_away_stat_table_home_level", String.format("%.2f", shots_on_target_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("shots_on_target_away_stat_table_home_level_all", String.format("%.2f", shots_on_target_home / lastMatchesHomeTeambyLevel.size() + shots_on_target_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("corners_home_stat_table_home_level", String.format("%.2f", corners_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("corners_away_stat_table_home_level", String.format("%.2f", corners_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("corners_away_stat_table_home_level_all", String.format("%.2f", corners_home / lastMatchesHomeTeambyLevel.size() + corners_away / lastMatchesHomeTeambyLevel.size()));
         model.addAttribute("yellow_card_home_stat_table_home_level", String.format("%.2f", yellow_card_home / lastMatchesHomeTeambyLevel.size()));
         model.addAttribute("yellow_card_away_stat_table_home_level", String.format("%.2f", yellow_card_away / lastMatchesHomeTeambyLevel.size()));
         model.addAttribute("yellow_card_away_stat_table_home_level_all", String.format("%.2f", yellow_card_home / lastMatchesHomeTeambyLevel.size() + yellow_card_away / lastMatchesHomeTeambyLevel.size()));
-        model.addAttribute("red_card_home_stat_table_home_level", red_card_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("red_card_away_stat_table_home_level", red_card_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("free_kicks_home_stat_table_home_level", free_kicks_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("free_kicks_away_stat_table_home_level", free_kicks_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("offsides_home_stat_table_home_level", offsides_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("offsides_away_stat_table_home_level", offsides_away / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("fouls_home_stat_table_home_level", fouls_home / lastMatchesHomeTeambyLevel.size());
-        model.addAttribute("fouls_away_stat_table_home_level", fouls_away / lastMatchesHomeTeambyLevel.size());
+        model.addAttribute("red_card_home_stat_table_home_level", String.format("%.2f", red_card_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("red_card_away_stat_table_home_level", String.format("%.2f", red_card_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("red_card_away_stat_table_home_level_all", String.format("%.2f", red_card_home / lastMatchesHomeTeambyLevel.size() + red_card_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("free_kicks_home_stat_table_home_level", String.format("%.2f", free_kicks_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("free_kicks_away_stat_table_home_level", String.format("%.2f", free_kicks_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("free_kicks_away_stat_table_home_level_all", String.format("%.2f", free_kicks_home / lastMatchesHomeTeambyLevel.size() + free_kicks_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("offsides_home_stat_table_home_level", String.format("%.2f", offsides_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("offsides_away_stat_table_home_level", String.format("%.2f", offsides_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("offsides_away_stat_table_home_level_all", String.format("%.2f", offsides_home / lastMatchesHomeTeambyLevel.size() + offsides_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("fouls_home_stat_table_home_level", String.format("%.2f", fouls_home / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("fouls_away_stat_table_home_level", String.format("%.2f", fouls_away / lastMatchesHomeTeambyLevel.size()));
+        model.addAttribute("fouls_away_stat_table_home_level_all", String.format("%.2f", fouls_home / lastMatchesHomeTeambyLevel.size() + fouls_away / lastMatchesHomeTeambyLevel.size()));
 
         ArrayList<team> th4 = new ArrayList<>();
         ArrayList<team> tg4 = new ArrayList<>();
@@ -810,25 +828,32 @@ public class MatchController {
             model.addAttribute("guest_table_home_level", th4);
             model.addAttribute("guest_table_guest_level", tg4);
         }
-        model.addAttribute("shots_home_stat_table_away_level", shots_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("shots_away_stat_table_away_level", shots_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("possession_home_stat_table_away_level", possession_home / lastMatchesGuestTeambyLevel.size()); //НЕПРАВИЛЬНЫЙ РАСЧЕТ
-        model.addAttribute("possession_away_stat_table_away_level", possession_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("shots_on_target_home_stat_table_away_level", shots_on_target_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("shots_on_target_away_stat_table_away_level", shots_on_target_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("corners_home_stat_table_away_level", corners_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("corners_away_stat_table_away_level", corners_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("shots_home_stat_table_away_level", String.format("%.2f", shots_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("shots_away_stat_table_away_level", String.format("%.2f", shots_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("shots_away_stat_table_away_level_all", String.format("%.2f", shots_home / lastMatchesGuestTeambyLevel.size() + shots_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("possession_home_stat_table_away_level", String.format("%.0f", possession_home / lastMatchesGuestTeambyLevel.size() / 2));
+        model.addAttribute("possession_away_stat_table_away_level", String.format("%.0f", possession_away / lastMatchesGuestTeambyLevel.size() / 2));
+        model.addAttribute("shots_on_target_home_stat_table_away_level", String.format("%.2f", shots_on_target_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("shots_on_target_away_stat_table_away_level", String.format("%.2f", shots_on_target_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("shots_on_target_away_stat_table_away_level_all", String.format("%.2f", shots_on_target_home / lastMatchesGuestTeambyLevel.size() + shots_on_target_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("corners_home_stat_table_away_level", String.format("%.2f", corners_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("corners_away_stat_table_away_level", String.format("%.2f", corners_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("corners_away_stat_table_away_level_all", String.format("%.2f", corners_home / lastMatchesGuestTeambyLevel.size() + corners_away / lastMatchesGuestTeambyLevel.size()));
         model.addAttribute("yellow_card_home_stat_table_away_level", String.format("%.2f", yellow_card_home / lastMatchesGuestTeambyLevel.size()));
         model.addAttribute("yellow_card_away_stat_table_away_level", String.format("%.2f", yellow_card_away / lastMatchesGuestTeambyLevel.size()));
         model.addAttribute("yellow_card_away_stat_table_away_level_all", String.format("%.2f", yellow_card_home / lastMatchesGuestTeambyLevel.size() + yellow_card_away / lastMatchesGuestTeambyLevel.size()));
-        model.addAttribute("red_card_home_stat_table_away_level", red_card_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("red_card_away_stat_table_away_level", red_card_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("free_kicks_home_stat_table_away_level", free_kicks_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("free_kicks_away_stat_table_away_level", free_kicks_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("offsides_home_stat_table_away_level", offsides_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("offsides_away_stat_table_away_level", offsides_away / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("fouls_home_stat_table_away_level", fouls_home / lastMatchesGuestTeambyLevel.size());
-        model.addAttribute("fouls_away_stat_table_away_level", fouls_away / lastMatchesGuestTeambyLevel.size());
+        model.addAttribute("red_card_home_stat_table_away_level", String.format("%.2f", red_card_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("red_card_away_stat_table_away_level", String.format("%.2f", red_card_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("red_card_away_stat_table_away_level_all", String.format("%.2f", red_card_home / lastMatchesGuestTeambyLevel.size() + red_card_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("free_kicks_home_stat_table_away_level", String.format("%.2f", free_kicks_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("free_kicks_away_stat_table_away_level", String.format("%.2f", free_kicks_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("free_kicks_away_stat_table_away_level_all", String.format("%.2f", free_kicks_home / lastMatchesGuestTeambyLevel.size() + free_kicks_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("offsides_home_stat_table_away_level", String.format("%.2f", offsides_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("offsides_away_stat_table_away_level", String.format("%.2f", offsides_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("offsides_away_stat_table_away_level_all", String.format("%.2f", offsides_home / lastMatchesGuestTeambyLevel.size() + offsides_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("fouls_home_stat_table_away_level", String.format("%.2f", fouls_home / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("fouls_away_stat_table_away_level", String.format("%.2f", fouls_away / lastMatchesGuestTeambyLevel.size()));
+        model.addAttribute("fouls_away_stat_table_away_level_all", String.format("%.2f", fouls_home / lastMatchesGuestTeambyLevel.size() + fouls_away / lastMatchesGuestTeambyLevel.size()));
 
         Optional<team> team_home = teamRepository.findById(match.get().getTeamHome());
         Optional<team> team_guest = teamRepository.findById(match.get().getTeamGuest());

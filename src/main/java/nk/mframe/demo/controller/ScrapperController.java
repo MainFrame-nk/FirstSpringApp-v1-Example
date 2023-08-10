@@ -115,7 +115,6 @@ public class ScrapperController {
         StringBuilder response = ConnectSite("https://odds.ru/football/match/" + dayMatches + "/","ListMatchesFootball\"");
         String start = "ournament";
         String end = "</a>";
-        String startTeam = "bt92PPZyA3Px";
         String endTeam = "</b><img";
         String[] str = response.toString().split("/football/t");
         int m = 0;
@@ -169,7 +168,6 @@ public class ScrapperController {
                     int j = 0;
                     for (int i = 0; i != timeMatches.size(); i++) {
                         matchAdd(dateMatches.get(i), timeMatches.get(i), teamsMatches.get(j), teamsMatches.get(j + 1), str2[1], str2[0], marketId.get(m));
-                        System.out.println(marketId.get(m));
                         j += 2;
                         m++;
                     }
@@ -525,8 +523,10 @@ public class ScrapperController {
                 }
             }
         }
+        int findIdMatch = -1;
         for (match_table mts : matches) {
             if (mts.getDateMatch().equals(dateMatch) && mts.getTimeMatch().equals(timeMatch) && mts.getTeamHome() == idTeamHome && mts.getTeamGuest() == idTeamAway) {
+                findIdMatch = mts.getIdMatch();
                 isFind = true;
                 break;
             }
@@ -542,7 +542,12 @@ public class ScrapperController {
             FindCoefficients(marketId, match.getIdMatch());
             System.out.println("Матч" + dateMatch + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] успешно добавлен!");
         } else {
-            System.out.println("Ошибка! Матч: " + dateMatch + " " + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
+            if (findIdMatch != -1) {
+                System.out.println("Ошибка! Матч: " + dateMatch + " " + timeMatch + " " + nameTeamHome + " - " + nameTeamAway + " [Лига: " + nameLeague + "] [Страна: " + nameCountry + "] уже есть в базе данных!");
+                FindCoefficients(marketId, findIdMatch);
+            } else {
+                throw new RuntimeException("Ошибка! findIdMatch в ScrapperController не найден! (равен -1) ");
+            }
         }
     }
 }

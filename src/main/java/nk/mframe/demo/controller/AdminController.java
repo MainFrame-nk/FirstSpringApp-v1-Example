@@ -58,7 +58,7 @@ public class AdminController {
 
     @PostMapping("/admin")
     public String importMatch(Model model) {
-        excelParse("C:\\Users\\Lumix\\Downloads\\readExcelFIle\\src\\main\\java\\org\\example\\parsing.xlsx");
+        excelParse("C:\\Users\\Neogenesis\\Downloads\\Load\\parsing.xlsx");
         System.out.println("Import success!");
         return "redirect:/admin";
     }
@@ -121,10 +121,10 @@ public class AdminController {
         String fouls = "Фолы";
         String yellowCards = "Желтые карточки";
         String redCards = "Красные карточки";
-        String matchSuccess = "Матч ";
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
+            String matchSuccess = "Матч ";
             for (Cell cell : row) {
                 //перебираем возможные типы ячеек
                 if (cell.toString().isEmpty()) {
