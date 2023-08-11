@@ -13,7 +13,6 @@ public class coefficient_table {
 
     private Long idEvent;
     private Integer bookmakerId;
-    private Integer outcomeId;
     private Double outcomeValue;
     private Double coefficient;
 
@@ -41,14 +40,6 @@ public class coefficient_table {
         this.bookmakerId = bookmakerId;
     }
 
-    public Integer getOutcomeId() {
-        return outcomeId;
-    }
-
-    public void setOutcomeId(Integer outcomeId) {
-        this.outcomeId = outcomeId;
-    }
-
     public Double getOutcomeValue() {
         return outcomeValue;
     }
@@ -68,10 +59,9 @@ public class coefficient_table {
     public coefficient_table() {
     }
 
-    public coefficient_table(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficient) {
+    public coefficient_table(Long idEvent, Integer bookmakerId, Double outcomeValue, Double coefficient) {
         this.idEvent = idEvent;
         this.bookmakerId = bookmakerId;
-        this.outcomeId = outcomeId;
         this.outcomeValue = outcomeValue;
         this.coefficient = coefficient;
     }

@@ -410,7 +410,7 @@ public class ScrapperController {
     }
 
     public void coefficientAdd(Long idEvent, Integer bookmakerId, Integer outcomeId, Double outcomeValue, Double coefficientValue) {
-        coefficient_table coefficient = new coefficient_table(idEvent, bookmakerId, outcomeId, outcomeValue, coefficientValue);
+        coefficient_table coefficient = new coefficient_table(idEvent, bookmakerId, outcomeValue, coefficientValue);
         coefficientRepository.save(coefficient);
         System.out.println("Линия: " + outcomeId + " " + outcomeValue + " Букмекер: " + bookmakerId + " КФ: " + coefficientValue + " успешно добавлена!");
     }
