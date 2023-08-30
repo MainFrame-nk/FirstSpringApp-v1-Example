@@ -1099,9 +1099,216 @@ public class MatchController {
         //                           14 - фолы
         Iterable<event> event = eventRepository.findAll();
         Iterable<coefficient_table> coefficients = coefficientRepository.findAll();
-//        ArrayList<Double> matchHomeStats = new ArrayList<>();
-//        ArrayList<Double> matchAwayStats = new ArrayList<>();
-//        ArrayList<Double> matchAllStats = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_home_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lcorners_away_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_home_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lyellow_cards_away_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_home_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lshots_on_target_away_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_home_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_total = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> loffsides_away_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_first_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_second_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_home_all_time_away_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_home_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_home_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_home_itaway = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_away_fora = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_total = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_away_ithome = new ArrayList<>();
+        ArrayList<Integer> lfouls_away_all_time_away_itaway = new ArrayList<>();
         ArrayList<event> matchEvents = new ArrayList<>();
         ArrayList<coefficient_table> matchCoefficient = new ArrayList<>();
         for (event evs : event) {                                   // очень долгий запрос, использовать sql hibernate
@@ -1114,26 +1321,46 @@ public class MatchController {
                                 double awayStat = (corners_away_all_time / lastMatchesHomeTeambyLevel.size() + corners_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (corners_home_all_time / lastMatchesHomeTeambyLevel.size() + corners_away_all_time / lastMatchesHomeTeambyLevel.size() + corners_home_all_time2 / lastMatchesGuestTeambyLevel.size() + corners_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_home_all_time_home_fora, lcorners_home_all_time_total, lcorners_home_all_time_home_ithome, lcorners_home_all_time_home_itaway);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_home_all_time_away_fora, lcorners_home_all_time_total, lcorners_home_all_time_away_ithome, lcorners_home_all_time_away_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_away_all_time_home_fora, lcorners_away_all_time_total, lcorners_away_all_time_home_ithome, lcorners_away_all_time_home_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_away_all_time_away_fora, lcorners_away_all_time_total, lcorners_away_all_time_away_ithome, lcorners_away_all_time_away_itaway);
                             } else if (evs.getBettingLine() == 2) {
                                 double homeStat = (yellow_card_home_all_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (yellow_card_away_all_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (yellow_card_home_all_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_all_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_all_time2 / lastMatchesGuestTeambyLevel.size() + yellow_card_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_home_all_time_home_fora, lyellow_cards_home_all_time_total, lyellow_cards_home_all_time_home_ithome, lyellow_cards_home_all_time_home_itaway);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_home_all_time_away_fora, lyellow_cards_home_all_time_total, lyellow_cards_home_all_time_away_ithome, lyellow_cards_home_all_time_away_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_away_all_time_home_fora, lyellow_cards_away_all_time_total, lyellow_cards_away_all_time_home_ithome, lyellow_cards_away_all_time_home_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_away_all_time_away_fora, lyellow_cards_away_all_time_total, lyellow_cards_away_all_time_away_ithome, lyellow_cards_away_all_time_away_itaway);
                             } else if (evs.getBettingLine() == 3) {
                                 double homeStat = (shots_on_target_home_all_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_home_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (shots_on_target_away_all_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (shots_on_target_home_all_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_away_all_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_home_all_time2 / lastMatchesGuestTeambyLevel.size() + shots_on_target_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_home_all_time_home_fora, lshots_on_target_home_all_time_total, lshots_on_target_home_all_time_home_ithome, lshots_on_target_home_all_time_home_itaway);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_home_all_time_away_fora, lshots_on_target_home_all_time_total, lshots_on_target_home_all_time_away_ithome, lshots_on_target_home_all_time_away_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_away_all_time_home_fora, lshots_on_target_away_all_time_total, lshots_on_target_away_all_time_home_ithome, lshots_on_target_away_all_time_home_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_away_all_time_away_fora, lshots_on_target_away_all_time_total, lshots_on_target_away_all_time_away_ithome, lshots_on_target_away_all_time_away_itaway);
                             } else if (evs.getBettingLine() == 4) {
                                 double homeStat = (offsides_home_all_time / lastMatchesHomeTeambyLevel.size() + offsides_home_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (offsides_away_all_time / lastMatchesHomeTeambyLevel.size() + offsides_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (offsides_home_all_time / lastMatchesHomeTeambyLevel.size() + offsides_away_all_time / lastMatchesHomeTeambyLevel.size() + offsides_home_all_time2 / lastMatchesGuestTeambyLevel.size() + offsides_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_home_all_time_home_fora, loffsides_home_all_time_total, loffsides_home_all_time_home_ithome, loffsides_home_all_time_home_itaway);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_home_all_time_away_fora, loffsides_home_all_time_total, loffsides_home_all_time_away_ithome, loffsides_home_all_time_away_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_away_all_time_home_fora, loffsides_away_all_time_total, loffsides_away_all_time_home_ithome, loffsides_away_all_time_home_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_away_all_time_away_fora, loffsides_away_all_time_total, loffsides_away_all_time_away_ithome, loffsides_away_all_time_away_itaway);
                             } else if (evs.getBettingLine() == 5) {
                                 double homeStat = (fouls_home_all_time / lastMatchesHomeTeambyLevel.size() + fouls_home_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (fouls_away_all_time / lastMatchesHomeTeambyLevel.size() + fouls_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (fouls_home_all_time / lastMatchesHomeTeambyLevel.size() + fouls_away_all_time / lastMatchesHomeTeambyLevel.size() + fouls_home_all_time2 / lastMatchesGuestTeambyLevel.size() + fouls_away_all_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_home_all_time_home_fora, lfouls_home_all_time_total, lfouls_home_all_time_home_ithome, lfouls_home_all_time_home_itaway);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_home_all_time_away_fora, lfouls_home_all_time_total, lfouls_home_all_time_away_ithome, lfouls_home_all_time_away_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_away_all_time_home_fora, lfouls_away_all_time_total, lfouls_away_all_time_home_ithome, lfouls_away_all_time_home_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_away_all_time_away_fora, lfouls_away_all_time_total, lfouls_away_all_time_away_ithome, lfouls_away_all_time_away_itaway);
                             }
                         } else if (evs.getGamePeriod() == 1) {
                             if (evs.getBettingLine() == 1) {
@@ -1141,26 +1368,46 @@ public class MatchController {
                                 double awayStat = (corners_away_first_time / lastMatchesHomeTeambyLevel.size() + corners_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (corners_home_first_time / lastMatchesHomeTeambyLevel.size() + corners_away_first_time / lastMatchesHomeTeambyLevel.size() + corners_home_first_time2 / lastMatchesGuestTeambyLevel.size() + corners_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_home_first_time_home_fora, lcorners_home_first_time_total, lcorners_home_first_time_home_ithome, lcorners_home_first_time_home_itaway);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_home_first_time_away_fora, lcorners_home_first_time_total, lcorners_home_first_time_away_ithome, lcorners_home_first_time_away_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_away_first_time_home_fora, lcorners_away_first_time_total, lcorners_away_first_time_home_ithome, lcorners_away_first_time_home_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_away_first_time_away_fora, lcorners_away_first_time_total, lcorners_away_first_time_away_ithome, lcorners_away_first_time_away_itaway);
                             } else if (evs.getBettingLine() == 2) {
                                 double homeStat = (yellow_card_home_first_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (yellow_card_away_first_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (yellow_card_home_first_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_first_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_first_time2 / lastMatchesGuestTeambyLevel.size() + yellow_card_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_home_first_time_home_fora, lyellow_cards_home_first_time_total, lyellow_cards_home_first_time_home_ithome, lyellow_cards_home_first_time_home_itaway);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_home_first_time_away_fora, lyellow_cards_home_first_time_total, lyellow_cards_home_first_time_away_ithome, lyellow_cards_home_first_time_away_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_away_first_time_home_fora, lyellow_cards_away_first_time_total, lyellow_cards_away_first_time_home_ithome, lyellow_cards_away_first_time_home_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_away_first_time_away_fora, lyellow_cards_away_first_time_total, lyellow_cards_away_first_time_away_ithome, lyellow_cards_away_first_time_away_itaway);
                             } else if (evs.getBettingLine() == 3) {
                                 double homeStat = (shots_on_target_home_first_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_home_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (shots_on_target_away_first_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (shots_on_target_home_first_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_away_first_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_home_first_time2 / lastMatchesGuestTeambyLevel.size() + shots_on_target_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_home_first_time_home_fora, lshots_on_target_home_first_time_total, lshots_on_target_home_first_time_home_ithome, lshots_on_target_home_first_time_home_itaway);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_home_first_time_away_fora, lshots_on_target_home_first_time_total, lshots_on_target_home_first_time_away_ithome, lshots_on_target_home_first_time_away_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_away_first_time_home_fora, lshots_on_target_away_first_time_total, lshots_on_target_away_first_time_home_ithome, lshots_on_target_away_first_time_home_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_away_first_time_away_fora, lshots_on_target_away_first_time_total, lshots_on_target_away_first_time_away_ithome, lshots_on_target_away_first_time_away_itaway);
                             } else if (evs.getBettingLine() == 4) {
                                 double homeStat = (offsides_home_first_time / lastMatchesHomeTeambyLevel.size() + offsides_home_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (offsides_away_first_time / lastMatchesHomeTeambyLevel.size() + offsides_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (offsides_home_first_time / lastMatchesHomeTeambyLevel.size() + offsides_away_first_time / lastMatchesHomeTeambyLevel.size() + offsides_home_first_time2 / lastMatchesGuestTeambyLevel.size() + offsides_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_home_first_time_home_fora, loffsides_home_first_time_total, loffsides_home_first_time_home_ithome, loffsides_home_first_time_home_itaway);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_home_first_time_away_fora, loffsides_home_first_time_total, loffsides_home_first_time_away_ithome, loffsides_home_first_time_away_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_away_first_time_home_fora, loffsides_away_first_time_total, loffsides_away_first_time_home_ithome, loffsides_away_first_time_home_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_away_first_time_away_fora, loffsides_away_first_time_total, loffsides_away_first_time_away_ithome, loffsides_away_first_time_away_itaway);
                             } else if (evs.getBettingLine() == 5) {
                                 double homeStat = (fouls_home_first_time / lastMatchesHomeTeambyLevel.size() + fouls_home_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (fouls_away_first_time / lastMatchesHomeTeambyLevel.size() + fouls_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (fouls_home_first_time / lastMatchesHomeTeambyLevel.size() + fouls_away_first_time / lastMatchesHomeTeambyLevel.size() + fouls_home_first_time2 / lastMatchesGuestTeambyLevel.size() + fouls_away_first_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_home_first_time_home_fora, lfouls_home_first_time_total, lfouls_home_first_time_home_ithome, lfouls_home_first_time_home_itaway);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_home_first_time_away_fora, lfouls_home_first_time_total, lfouls_home_first_time_away_ithome, lfouls_home_first_time_away_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_away_first_time_home_fora, lfouls_away_first_time_total, lfouls_away_first_time_home_ithome, lfouls_away_first_time_home_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_away_first_time_away_fora, lfouls_away_first_time_total, lfouls_away_first_time_away_ithome, lfouls_away_first_time_away_itaway);
                             }
                         } else if (evs.getGamePeriod() == 2) {
                             if (evs.getBettingLine() == 1) {
@@ -1168,39 +1415,893 @@ public class MatchController {
                                 double awayStat = (corners_away_second_time / lastMatchesHomeTeambyLevel.size() + corners_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (corners_home_second_time / lastMatchesHomeTeambyLevel.size() + corners_away_second_time / lastMatchesHomeTeambyLevel.size() + corners_home_second_time2 / lastMatchesGuestTeambyLevel.size() + corners_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_home_second_time_home_fora, lcorners_home_second_time_total, lcorners_home_second_time_home_ithome, lcorners_home_second_time_home_itaway);
+                                cornersCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_home_second_time_away_fora, lcorners_home_second_time_total, lcorners_home_second_time_away_ithome, lcorners_home_second_time_away_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lcorners_away_second_time_home_fora, lcorners_away_second_time_total, lcorners_away_second_time_home_ithome, lcorners_away_second_time_home_itaway);
+                                cornersCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lcorners_away_second_time_away_fora, lcorners_away_second_time_total, lcorners_away_second_time_away_ithome, lcorners_away_second_time_away_itaway);
                             } else if (evs.getBettingLine() == 2) {
                                 double homeStat = (yellow_card_home_second_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (yellow_card_away_second_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (yellow_card_home_second_time / lastMatchesHomeTeambyLevel.size() + yellow_card_away_second_time / lastMatchesHomeTeambyLevel.size() + yellow_card_home_second_time2 / lastMatchesGuestTeambyLevel.size() + yellow_card_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_home_second_time_home_fora, lyellow_cards_home_second_time_total, lyellow_cards_home_second_time_home_ithome, lyellow_cards_home_second_time_home_itaway);
+                                yellowCardsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_home_second_time_away_fora, lyellow_cards_home_second_time_total, lyellow_cards_home_second_time_away_ithome, lyellow_cards_home_second_time_away_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lyellow_cards_away_second_time_home_fora, lyellow_cards_away_second_time_total, lyellow_cards_away_second_time_home_ithome, lyellow_cards_away_second_time_home_itaway);
+                                yellowCardsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lyellow_cards_away_second_time_away_fora, lyellow_cards_away_second_time_total, lyellow_cards_away_second_time_away_ithome, lyellow_cards_away_second_time_away_itaway);
                             } else if (evs.getBettingLine() == 3) {
                                 double homeStat = (shots_on_target_home_second_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (shots_on_target_away_second_time / lastMatchesHomeTeambyLevel.size() + shots_on_target_home_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (homeStat + awayStat) / 2;
-                                System.out.println("Нашёл! Удары в створ home = " + homeStat + ". Удары в створ away = " + awayStat + ". Общий тоталы = " + totalStat);
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_home_second_time_home_fora, lshots_on_target_home_second_time_total, lshots_on_target_home_second_time_home_ithome, lshots_on_target_home_second_time_home_itaway);
+                                shotsOnTargetCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_home_second_time_away_fora, lshots_on_target_home_second_time_total, lshots_on_target_home_second_time_away_ithome, lshots_on_target_home_second_time_away_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lshots_on_target_away_second_time_home_fora, lshots_on_target_away_second_time_total, lshots_on_target_away_second_time_home_ithome, lshots_on_target_away_second_time_home_itaway);
+                                shotsOnTargetCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lshots_on_target_away_second_time_away_fora, lshots_on_target_away_second_time_total, lshots_on_target_away_second_time_away_ithome, lshots_on_target_away_second_time_away_itaway);
                             } else if (evs.getBettingLine() == 4) {
                                 double homeStat = (offsides_home_second_time / lastMatchesHomeTeambyLevel.size() + offsides_home_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (offsides_away_second_time / lastMatchesHomeTeambyLevel.size() + offsides_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (offsides_home_second_time / lastMatchesHomeTeambyLevel.size() + offsides_away_second_time / lastMatchesHomeTeambyLevel.size() + offsides_home_second_time2 / lastMatchesGuestTeambyLevel.size() + offsides_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_home_second_time_home_fora, loffsides_home_second_time_total, loffsides_home_second_time_home_ithome, loffsides_home_second_time_home_itaway);
+                                offsidesCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_home_second_time_away_fora, loffsides_home_second_time_total, loffsides_home_second_time_away_ithome, loffsides_home_second_time_away_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, loffsides_away_second_time_home_fora, loffsides_away_second_time_total, loffsides_away_second_time_home_ithome, loffsides_away_second_time_home_itaway);
+                                offsidesCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, loffsides_away_second_time_away_fora, loffsides_away_second_time_total, loffsides_away_second_time_away_ithome, loffsides_away_second_time_away_itaway);
                             } else if (evs.getBettingLine() == 5) {
                                 double homeStat = (fouls_home_second_time / lastMatchesHomeTeambyLevel.size() + fouls_home_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double awayStat = (fouls_away_second_time / lastMatchesHomeTeambyLevel.size() + fouls_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 double totalStat = (fouls_home_second_time / lastMatchesHomeTeambyLevel.size() + fouls_away_second_time / lastMatchesHomeTeambyLevel.size() + fouls_home_second_time2 / lastMatchesGuestTeambyLevel.size() + fouls_away_second_time2 / lastMatchesGuestTeambyLevel.size()) / 2;
                                 analysSuccess(homeStat, awayStat, totalStat, evs, coeffs, matchEvents, matchCoefficient, model);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_home_second_time_home_fora, lfouls_home_second_time_total, lfouls_home_second_time_home_ithome, lfouls_home_second_time_home_itaway);
+                                foulsCountMatches(1, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_home_second_time_away_fora, lfouls_home_second_time_total, lfouls_home_second_time_away_ithome, lfouls_home_second_time_away_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesHomeTeambyLevel, lfouls_away_second_time_home_fora, lfouls_away_second_time_total, lfouls_away_second_time_home_ithome, lfouls_away_second_time_home_itaway);
+                                foulsCountMatches(2, evs, coeffs, lastMatchesGuestTeambyLevel, lfouls_away_second_time_away_fora, lfouls_away_second_time_total, lfouls_away_second_time_away_ithome, lfouls_away_second_time_away_itaway);
                             }
                         }
                     }
                 }
             }
         }
-        for (event me : matchEvents) {
-            System.out.println(me.getIdEvent());
+        if (lcorners_home_first_time_home_fora.isEmpty()) {
+            lcorners_home_first_time_home_fora.add(0);
         }
-        for (coefficient_table me : matchCoefficient) {
-            System.out.println(me.getIdCoefficient());
+        if (lcorners_home_first_time_total.isEmpty()) {
+            lcorners_home_first_time_total.add(0);
         }
+        if (lcorners_home_first_time_home_ithome.isEmpty()) {
+            lcorners_home_first_time_home_ithome.add(0);
+        }
+        if (lcorners_home_first_time_home_itaway.isEmpty()) {
+            lcorners_home_first_time_home_itaway.add(0);
+        }
+        if (lcorners_home_first_time_away_fora.isEmpty()) {
+            lcorners_home_first_time_away_fora.add(0);
+        }
+        if (lcorners_home_first_time_away_ithome.isEmpty()) {
+            lcorners_home_first_time_away_ithome.add(0);
+        }
+        if (lcorners_home_first_time_away_itaway.isEmpty()) {
+            lcorners_home_first_time_away_itaway.add(0);
+        }
+        if (lcorners_away_first_time_home_fora.isEmpty()) {
+            lcorners_away_first_time_home_fora.add(0);
+        }
+        if (lcorners_away_first_time_total.isEmpty()) {
+            lcorners_away_first_time_total.add(0);
+        }
+        if (lcorners_away_first_time_home_ithome.isEmpty()) {
+            lcorners_away_first_time_home_ithome.add(0);
+        }
+        if (lcorners_away_first_time_home_itaway.isEmpty()) {
+            lcorners_away_first_time_home_itaway.add(0);
+        }
+        if (lcorners_away_first_time_away_fora.isEmpty()) {
+            lcorners_away_first_time_away_fora.add(0);
+        }
+        if (lcorners_away_first_time_away_ithome.isEmpty()) {
+            lcorners_away_first_time_away_ithome.add(0);
+        }
+        if (lcorners_away_first_time_away_itaway.isEmpty()) {
+            lcorners_away_first_time_away_itaway.add(0);
+        }
+        if (lcorners_home_second_time_home_fora.isEmpty()) {
+            lcorners_home_second_time_home_fora.add(0);
+        }
+        if (lcorners_home_second_time_total.isEmpty()) {
+            lcorners_home_second_time_total.add(0);
+        }
+        if (lcorners_home_second_time_home_ithome.isEmpty()) {
+            lcorners_home_second_time_home_ithome.add(0);
+        }
+        if (lcorners_home_second_time_home_itaway.isEmpty()) {
+            lcorners_home_second_time_home_itaway.add(0);
+        }
+        if (lcorners_home_second_time_away_fora.isEmpty()) {
+            lcorners_home_second_time_away_fora.add(0);
+        }
+        if (lcorners_home_second_time_away_ithome.isEmpty()) {
+            lcorners_home_second_time_away_ithome.add(0);
+        }
+        if (lcorners_home_second_time_away_itaway.isEmpty()) {
+            lcorners_home_second_time_away_itaway.add(0);
+        }
+        if (lcorners_away_second_time_home_fora.isEmpty()) {
+            lcorners_away_second_time_home_fora.add(0);
+        }
+        if (lcorners_away_second_time_total.isEmpty()) {
+            lcorners_away_second_time_total.add(0);
+        }
+        if (lcorners_away_second_time_home_ithome.isEmpty()) {
+            lcorners_away_second_time_home_ithome.add(0);
+        }
+        if (lcorners_away_second_time_home_itaway.isEmpty()) {
+            lcorners_away_second_time_home_itaway.add(0);
+        }
+        if (lcorners_away_second_time_away_fora.isEmpty()) {
+            lcorners_away_second_time_away_fora.add(0);
+        }
+        if (lcorners_away_second_time_away_ithome.isEmpty()) {
+            lcorners_away_second_time_away_ithome.add(0);
+        }
+        if (lcorners_away_second_time_away_itaway.isEmpty()) {
+            lcorners_away_second_time_away_itaway.add(0);
+        }
+        if (lcorners_home_all_time_home_fora.isEmpty()) {
+            lcorners_home_all_time_home_fora.add(0);
+        }
+        if (lcorners_home_all_time_total.isEmpty()) {
+            lcorners_home_all_time_total.add(0);
+        }
+        if (lcorners_home_all_time_home_ithome.isEmpty()) {
+            lcorners_home_all_time_home_ithome.add(0);
+        }
+        if (lcorners_home_all_time_home_itaway.isEmpty()) {
+            lcorners_home_all_time_home_itaway.add(0);
+        }
+        if (lcorners_home_all_time_away_fora.isEmpty()) {
+            lcorners_home_all_time_away_fora.add(0);
+        }
+        if (lcorners_home_all_time_away_ithome.isEmpty()) {
+            lcorners_home_all_time_away_ithome.add(0);
+        }
+        if (lcorners_home_all_time_away_itaway.isEmpty()) {
+            lcorners_home_all_time_away_itaway.add(0);
+        }
+        if (lcorners_away_all_time_home_fora.isEmpty()) {
+            lcorners_away_all_time_home_fora.add(0);
+        }
+        if (lcorners_away_all_time_total.isEmpty()) {
+            lcorners_away_all_time_total.add(0);
+        }
+        if (lcorners_away_all_time_home_ithome.isEmpty()) {
+            lcorners_away_all_time_home_ithome.add(0);
+        }
+        if (lcorners_away_all_time_home_itaway.isEmpty()) {
+            lcorners_away_all_time_home_itaway.add(0);
+        }
+        if (lcorners_away_all_time_away_fora.isEmpty()) {
+            lcorners_away_all_time_away_fora.add(0);
+        }
+        if (lcorners_away_all_time_away_ithome.isEmpty()) {
+            lcorners_away_all_time_away_ithome.add(0);
+        }
+        if (lcorners_away_all_time_away_itaway.isEmpty()) {
+            lcorners_away_all_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_home_first_time_home_fora.isEmpty()) {
+            lyellow_cards_home_first_time_home_fora.add(0);
+        }
+        if (lyellow_cards_home_first_time_total.isEmpty()) {
+            lyellow_cards_home_first_time_total.add(0);
+        }
+        if (lyellow_cards_home_first_time_home_ithome.isEmpty()) {
+            lyellow_cards_home_first_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_home_first_time_home_itaway.isEmpty()) {
+            lyellow_cards_home_first_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_home_first_time_away_fora.isEmpty()) {
+            lyellow_cards_home_first_time_away_fora.add(0);
+        }
+        if (lyellow_cards_home_first_time_away_ithome.isEmpty()) {
+            lyellow_cards_home_first_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_home_first_time_away_itaway.isEmpty()) {
+            lyellow_cards_home_first_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_away_first_time_home_fora.isEmpty()) {
+            lyellow_cards_away_first_time_home_fora.add(0);
+        }
+        if (lyellow_cards_away_first_time_total.isEmpty()) {
+            lyellow_cards_away_first_time_total.add(0);
+        }
+        if (lyellow_cards_away_first_time_home_ithome.isEmpty()) {
+            lyellow_cards_away_first_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_away_first_time_home_itaway.isEmpty()) {
+            lyellow_cards_away_first_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_away_first_time_away_fora.isEmpty()) {
+            lyellow_cards_away_first_time_away_fora.add(0);
+        }
+        if (lyellow_cards_away_first_time_away_ithome.isEmpty()) {
+            lyellow_cards_away_first_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_away_first_time_away_itaway.isEmpty()) {
+            lyellow_cards_away_first_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_home_second_time_home_fora.isEmpty()) {
+            lyellow_cards_home_second_time_home_fora.add(0);
+        }
+        if (lyellow_cards_home_second_time_total.isEmpty()) {
+            lyellow_cards_home_second_time_total.add(0);
+        }
+        if (lyellow_cards_home_second_time_home_ithome.isEmpty()) {
+            lyellow_cards_home_second_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_home_second_time_home_itaway.isEmpty()) {
+            lyellow_cards_home_second_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_home_second_time_away_fora.isEmpty()) {
+            lyellow_cards_home_second_time_away_fora.add(0);
+        }
+        if (lyellow_cards_home_second_time_away_ithome.isEmpty()) {
+            lyellow_cards_home_second_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_home_second_time_away_itaway.isEmpty()) {
+            lyellow_cards_home_second_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_away_second_time_home_fora.isEmpty()) {
+            lyellow_cards_away_second_time_home_fora.add(0);
+        }
+        if (lyellow_cards_away_second_time_total.isEmpty()) {
+            lyellow_cards_away_second_time_total.add(0);
+        }
+        if (lyellow_cards_away_second_time_home_ithome.isEmpty()) {
+            lyellow_cards_away_second_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_away_second_time_home_itaway.isEmpty()) {
+            lyellow_cards_away_second_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_away_second_time_away_fora.isEmpty()) {
+            lyellow_cards_away_second_time_away_fora.add(0);
+        }
+        if (lyellow_cards_away_second_time_away_ithome.isEmpty()) {
+            lyellow_cards_away_second_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_away_second_time_away_itaway.isEmpty()) {
+            lyellow_cards_away_second_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_home_all_time_home_fora.isEmpty()) {
+            lyellow_cards_home_all_time_home_fora.add(0);
+        }
+        if (lyellow_cards_home_all_time_total.isEmpty()) {
+            lyellow_cards_home_all_time_total.add(0);
+        }
+        if (lyellow_cards_home_all_time_home_ithome.isEmpty()) {
+            lyellow_cards_home_all_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_home_all_time_home_itaway.isEmpty()) {
+            lyellow_cards_home_all_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_home_all_time_away_fora.isEmpty()) {
+            lyellow_cards_home_all_time_away_fora.add(0);
+        }
+        if (lyellow_cards_home_all_time_away_ithome.isEmpty()) {
+            lyellow_cards_home_all_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_home_all_time_away_itaway.isEmpty()) {
+            lyellow_cards_home_all_time_away_itaway.add(0);
+        }
+        if (lyellow_cards_away_all_time_home_fora.isEmpty()) {
+            lyellow_cards_away_all_time_home_fora.add(0);
+        }
+        if (lyellow_cards_away_all_time_total.isEmpty()) {
+            lyellow_cards_away_all_time_total.add(0);
+        }
+        if (lyellow_cards_away_all_time_home_ithome.isEmpty()) {
+            lyellow_cards_away_all_time_home_ithome.add(0);
+        }
+        if (lyellow_cards_away_all_time_home_itaway.isEmpty()) {
+            lyellow_cards_away_all_time_home_itaway.add(0);
+        }
+        if (lyellow_cards_away_all_time_away_fora.isEmpty()) {
+            lyellow_cards_away_all_time_away_fora.add(0);
+        }
+        if (lyellow_cards_away_all_time_away_ithome.isEmpty()) {
+            lyellow_cards_away_all_time_away_ithome.add(0);
+        }
+        if (lyellow_cards_away_all_time_away_itaway.isEmpty()) {
+            lyellow_cards_away_all_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_home_first_time_home_fora.isEmpty()) {
+            lshots_on_target_home_first_time_home_fora.add(0);
+        }
+        if (lshots_on_target_home_first_time_total.isEmpty()) {
+            lshots_on_target_home_first_time_total.add(0);
+        }
+        if (lshots_on_target_home_first_time_home_ithome.isEmpty()) {
+            lshots_on_target_home_first_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_home_first_time_home_itaway.isEmpty()) {
+            lshots_on_target_home_first_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_home_first_time_away_fora.isEmpty()) {
+            lshots_on_target_home_first_time_away_fora.add(0);
+        }
+        if (lshots_on_target_home_first_time_away_ithome.isEmpty()) {
+            lshots_on_target_home_first_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_home_first_time_away_itaway.isEmpty()) {
+            lshots_on_target_home_first_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_away_first_time_home_fora.isEmpty()) {
+            lshots_on_target_away_first_time_home_fora.add(0);
+        }
+        if (lshots_on_target_away_first_time_total.isEmpty()) {
+            lshots_on_target_away_first_time_total.add(0);
+        }
+        if (lshots_on_target_away_first_time_home_ithome.isEmpty()) {
+            lshots_on_target_away_first_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_away_first_time_home_itaway.isEmpty()) {
+            lshots_on_target_away_first_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_away_first_time_away_fora.isEmpty()) {
+            lshots_on_target_away_first_time_away_fora.add(0);
+        }
+        if (lshots_on_target_away_first_time_away_ithome.isEmpty()) {
+            lshots_on_target_away_first_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_away_first_time_away_itaway.isEmpty()) {
+            lshots_on_target_away_first_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_home_second_time_home_fora.isEmpty()) {
+            lshots_on_target_home_second_time_home_fora.add(0);
+        }
+        if (lshots_on_target_home_second_time_total.isEmpty()) {
+            lshots_on_target_home_second_time_total.add(0);
+        }
+        if (lshots_on_target_home_second_time_home_ithome.isEmpty()) {
+            lshots_on_target_home_second_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_home_second_time_home_itaway.isEmpty()) {
+            lshots_on_target_home_second_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_home_second_time_away_fora.isEmpty()) {
+            lshots_on_target_home_second_time_away_fora.add(0);
+        }
+        if (lshots_on_target_home_second_time_away_ithome.isEmpty()) {
+            lshots_on_target_home_second_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_home_second_time_away_itaway.isEmpty()) {
+            lshots_on_target_home_second_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_away_second_time_home_fora.isEmpty()) {
+            lshots_on_target_away_second_time_home_fora.add(0);
+        }
+        if (lshots_on_target_away_second_time_total.isEmpty()) {
+            lshots_on_target_away_second_time_total.add(0);
+        }
+        if (lshots_on_target_away_second_time_home_ithome.isEmpty()) {
+            lshots_on_target_away_second_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_away_second_time_home_itaway.isEmpty()) {
+            lshots_on_target_away_second_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_away_second_time_away_fora.isEmpty()) {
+            lshots_on_target_away_second_time_away_fora.add(0);
+        }
+        if (lshots_on_target_away_second_time_away_ithome.isEmpty()) {
+            lshots_on_target_away_second_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_away_second_time_away_itaway.isEmpty()) {
+            lshots_on_target_away_second_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_home_all_time_home_fora.isEmpty()) {
+            lshots_on_target_home_all_time_home_fora.add(0);
+        }
+        if (lshots_on_target_home_all_time_total.isEmpty()) {
+            lshots_on_target_home_all_time_total.add(0);
+        }
+        if (lshots_on_target_home_all_time_home_ithome.isEmpty()) {
+            lshots_on_target_home_all_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_home_all_time_home_itaway.isEmpty()) {
+            lshots_on_target_home_all_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_home_all_time_away_fora.isEmpty()) {
+            lshots_on_target_home_all_time_away_fora.add(0);
+        }
+        if (lshots_on_target_home_all_time_away_ithome.isEmpty()) {
+            lshots_on_target_home_all_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_home_all_time_away_itaway.isEmpty()) {
+            lshots_on_target_home_all_time_away_itaway.add(0);
+        }
+        if (lshots_on_target_away_all_time_home_fora.isEmpty()) {
+            lshots_on_target_away_all_time_home_fora.add(0);
+        }
+        if (lshots_on_target_away_all_time_total.isEmpty()) {
+            lshots_on_target_away_all_time_total.add(0);
+        }
+        if (lshots_on_target_away_all_time_home_ithome.isEmpty()) {
+            lshots_on_target_away_all_time_home_ithome.add(0);
+        }
+        if (lshots_on_target_away_all_time_home_itaway.isEmpty()) {
+            lshots_on_target_away_all_time_home_itaway.add(0);
+        }
+        if (lshots_on_target_away_all_time_away_fora.isEmpty()) {
+            lshots_on_target_away_all_time_away_fora.add(0);
+        }
+        if (lshots_on_target_away_all_time_away_ithome.isEmpty()) {
+            lshots_on_target_away_all_time_away_ithome.add(0);
+        }
+        if (lshots_on_target_away_all_time_away_itaway.isEmpty()) {
+            lshots_on_target_away_all_time_away_itaway.add(0);
+        }
+        if (loffsides_home_first_time_home_fora.isEmpty()) {
+            loffsides_home_first_time_home_fora.add(0);
+        }
+        if (loffsides_home_first_time_total.isEmpty()) {
+            loffsides_home_first_time_total.add(0);
+        }
+        if (loffsides_home_first_time_home_ithome.isEmpty()) {
+            loffsides_home_first_time_home_ithome.add(0);
+        }
+        if (loffsides_home_first_time_home_itaway.isEmpty()) {
+            loffsides_home_first_time_home_itaway.add(0);
+        }
+        if (loffsides_home_first_time_away_fora.isEmpty()) {
+            loffsides_home_first_time_away_fora.add(0);
+        }
+        if (loffsides_home_first_time_away_ithome.isEmpty()) {
+            loffsides_home_first_time_away_ithome.add(0);
+        }
+        if (loffsides_home_first_time_away_itaway.isEmpty()) {
+            loffsides_home_first_time_away_itaway.add(0);
+        }
+        if (loffsides_away_first_time_home_fora.isEmpty()) {
+            loffsides_away_first_time_home_fora.add(0);
+        }
+        if (loffsides_away_first_time_total.isEmpty()) {
+            loffsides_away_first_time_total.add(0);
+        }
+        if (loffsides_away_first_time_home_ithome.isEmpty()) {
+            loffsides_away_first_time_home_ithome.add(0);
+        }
+        if (loffsides_away_first_time_home_itaway.isEmpty()) {
+            loffsides_away_first_time_home_itaway.add(0);
+        }
+        if (loffsides_away_first_time_away_fora.isEmpty()) {
+            loffsides_away_first_time_away_fora.add(0);
+        }
+        if (loffsides_away_first_time_away_ithome.isEmpty()) {
+            loffsides_away_first_time_away_ithome.add(0);
+        }
+        if (loffsides_away_first_time_away_itaway.isEmpty()) {
+            loffsides_away_first_time_away_itaway.add(0);
+        }
+        if (loffsides_home_second_time_home_fora.isEmpty()) {
+            loffsides_home_second_time_home_fora.add(0);
+        }
+        if (loffsides_home_second_time_total.isEmpty()) {
+            loffsides_home_second_time_total.add(0);
+        }
+        if (loffsides_home_second_time_home_ithome.isEmpty()) {
+            loffsides_home_second_time_home_ithome.add(0);
+        }
+        if (loffsides_home_second_time_home_itaway.isEmpty()) {
+            loffsides_home_second_time_home_itaway.add(0);
+        }
+        if (loffsides_home_second_time_away_fora.isEmpty()) {
+            loffsides_home_second_time_away_fora.add(0);
+        }
+        if (loffsides_home_second_time_away_ithome.isEmpty()) {
+            loffsides_home_second_time_away_ithome.add(0);
+        }
+        if (loffsides_home_second_time_away_itaway.isEmpty()) {
+            loffsides_home_second_time_away_itaway.add(0);
+        }
+        if (loffsides_away_second_time_home_fora.isEmpty()) {
+            loffsides_away_second_time_home_fora.add(0);
+        }
+        if (loffsides_away_second_time_total.isEmpty()) {
+            loffsides_away_second_time_total.add(0);
+        }
+        if (loffsides_away_second_time_home_ithome.isEmpty()) {
+            loffsides_away_second_time_home_ithome.add(0);
+        }
+        if (loffsides_away_second_time_home_itaway.isEmpty()) {
+            loffsides_away_second_time_home_itaway.add(0);
+        }
+        if (loffsides_away_second_time_away_fora.isEmpty()) {
+            loffsides_away_second_time_away_fora.add(0);
+        }
+        if (loffsides_away_second_time_away_ithome.isEmpty()) {
+            loffsides_away_second_time_away_ithome.add(0);
+        }
+        if (loffsides_away_second_time_away_itaway.isEmpty()) {
+            loffsides_away_second_time_away_itaway.add(0);
+        }
+        if (loffsides_home_all_time_home_fora.isEmpty()) {
+            loffsides_home_all_time_home_fora.add(0);
+        }
+        if (loffsides_home_all_time_total.isEmpty()) {
+            loffsides_home_all_time_total.add(0);
+        }
+        if (loffsides_home_all_time_home_ithome.isEmpty()) {
+            loffsides_home_all_time_home_ithome.add(0);
+        }
+        if (loffsides_home_all_time_home_itaway.isEmpty()) {
+            loffsides_home_all_time_home_itaway.add(0);
+        }
+        if (loffsides_home_all_time_away_fora.isEmpty()) {
+            loffsides_home_all_time_away_fora.add(0);
+        }
+        if (loffsides_home_all_time_away_ithome.isEmpty()) {
+            loffsides_home_all_time_away_ithome.add(0);
+        }
+        if (loffsides_home_all_time_away_itaway.isEmpty()) {
+            loffsides_home_all_time_away_itaway.add(0);
+        }
+        if (loffsides_away_all_time_home_fora.isEmpty()) {
+            loffsides_away_all_time_home_fora.add(0);
+        }
+        if (loffsides_away_all_time_total.isEmpty()) {
+            loffsides_away_all_time_total.add(0);
+        }
+        if (loffsides_away_all_time_home_ithome.isEmpty()) {
+            loffsides_away_all_time_home_ithome.add(0);
+        }
+        if (loffsides_away_all_time_home_itaway.isEmpty()) {
+            loffsides_away_all_time_home_itaway.add(0);
+        }
+        if (loffsides_away_all_time_away_fora.isEmpty()) {
+            loffsides_away_all_time_away_fora.add(0);
+        }
+        if (loffsides_away_all_time_away_ithome.isEmpty()) {
+            loffsides_away_all_time_away_ithome.add(0);
+        }
+        if (loffsides_away_all_time_away_itaway.isEmpty()) {
+            loffsides_away_all_time_away_itaway.add(0);
+        }
+        if (lfouls_home_first_time_home_fora.isEmpty()) {
+            lfouls_home_first_time_home_fora.add(0);
+        }
+        if (lfouls_home_first_time_total.isEmpty()) {
+            lfouls_home_first_time_total.add(0);
+        }
+        if (lfouls_home_first_time_home_ithome.isEmpty()) {
+            lfouls_home_first_time_home_ithome.add(0);
+        }
+        if (lfouls_home_first_time_home_itaway.isEmpty()) {
+            lfouls_home_first_time_home_itaway.add(0);
+        }
+        if (lfouls_home_first_time_away_fora.isEmpty()) {
+            lfouls_home_first_time_away_fora.add(0);
+        }
+        if (lfouls_home_first_time_away_ithome.isEmpty()) {
+            lfouls_home_first_time_away_ithome.add(0);
+        }
+        if (lfouls_home_first_time_away_itaway.isEmpty()) {
+            lfouls_home_first_time_away_itaway.add(0);
+        }
+        if (lfouls_away_first_time_home_fora.isEmpty()) {
+            lfouls_away_first_time_home_fora.add(0);
+        }
+        if (lfouls_away_first_time_total.isEmpty()) {
+            lfouls_away_first_time_total.add(0);
+        }
+        if (lfouls_away_first_time_home_ithome.isEmpty()) {
+            lfouls_away_first_time_home_ithome.add(0);
+        }
+        if (lfouls_away_first_time_home_itaway.isEmpty()) {
+            lfouls_away_first_time_home_itaway.add(0);
+        }
+        if (lfouls_away_first_time_away_fora.isEmpty()) {
+            lfouls_away_first_time_away_fora.add(0);
+        }
+        if (lfouls_away_first_time_away_ithome.isEmpty()) {
+            lfouls_away_first_time_away_ithome.add(0);
+        }
+        if (lfouls_away_first_time_away_itaway.isEmpty()) {
+            lfouls_away_first_time_away_itaway.add(0);
+        }
+        if (lfouls_home_second_time_home_fora.isEmpty()) {
+            lfouls_home_second_time_home_fora.add(0);
+        }
+        if (lfouls_home_second_time_total.isEmpty()) {
+            lfouls_home_second_time_total.add(0);
+        }
+        if (lfouls_home_second_time_home_ithome.isEmpty()) {
+            lfouls_home_second_time_home_ithome.add(0);
+        }
+        if (lfouls_home_second_time_home_itaway.isEmpty()) {
+            lfouls_home_second_time_home_itaway.add(0);
+        }
+        if (lfouls_home_second_time_away_fora.isEmpty()) {
+            lfouls_home_second_time_away_fora.add(0);
+        }
+        if (lfouls_home_second_time_away_ithome.isEmpty()) {
+            lfouls_home_second_time_away_ithome.add(0);
+        }
+        if (lfouls_home_second_time_away_itaway.isEmpty()) {
+            lfouls_home_second_time_away_itaway.add(0);
+        }
+        if (lfouls_away_second_time_home_fora.isEmpty()) {
+            lfouls_away_second_time_home_fora.add(0);
+        }
+        if (lfouls_away_second_time_total.isEmpty()) {
+            lfouls_away_second_time_total.add(0);
+        }
+        if (lfouls_away_second_time_home_ithome.isEmpty()) {
+            lfouls_away_second_time_home_ithome.add(0);
+        }
+        if (lfouls_away_second_time_home_itaway.isEmpty()) {
+            lfouls_away_second_time_home_itaway.add(0);
+        }
+        if (lfouls_away_second_time_away_fora.isEmpty()) {
+            lfouls_away_second_time_away_fora.add(0);
+        }
+        if (lfouls_away_second_time_away_ithome.isEmpty()) {
+            lfouls_away_second_time_away_ithome.add(0);
+        }
+        if (lfouls_away_second_time_away_itaway.isEmpty()) {
+            lfouls_away_second_time_away_itaway.add(0);
+        }
+        if (lfouls_home_all_time_home_fora.isEmpty()) {
+            lfouls_home_all_time_home_fora.add(0);
+        }
+        if (lfouls_home_all_time_total.isEmpty()) {
+            lfouls_home_all_time_total.add(0);
+        }
+        if (lfouls_home_all_time_home_ithome.isEmpty()) {
+            lfouls_home_all_time_home_ithome.add(0);
+        }
+        if (lfouls_home_all_time_home_itaway.isEmpty()) {
+            lfouls_home_all_time_home_itaway.add(0);
+        }
+        if (lfouls_home_all_time_away_fora.isEmpty()) {
+            lfouls_home_all_time_away_fora.add(0);
+        }
+        if (lfouls_home_all_time_away_ithome.isEmpty()) {
+            lfouls_home_all_time_away_ithome.add(0);
+        }
+        if (lfouls_home_all_time_away_itaway.isEmpty()) {
+            lfouls_home_all_time_away_itaway.add(0);
+        }
+        if (lfouls_away_all_time_home_fora.isEmpty()) {
+            lfouls_away_all_time_home_fora.add(0);
+        }
+        if (lfouls_away_all_time_total.isEmpty()) {
+            lfouls_away_all_time_total.add(0);
+        }
+        if (lfouls_away_all_time_home_ithome.isEmpty()) {
+            lfouls_away_all_time_home_ithome.add(0);
+        }
+        if (lfouls_away_all_time_home_itaway.isEmpty()) {
+            lfouls_away_all_time_home_itaway.add(0);
+        }
+        if (lfouls_away_all_time_away_fora.isEmpty()) {
+            lfouls_away_all_time_away_fora.add(0);
+        }
+        if (lfouls_away_all_time_away_ithome.isEmpty()) {
+            lfouls_away_all_time_away_ithome.add(0);
+        }
+        if (lfouls_away_all_time_away_itaway.isEmpty()) {
+            lfouls_away_all_time_away_itaway.add(0);
+        }
+
+        model.addAttribute("corners_home_first_time_home_fora", lcorners_home_first_time_home_fora);
+        model.addAttribute("corners_home_first_time_total", lcorners_home_first_time_total);
+        model.addAttribute("corners_home_first_time_home_ithome", lcorners_home_first_time_home_ithome);
+        model.addAttribute("corners_home_first_time_home_itaway", lcorners_home_first_time_home_itaway);
+        model.addAttribute("corners_home_first_time_away_fora", lcorners_home_first_time_away_fora);
+        model.addAttribute("corners_home_first_time_away_ithome", lcorners_home_first_time_away_ithome);
+        model.addAttribute("corners_home_first_time_away_itaway", lcorners_home_first_time_away_itaway);
+        model.addAttribute("corners_away_first_time_home_fora", lcorners_away_first_time_home_fora);
+        model.addAttribute("corners_away_first_time_total", lcorners_away_first_time_total);
+        model.addAttribute("corners_away_first_time_home_ithome", lcorners_away_first_time_home_ithome);
+        model.addAttribute("corners_away_first_time_home_itaway", lcorners_away_first_time_home_itaway);
+        model.addAttribute("corners_away_first_time_away_fora", lcorners_away_first_time_away_fora);
+        model.addAttribute("corners_away_first_time_away_ithome", lcorners_away_first_time_away_ithome);
+        model.addAttribute("corners_away_first_time_away_itaway", lcorners_away_first_time_away_itaway);
+        model.addAttribute("corners_home_second_time_home_fora", lcorners_home_second_time_home_fora);
+        model.addAttribute("corners_home_second_time_total", lcorners_home_second_time_total);
+        model.addAttribute("corners_home_second_time_home_ithome", lcorners_home_second_time_home_ithome);
+        model.addAttribute("corners_home_second_time_home_itaway", lcorners_home_second_time_home_itaway);
+        model.addAttribute("corners_home_second_time_away_fora", lcorners_home_second_time_away_fora);
+        model.addAttribute("corners_home_second_time_away_ithome", lcorners_home_second_time_away_ithome);
+        model.addAttribute("corners_home_second_time_away_itaway", lcorners_home_second_time_away_itaway);
+        model.addAttribute("corners_away_second_time_home_fora", lcorners_away_second_time_home_fora);
+        model.addAttribute("corners_away_second_time_total", lcorners_away_second_time_total);
+        model.addAttribute("corners_away_second_time_home_ithome", lcorners_away_second_time_home_ithome);
+        model.addAttribute("corners_away_second_time_home_itaway", lcorners_away_second_time_home_itaway);
+        model.addAttribute("corners_away_second_time_away_fora", lcorners_away_second_time_away_fora);
+        model.addAttribute("corners_away_second_time_away_ithome", lcorners_away_second_time_away_ithome);
+        model.addAttribute("corners_away_second_time_away_itaway", lcorners_away_second_time_away_itaway);
+        model.addAttribute("corners_home_all_time_home_fora", lcorners_home_all_time_home_fora);
+        model.addAttribute("corners_home_all_time_total", lcorners_home_all_time_total);
+        model.addAttribute("corners_home_all_time_home_ithome", lcorners_home_all_time_home_ithome);
+        model.addAttribute("corners_home_all_time_home_itaway", lcorners_home_all_time_home_itaway);
+        model.addAttribute("corners_home_all_time_away_fora", lcorners_home_all_time_away_fora);
+        model.addAttribute("corners_home_all_time_away_ithome", lcorners_home_all_time_away_ithome);
+        model.addAttribute("corners_home_all_time_away_itaway", lcorners_home_all_time_away_itaway);
+        model.addAttribute("corners_away_all_time_home_fora", lcorners_away_all_time_home_fora);
+        model.addAttribute("corners_away_all_time_total", lcorners_away_all_time_total);
+        model.addAttribute("corners_away_all_time_home_ithome", lcorners_away_all_time_home_ithome);
+        model.addAttribute("corners_away_all_time_home_itaway", lcorners_away_all_time_home_itaway);
+        model.addAttribute("corners_away_all_time_away_fora", lcorners_away_all_time_away_fora);
+        model.addAttribute("corners_away_all_time_away_ithome", lcorners_away_all_time_away_ithome);
+        model.addAttribute("corners_away_all_time_away_itaway", lcorners_away_all_time_away_itaway);
+        model.addAttribute("yellow_cards_home_first_time_home_fora", lyellow_cards_home_first_time_home_fora);
+        model.addAttribute("yellow_cards_home_first_time_total", lyellow_cards_home_first_time_total);
+        model.addAttribute("yellow_cards_home_first_time_home_ithome", lyellow_cards_home_first_time_home_ithome);
+        model.addAttribute("yellow_cards_home_first_time_home_itaway", lyellow_cards_home_first_time_home_itaway);
+        model.addAttribute("yellow_cards_home_first_time_away_fora", lyellow_cards_home_first_time_away_fora);
+        model.addAttribute("yellow_cards_home_first_time_away_ithome", lyellow_cards_home_first_time_away_ithome);
+        model.addAttribute("yellow_cards_home_first_time_away_itaway", lyellow_cards_home_first_time_away_itaway);
+        model.addAttribute("yellow_cards_away_first_time_home_fora", lyellow_cards_away_first_time_home_fora);
+        model.addAttribute("yellow_cards_away_first_time_total", lyellow_cards_away_first_time_total);
+        model.addAttribute("yellow_cards_away_first_time_home_ithome", lyellow_cards_away_first_time_home_ithome);
+        model.addAttribute("yellow_cards_away_first_time_home_itaway", lyellow_cards_away_first_time_home_itaway);
+        model.addAttribute("yellow_cards_away_first_time_away_fora", lyellow_cards_away_first_time_away_fora);
+        model.addAttribute("yellow_cards_away_first_time_away_ithome", lyellow_cards_away_first_time_away_ithome);
+        model.addAttribute("yellow_cards_away_first_time_away_itaway", lyellow_cards_away_first_time_away_itaway);
+        model.addAttribute("yellow_cards_home_second_time_home_fora", lyellow_cards_home_second_time_home_fora);
+        model.addAttribute("yellow_cards_home_second_time_total", lyellow_cards_home_second_time_total);
+        model.addAttribute("yellow_cards_home_second_time_home_ithome", lyellow_cards_home_second_time_home_ithome);
+        model.addAttribute("yellow_cards_home_second_time_home_itaway", lyellow_cards_home_second_time_home_itaway);
+        model.addAttribute("yellow_cards_home_second_time_away_fora", lyellow_cards_home_second_time_away_fora);
+        model.addAttribute("yellow_cards_home_second_time_away_ithome", lyellow_cards_home_second_time_away_ithome);
+        model.addAttribute("yellow_cards_home_second_time_away_itaway", lyellow_cards_home_second_time_away_itaway);
+        model.addAttribute("yellow_cards_away_second_time_home_fora", lyellow_cards_away_second_time_home_fora);
+        model.addAttribute("yellow_cards_away_second_time_total", lyellow_cards_away_second_time_total);
+        model.addAttribute("yellow_cards_away_second_time_home_ithome", lyellow_cards_away_second_time_home_ithome);
+        model.addAttribute("yellow_cards_away_second_time_home_itaway", lyellow_cards_away_second_time_home_itaway);
+        model.addAttribute("yellow_cards_away_second_time_away_fora", lyellow_cards_away_second_time_away_fora);
+        model.addAttribute("yellow_cards_away_second_time_away_ithome", lyellow_cards_away_second_time_away_ithome);
+        model.addAttribute("yellow_cards_away_second_time_away_itaway", lyellow_cards_away_second_time_away_itaway);
+        model.addAttribute("yellow_cards_home_all_time_home_fora", lyellow_cards_home_all_time_home_fora);
+        model.addAttribute("yellow_cards_home_all_time_total", lyellow_cards_home_all_time_total);
+        model.addAttribute("yellow_cards_home_all_time_home_ithome", lyellow_cards_home_all_time_home_ithome);
+        model.addAttribute("yellow_cards_home_all_time_home_itaway", lyellow_cards_home_all_time_home_itaway);
+        model.addAttribute("yellow_cards_home_all_time_away_fora", lyellow_cards_home_all_time_away_fora);
+        model.addAttribute("yellow_cards_home_all_time_away_ithome", lyellow_cards_home_all_time_away_ithome);
+        model.addAttribute("yellow_cards_home_all_time_away_itaway", lyellow_cards_home_all_time_away_itaway);
+        model.addAttribute("yellow_cards_away_all_time_home_fora", lyellow_cards_away_all_time_home_fora);
+        model.addAttribute("yellow_cards_away_all_time_total", lyellow_cards_away_all_time_total);
+        model.addAttribute("yellow_cards_away_all_time_home_ithome", lyellow_cards_away_all_time_home_ithome);
+        model.addAttribute("yellow_cards_away_all_time_home_itaway", lyellow_cards_away_all_time_home_itaway);
+        model.addAttribute("yellow_cards_away_all_time_away_fora", lyellow_cards_away_all_time_away_fora);
+        model.addAttribute("yellow_cards_away_all_time_away_ithome", lyellow_cards_away_all_time_away_ithome);
+        model.addAttribute("yellow_cards_away_all_time_away_itaway", lyellow_cards_away_all_time_away_itaway);
+        model.addAttribute("shots_on_target_home_first_time_home_fora", lshots_on_target_home_first_time_home_fora);
+        model.addAttribute("shots_on_target_home_first_time_total", lshots_on_target_home_first_time_total);
+        model.addAttribute("shots_on_target_home_first_time_home_ithome", lshots_on_target_home_first_time_home_ithome);
+        model.addAttribute("shots_on_target_home_first_time_home_itaway", lshots_on_target_home_first_time_home_itaway);
+        model.addAttribute("shots_on_target_home_first_time_away_fora", lshots_on_target_home_first_time_away_fora);
+        model.addAttribute("shots_on_target_home_first_time_away_ithome", lshots_on_target_home_first_time_away_ithome);
+        model.addAttribute("shots_on_target_home_first_time_away_itaway", lshots_on_target_home_first_time_away_itaway);
+        model.addAttribute("shots_on_target_away_first_time_home_fora", lshots_on_target_away_first_time_home_fora);
+        model.addAttribute("shots_on_target_away_first_time_total", lshots_on_target_away_first_time_total);
+        model.addAttribute("shots_on_target_away_first_time_home_ithome", lshots_on_target_away_first_time_home_ithome);
+        model.addAttribute("shots_on_target_away_first_time_home_itaway", lshots_on_target_away_first_time_home_itaway);
+        model.addAttribute("shots_on_target_away_first_time_away_fora", lshots_on_target_away_first_time_away_fora);
+        model.addAttribute("shots_on_target_away_first_time_away_ithome", lshots_on_target_away_first_time_away_ithome);
+        model.addAttribute("shots_on_target_away_first_time_away_itaway", lshots_on_target_away_first_time_away_itaway);
+        model.addAttribute("shots_on_target_home_second_time_home_fora", lshots_on_target_home_second_time_home_fora);
+        model.addAttribute("shots_on_target_home_second_time_total", lshots_on_target_home_second_time_total);
+        model.addAttribute("shots_on_target_home_second_time_home_ithome", lshots_on_target_home_second_time_home_ithome);
+        model.addAttribute("shots_on_target_home_second_time_home_itaway", lshots_on_target_home_second_time_home_itaway);
+        model.addAttribute("shots_on_target_home_second_time_away_fora", lshots_on_target_home_second_time_away_fora);
+        model.addAttribute("shots_on_target_home_second_time_away_ithome", lshots_on_target_home_second_time_away_ithome);
+        model.addAttribute("shots_on_target_home_second_time_away_itaway", lshots_on_target_home_second_time_away_itaway);
+        model.addAttribute("shots_on_target_away_second_time_home_fora", lshots_on_target_away_second_time_home_fora);
+        model.addAttribute("shots_on_target_away_second_time_total", lshots_on_target_away_second_time_total);
+        model.addAttribute("shots_on_target_away_second_time_home_ithome", lshots_on_target_away_second_time_home_ithome);
+        model.addAttribute("shots_on_target_away_second_time_home_itaway", lshots_on_target_away_second_time_home_itaway);
+        model.addAttribute("shots_on_target_away_second_time_away_fora", lshots_on_target_away_second_time_away_fora);
+        model.addAttribute("shots_on_target_away_second_time_away_ithome", lshots_on_target_away_second_time_away_ithome);
+        model.addAttribute("shots_on_target_away_second_time_away_itaway", lshots_on_target_away_second_time_away_itaway);
+        model.addAttribute("shots_on_target_home_all_time_home_fora", lshots_on_target_home_all_time_home_fora);
+        model.addAttribute("shots_on_target_home_all_time_total", lshots_on_target_home_all_time_total);
+        model.addAttribute("shots_on_target_home_all_time_home_ithome", lshots_on_target_home_all_time_home_ithome);
+        model.addAttribute("shots_on_target_home_all_time_home_itaway", lshots_on_target_home_all_time_home_itaway);
+        model.addAttribute("shots_on_target_home_all_time_away_fora", lshots_on_target_home_all_time_away_fora);
+        model.addAttribute("shots_on_target_home_all_time_away_ithome", lshots_on_target_home_all_time_away_ithome);
+        model.addAttribute("shots_on_target_home_all_time_away_itaway", lshots_on_target_home_all_time_away_itaway);
+        model.addAttribute("shots_on_target_away_all_time_home_fora", lshots_on_target_away_all_time_home_fora);
+        model.addAttribute("shots_on_target_away_all_time_total", lshots_on_target_away_all_time_total);
+        model.addAttribute("shots_on_target_away_all_time_home_ithome", lshots_on_target_away_all_time_home_ithome);
+        model.addAttribute("shots_on_target_away_all_time_home_itaway", lshots_on_target_away_all_time_home_itaway);
+        model.addAttribute("shots_on_target_away_all_time_away_fora", lshots_on_target_away_all_time_away_fora);
+        model.addAttribute("shots_on_target_away_all_time_away_ithome", lshots_on_target_away_all_time_away_ithome);
+        model.addAttribute("shots_on_target_away_all_time_away_itaway", lshots_on_target_away_all_time_away_itaway);
+        model.addAttribute("offsides_home_first_time_home_fora", loffsides_home_first_time_home_fora);
+        model.addAttribute("offsides_home_first_time_total", loffsides_home_first_time_total);
+        model.addAttribute("offsides_home_first_time_home_ithome", loffsides_home_first_time_home_ithome);
+        model.addAttribute("offsides_home_first_time_home_itaway", loffsides_home_first_time_home_itaway);
+        model.addAttribute("offsides_home_first_time_away_fora", loffsides_home_first_time_away_fora);
+        model.addAttribute("offsides_home_first_time_away_ithome", loffsides_home_first_time_away_ithome);
+        model.addAttribute("offsides_home_first_time_away_itaway", loffsides_home_first_time_away_itaway);
+        model.addAttribute("offsides_away_first_time_home_fora", loffsides_away_first_time_home_fora);
+        model.addAttribute("offsides_away_first_time_total", loffsides_away_first_time_total);
+        model.addAttribute("offsides_away_first_time_home_ithome", loffsides_away_first_time_home_ithome);
+        model.addAttribute("offsides_away_first_time_home_itaway", loffsides_away_first_time_home_itaway);
+        model.addAttribute("offsides_away_first_time_away_fora", loffsides_away_first_time_away_fora);
+        model.addAttribute("offsides_away_first_time_away_ithome", loffsides_away_first_time_away_ithome);
+        model.addAttribute("offsides_away_first_time_away_itaway", loffsides_away_first_time_away_itaway);
+        model.addAttribute("offsides_home_second_time_home_fora", loffsides_home_second_time_home_fora);
+        model.addAttribute("offsides_home_second_time_total", loffsides_home_second_time_total);
+        model.addAttribute("offsides_home_second_time_home_ithome", loffsides_home_second_time_home_ithome);
+        model.addAttribute("offsides_home_second_time_home_itaway", loffsides_home_second_time_home_itaway);
+        model.addAttribute("offsides_home_second_time_away_fora", loffsides_home_second_time_away_fora);
+        model.addAttribute("offsides_home_second_time_away_ithome", loffsides_home_second_time_away_ithome);
+        model.addAttribute("offsides_home_second_time_away_itaway", loffsides_home_second_time_away_itaway);
+        model.addAttribute("offsides_away_second_time_home_fora", loffsides_away_second_time_home_fora);
+        model.addAttribute("offsides_away_second_time_total", loffsides_away_second_time_total);
+        model.addAttribute("offsides_away_second_time_home_ithome", loffsides_away_second_time_home_ithome);
+        model.addAttribute("offsides_away_second_time_home_itaway", loffsides_away_second_time_home_itaway);
+        model.addAttribute("offsides_away_second_time_away_fora", loffsides_away_second_time_away_fora);
+        model.addAttribute("offsides_away_second_time_away_ithome", loffsides_away_second_time_away_ithome);
+        model.addAttribute("offsides_away_second_time_away_itaway", loffsides_away_second_time_away_itaway);
+        model.addAttribute("offsides_home_all_time_home_fora", loffsides_home_all_time_home_fora);
+        model.addAttribute("offsides_home_all_time_total", loffsides_home_all_time_total);
+        model.addAttribute("offsides_home_all_time_home_ithome", loffsides_home_all_time_home_ithome);
+        model.addAttribute("offsides_home_all_time_home_itaway", loffsides_home_all_time_home_itaway);
+        model.addAttribute("offsides_home_all_time_away_fora", loffsides_home_all_time_away_fora);
+        model.addAttribute("offsides_home_all_time_away_ithome", loffsides_home_all_time_away_ithome);
+        model.addAttribute("offsides_home_all_time_away_itaway", loffsides_home_all_time_away_itaway);
+        model.addAttribute("offsides_away_all_time_home_fora", loffsides_away_all_time_home_fora);
+        model.addAttribute("offsides_away_all_time_total", loffsides_away_all_time_total);
+        model.addAttribute("offsides_away_all_time_home_ithome", loffsides_away_all_time_home_ithome);
+        model.addAttribute("offsides_away_all_time_home_itaway", loffsides_away_all_time_home_itaway);
+        model.addAttribute("offsides_away_all_time_away_fora", loffsides_away_all_time_away_fora);
+        model.addAttribute("offsides_away_all_time_away_ithome", loffsides_away_all_time_away_ithome);
+        model.addAttribute("offsides_away_all_time_away_itaway", loffsides_away_all_time_away_itaway);
+        model.addAttribute("fouls_home_first_time_home_fora", lfouls_home_first_time_home_fora);
+        model.addAttribute("fouls_home_first_time_total", lfouls_home_first_time_total);
+        model.addAttribute("fouls_home_first_time_home_ithome", lfouls_home_first_time_home_ithome);
+        model.addAttribute("fouls_home_first_time_home_itaway", lfouls_home_first_time_home_itaway);
+        model.addAttribute("fouls_home_first_time_away_fora", lfouls_home_first_time_away_fora);
+        model.addAttribute("fouls_home_first_time_away_ithome", lfouls_home_first_time_away_ithome);
+        model.addAttribute("fouls_home_first_time_away_itaway", lfouls_home_first_time_away_itaway);
+        model.addAttribute("fouls_away_first_time_home_fora", lfouls_away_first_time_home_fora);
+        model.addAttribute("fouls_away_first_time_total", lfouls_away_first_time_total);
+        model.addAttribute("fouls_away_first_time_home_ithome", lfouls_away_first_time_home_ithome);
+        model.addAttribute("fouls_away_first_time_home_itaway", lfouls_away_first_time_home_itaway);
+        model.addAttribute("fouls_away_first_time_away_fora", lfouls_away_first_time_away_fora);
+        model.addAttribute("fouls_away_first_time_away_ithome", lfouls_away_first_time_away_ithome);
+        model.addAttribute("fouls_away_first_time_away_itaway", lfouls_away_first_time_away_itaway);
+        model.addAttribute("fouls_home_second_time_home_fora", lfouls_home_second_time_home_fora);
+        model.addAttribute("fouls_home_second_time_total", lfouls_home_second_time_total);
+        model.addAttribute("fouls_home_second_time_home_ithome", lfouls_home_second_time_home_ithome);
+        model.addAttribute("fouls_home_second_time_home_itaway", lfouls_home_second_time_home_itaway);
+        model.addAttribute("fouls_home_second_time_away_fora", lfouls_home_second_time_away_fora);
+        model.addAttribute("fouls_home_second_time_away_ithome", lfouls_home_second_time_away_ithome);
+        model.addAttribute("fouls_home_second_time_away_itaway", lfouls_home_second_time_away_itaway);
+        model.addAttribute("fouls_away_second_time_home_fora", lfouls_away_second_time_home_fora);
+        model.addAttribute("fouls_away_second_time_total", lfouls_away_second_time_total);
+        model.addAttribute("fouls_away_second_time_home_ithome", lfouls_away_second_time_home_ithome);
+        model.addAttribute("fouls_away_second_time_home_itaway", lfouls_away_second_time_home_itaway);
+        model.addAttribute("fouls_away_second_time_away_fora", lfouls_away_second_time_away_fora);
+        model.addAttribute("fouls_away_second_time_away_ithome", lfouls_away_second_time_away_ithome);
+        model.addAttribute("fouls_away_second_time_away_itaway", lfouls_away_second_time_away_itaway);
+        model.addAttribute("fouls_home_all_time_home_fora", lfouls_home_all_time_home_fora);
+        model.addAttribute("fouls_home_all_time_total", lfouls_home_all_time_total);
+        model.addAttribute("fouls_home_all_time_home_ithome", lfouls_home_all_time_home_ithome);
+        model.addAttribute("fouls_home_all_time_home_itaway", lfouls_home_all_time_home_itaway);
+        model.addAttribute("fouls_home_all_time_away_fora", lfouls_home_all_time_away_fora);
+        model.addAttribute("fouls_home_all_time_away_ithome", lfouls_home_all_time_away_ithome);
+        model.addAttribute("fouls_home_all_time_away_itaway", lfouls_home_all_time_away_itaway);
+        model.addAttribute("fouls_away_all_time_home_fora", lfouls_away_all_time_home_fora);
+        model.addAttribute("fouls_away_all_time_total", lfouls_away_all_time_total);
+        model.addAttribute("fouls_away_all_time_home_ithome", lfouls_away_all_time_home_ithome);
+        model.addAttribute("fouls_away_all_time_home_itaway", lfouls_away_all_time_home_itaway);
+        model.addAttribute("fouls_away_all_time_away_fora", lfouls_away_all_time_away_fora);
+        model.addAttribute("fouls_away_all_time_away_ithome", lfouls_away_all_time_away_ithome);
+        model.addAttribute("fouls_away_all_time_away_itaway", lfouls_away_all_time_away_itaway);
         return "match-analysis";
     }
     private void findSuccessEvent(event evs, coefficient_table coeffs, ArrayList<event> matchEvents, ArrayList<coefficient_table> matchCoefficient, Model model) {
@@ -1218,7 +2319,6 @@ public class MatchController {
         Double value = coeffs.getOutcomeValue();
         if (evs.getOccasion() == 3) {
             if (coeffs.getIdCoefficient() % 2 == 0) {
-                //double success = homeStat - awayStat;
                 if (awayStat + value > homeStat) {
                     findSuccessEvent(evs, coeffs, matchEvents, matchCoefficient, model);
                 }
@@ -1227,30 +2327,16 @@ public class MatchController {
                     findSuccessEvent(evs, coeffs, matchEvents, matchCoefficient, model);
                 }
             }
-//                            if (matchHomeStats.isEmpty()) {
-//                                matchHomeStats.add((corners_home / lastMatchesHomeTeambyLevel.size() + corners_home2 / lastMatchesGuestTeambyLevel.size()) / 2);
-//                                model.addAttribute("corners_stat_home", matchHomeStats);
-//                            }
-//                            if (matchAwayStats.isEmpty()) {
-//                                matchAwayStats.add((corners_away / lastMatchesHomeTeambyLevel.size() + corners_away2 / lastMatchesGuestTeambyLevel.size()) / 2);
-//                                model.addAttribute("corners_stat_away", matchAwayStats);
-//                            }
         } else if (evs.getOccasion() == 4) {
             if (coeffs.getIdCoefficient() % 2 == 0) {
                 if (value > totalStat) {
                     findSuccessEvent(evs, coeffs, matchEvents, matchCoefficient, model);
-                    System.out.println("Ставка: " + value + " Статистика1: " + totalStat + "Коэффициент: " + coeffs.getCoefficient());
                 }
             } else {
                 if (value < totalStat) {
                     findSuccessEvent(evs, coeffs, matchEvents, matchCoefficient, model);
-                    System.out.println("Ставка: " + value + " Статистика2:" + totalStat + "Коэффициент: " + coeffs.getCoefficient());
                 }
             }
-//                            if (matchAllStats.isEmpty()) {
-//                                matchAllStats.add((corners_home / lastMatchesHomeTeambyLevel.size() + corners_away / lastMatchesHomeTeambyLevel.size() + corners_home2 / lastMatchesGuestTeambyLevel.size() + corners_away2 / lastMatchesGuestTeambyLevel.size()) / 2);
-//                                model.addAttribute("corners_stat_all", matchAllStats);
-//                            }
         } else if (evs.getOccasion() == 5) {
             if (coeffs.getIdCoefficient() % 2 == 0) {
                 if (value > homeStat) {
@@ -1269,6 +2355,1527 @@ public class MatchController {
             } else {
                 if (value < awayStat) {
                     findSuccessEvent(evs, coeffs, matchEvents, matchCoefficient, model);
+                }
+            }
+        }
+    }
+
+    private void cornersCountMatches(int team, event evs, coefficient_table coeffs, ArrayList<match_table> lastMatchesTeamByLevel, ArrayList<Integer> lcorners_home_first_time_home_fora, ArrayList<Integer> lcorners_home_first_time_home_total, ArrayList<Integer> lcorners_home_first_time_home_ithome, ArrayList<Integer> lcorners_home_first_time_home_itaway) {
+        Double value = coeffs.getOutcomeValue();
+        int corners_home_first_time_home_fora = -1, corners_home_first_time_total = -1, corners_home_first_time_home_ithome = -1, corners_home_first_time_home_itaway = -1;
+        int corners_home_first_time_away_fora = -1, corners_home_first_time_away_ithome = -1, corners_home_first_time_away_itaway = -1;
+        int corners_home_first_time_home_fora2 = -1, corners_home_first_time_total2 = -1, corners_home_first_time_home_ithome2 = -1, corners_home_first_time_home_itaway2 = -1;
+        int corners_home_first_time_away_fora2 = -1, corners_home_first_time_away_ithome2 = -1, corners_home_first_time_away_itaway2 = -1;
+        for (match_table match : lastMatchesTeamByLevel) {
+            if (evs.getGamePeriod() == 0) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest() + value > match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome() + value > match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome() - value > match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest() - value > match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome() + match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            corners_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            corners_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerFirstHalfGuest() + match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerFirstHalfHome() + match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 1) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getCornerFirstHalfGuest() + value > match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerFirstHalfHome() + value > match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getCornerFirstHalfHome() - value > match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerFirstHalfGuest() - value > match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getCornerFirstHalfHome() + match.getCornerFirstHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            corners_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            corners_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerFirstHalfGuest()) {
+                                corners_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerFirstHalfHome()) {
+                                corners_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 2) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getCornerSecondHalfGuest() + value > match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerSecondHalfHome() + value > match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getCornerSecondHalfHome() - value > match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getCornerSecondHalfGuest() - value > match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getCornerSecondHalfHome() + match.getCornerSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            corners_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            corners_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getCornerSecondHalfGuest()) {
+                                corners_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getCornerSecondHalfHome()) {
+                                corners_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (team == 1) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (corners_home_first_time_home_fora > 6) {
+                    lcorners_home_first_time_home_fora.add(corners_home_first_time_home_fora + 1);
+                }
+                if (corners_home_first_time_total > 6) {
+                    lcorners_home_first_time_home_total.add(corners_home_first_time_total + 1);
+                }
+                if (corners_home_first_time_home_ithome > 6) {
+                    lcorners_home_first_time_home_ithome.add(corners_home_first_time_home_ithome + 1);
+                }
+                if (corners_home_first_time_home_itaway > 6) {
+                    lcorners_home_first_time_home_itaway.add(corners_home_first_time_home_itaway + 1);
+                }
+            } else {
+                if (corners_home_first_time_home_fora2 > 6) {
+                    lcorners_home_first_time_home_fora.add(corners_home_first_time_home_fora2 + 1);
+                }
+                if (corners_home_first_time_total2 > 6) {
+                    lcorners_home_first_time_home_total.add(corners_home_first_time_total2 + 1);
+                }
+                if (corners_home_first_time_home_ithome2 > 6) {
+                    lcorners_home_first_time_home_ithome.add(corners_home_first_time_home_ithome2 + 1);
+                }
+                if (corners_home_first_time_home_itaway2 > 6) {
+                    lcorners_home_first_time_home_itaway.add(corners_home_first_time_home_itaway2 + 1);
+                }
+            }
+        } else if (team == 2) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (corners_home_first_time_away_fora > 6) {
+                    lcorners_home_first_time_home_fora.add(corners_home_first_time_away_fora + 1);
+                }
+                if (corners_home_first_time_total > 6) {
+                    lcorners_home_first_time_home_total.add(corners_home_first_time_total + 1);
+                }
+                if (corners_home_first_time_away_ithome > 6) {
+                    lcorners_home_first_time_home_ithome.add(corners_home_first_time_away_ithome + 1);
+                }
+                if (corners_home_first_time_away_itaway > 6) {
+                    lcorners_home_first_time_home_itaway.add(corners_home_first_time_away_itaway + 1);
+                }
+            } else {
+                if (corners_home_first_time_away_fora2 > 6) {
+                    lcorners_home_first_time_home_fora.add(corners_home_first_time_away_fora2 + 1);
+                }
+                if (corners_home_first_time_total2 > 6) {
+                    lcorners_home_first_time_home_total.add(corners_home_first_time_total2 + 1);
+                }
+                if (corners_home_first_time_away_ithome2 > 6) {
+                    lcorners_home_first_time_home_ithome.add(corners_home_first_time_away_ithome2 + 1);
+                }
+                if (corners_home_first_time_away_itaway2 > 6) {
+                    lcorners_home_first_time_home_itaway.add(corners_home_first_time_away_itaway2 + 1);
+                }
+            }
+        }
+    }
+    private void yellowCardsCountMatches(int team, event evs, coefficient_table coeffs, ArrayList<match_table> lastMatchesTeamByLevel, ArrayList<Integer> lyellow_cards_home_first_time_home_fora, ArrayList<Integer> lyellow_cards_home_first_time_home_total, ArrayList<Integer> lyellow_cards_home_first_time_home_ithome, ArrayList<Integer> lyellow_cards_home_first_time_home_itaway) {
+        Double value = coeffs.getOutcomeValue();
+        int yellow_cards_home_first_time_home_fora = -1, yellow_cards_home_first_time_total = -1, yellow_cards_home_first_time_home_ithome = -1, yellow_cards_home_first_time_home_itaway = -1;
+        int yellow_cards_home_first_time_away_fora = -1, yellow_cards_home_first_time_away_ithome = -1, yellow_cards_home_first_time_away_itaway = -1;
+        int yellow_cards_home_first_time_home_fora2 = -1, yellow_cards_home_first_time_total2 = -1, yellow_cards_home_first_time_home_ithome2 = -1, yellow_cards_home_first_time_home_itaway2 = -1;
+        int yellow_cards_home_first_time_away_fora2 = -1, yellow_cards_home_first_time_away_ithome2 = -1, yellow_cards_home_first_time_away_itaway2 = -1;
+        for (match_table match : lastMatchesTeamByLevel) {
+            if (evs.getGamePeriod() == 0) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest() + value > match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome() + value > match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome() - value > match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest() - value > match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome() + match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            yellow_cards_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            yellow_cards_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardFirstHalfGuest() + match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardFirstHalfHome() + match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 1) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getYellowCardFirstHalfGuest() + value > match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardFirstHalfHome() + value > match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getYellowCardFirstHalfHome() - value > match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardFirstHalfGuest() - value > match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getYellowCardFirstHalfHome() + match.getYellowCardFirstHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            yellow_cards_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            yellow_cards_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardFirstHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardFirstHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 2) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getYellowCardSecondHalfGuest() + value > match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardSecondHalfHome() + value > match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getYellowCardSecondHalfHome() - value > match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getYellowCardSecondHalfGuest() - value > match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getYellowCardSecondHalfHome() + match.getYellowCardSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            yellow_cards_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            yellow_cards_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getYellowCardSecondHalfGuest()) {
+                                yellow_cards_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getYellowCardSecondHalfHome()) {
+                                yellow_cards_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (team == 1) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (yellow_cards_home_first_time_home_fora != -1) {
+                    lyellow_cards_home_first_time_home_fora.add(yellow_cards_home_first_time_home_fora + 1);
+                }
+                if (yellow_cards_home_first_time_total != -1) {
+                    lyellow_cards_home_first_time_home_total.add(yellow_cards_home_first_time_total + 1);
+                }
+                if (yellow_cards_home_first_time_home_ithome != -1) {
+                    lyellow_cards_home_first_time_home_ithome.add(yellow_cards_home_first_time_home_ithome + 1);
+                }
+                if (yellow_cards_home_first_time_home_itaway != -1) {
+                    lyellow_cards_home_first_time_home_itaway.add(yellow_cards_home_first_time_home_itaway + 1);
+                }
+            } else {
+                if (yellow_cards_home_first_time_home_fora2 != -1) {
+                    lyellow_cards_home_first_time_home_fora.add(yellow_cards_home_first_time_home_fora2 + 1);
+                }
+                if (yellow_cards_home_first_time_total2 != -1) {
+                    lyellow_cards_home_first_time_home_total.add(yellow_cards_home_first_time_total2 + 1);
+                }
+                if (yellow_cards_home_first_time_home_ithome2 != -1) {
+                    lyellow_cards_home_first_time_home_ithome.add(yellow_cards_home_first_time_home_ithome2 + 1);
+                }
+                if (yellow_cards_home_first_time_home_itaway2 != -1) {
+                    lyellow_cards_home_first_time_home_itaway.add(yellow_cards_home_first_time_home_itaway2 + 1);
+                }
+            }
+        } else if (team == 2) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (yellow_cards_home_first_time_away_fora != -1) {
+                    lyellow_cards_home_first_time_home_fora.add(yellow_cards_home_first_time_away_fora + 1);
+                }
+                if (yellow_cards_home_first_time_total != -1) {
+                    lyellow_cards_home_first_time_home_total.add(yellow_cards_home_first_time_total + 1);
+                }
+                if (yellow_cards_home_first_time_away_ithome != -1) {
+                    lyellow_cards_home_first_time_home_ithome.add(yellow_cards_home_first_time_away_ithome + 1);
+                }
+                if (yellow_cards_home_first_time_away_itaway != -1) {
+                    lyellow_cards_home_first_time_home_itaway.add(yellow_cards_home_first_time_away_itaway + 1);
+                }
+            } else {
+                if (yellow_cards_home_first_time_away_fora2 != -1) {
+                    lyellow_cards_home_first_time_home_fora.add(yellow_cards_home_first_time_away_fora2 + 1);
+                }
+                if (yellow_cards_home_first_time_total2 != -1) {
+                    lyellow_cards_home_first_time_home_total.add(yellow_cards_home_first_time_total2 + 1);
+                }
+                if (yellow_cards_home_first_time_away_ithome2 != -1) {
+                    lyellow_cards_home_first_time_home_ithome.add(yellow_cards_home_first_time_away_ithome2 + 1);
+                }
+                if (yellow_cards_home_first_time_away_itaway2 != -1) {
+                    lyellow_cards_home_first_time_home_itaway.add(yellow_cards_home_first_time_away_itaway2 + 1);
+                }
+            }
+        }
+    }
+    private void shotsOnTargetCountMatches(int team, event evs, coefficient_table coeffs, ArrayList<match_table> lastMatchesTeamByLevel, ArrayList<Integer> lshots_on_target_home_first_time_home_fora, ArrayList<Integer> lshots_on_target_home_first_time_home_total, ArrayList<Integer> lshots_on_target_home_first_time_home_ithome, ArrayList<Integer> lshots_on_target_home_first_time_home_itaway) {
+        Double value = coeffs.getOutcomeValue();
+        int shots_on_target_home_first_time_home_fora = -1, shots_on_target_home_first_time_total = -1, shots_on_target_home_first_time_home_ithome = -1, shots_on_target_home_first_time_home_itaway = -1;
+        int shots_on_target_home_first_time_away_fora = -1, shots_on_target_home_first_time_away_ithome = -1, shots_on_target_home_first_time_away_itaway = -1;
+        int shots_on_target_home_first_time_home_fora2 = -1, shots_on_target_home_first_time_total2 = -1, shots_on_target_home_first_time_home_ithome2 = -1, shots_on_target_home_first_time_home_itaway2 = -1;
+        int shots_on_target_home_first_time_away_fora2 = -1, shots_on_target_home_first_time_away_ithome2 = -1, shots_on_target_home_first_time_away_itaway2 = -1;
+        for (match_table match : lastMatchesTeamByLevel) {
+            if (evs.getGamePeriod() == 0) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest() + value > match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome() + value > match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome() - value > match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest() - value > match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome() + match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            shots_on_target_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            shots_on_target_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetFirstHalfGuest() + match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 1) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getShotOnTargetFirstHalfGuest() + value > match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetFirstHalfHome() + value > match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getShotOnTargetFirstHalfHome() - value > match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetFirstHalfGuest() - value > match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getShotOnTargetFirstHalfHome() + match.getShotOnTargetFirstHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            shots_on_target_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            shots_on_target_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetFirstHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetFirstHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 2) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getShotOnTargetSecondHalfGuest() + value > match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetSecondHalfHome() + value > match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getShotOnTargetSecondHalfHome() - value > match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getShotOnTargetSecondHalfGuest() - value > match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getShotOnTargetSecondHalfHome() + match.getShotOnTargetSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            shots_on_target_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            shots_on_target_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getShotOnTargetSecondHalfGuest()) {
+                                shots_on_target_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getShotOnTargetSecondHalfHome()) {
+                                shots_on_target_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (team == 1) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (shots_on_target_home_first_time_home_fora != -1) {
+                    lshots_on_target_home_first_time_home_fora.add(shots_on_target_home_first_time_home_fora + 1);
+                }
+                if (shots_on_target_home_first_time_total != -1) {
+                    lshots_on_target_home_first_time_home_total.add(shots_on_target_home_first_time_total + 1);
+                }
+                if (shots_on_target_home_first_time_home_ithome != -1) {
+                    lshots_on_target_home_first_time_home_ithome.add(shots_on_target_home_first_time_home_ithome + 1);
+                }
+                if (shots_on_target_home_first_time_home_itaway != -1) {
+                    lshots_on_target_home_first_time_home_itaway.add(shots_on_target_home_first_time_home_itaway + 1);
+                }
+            } else {
+                if (shots_on_target_home_first_time_home_fora2 != -1) {
+                    lshots_on_target_home_first_time_home_fora.add(shots_on_target_home_first_time_home_fora2 + 1);
+                }
+                if (shots_on_target_home_first_time_total2 != -1) {
+                    lshots_on_target_home_first_time_home_total.add(shots_on_target_home_first_time_total2 + 1);
+                }
+                if (shots_on_target_home_first_time_home_ithome2 != -1) {
+                    lshots_on_target_home_first_time_home_ithome.add(shots_on_target_home_first_time_home_ithome2 + 1);
+                }
+                if (shots_on_target_home_first_time_home_itaway2 != -1) {
+                    lshots_on_target_home_first_time_home_itaway.add(shots_on_target_home_first_time_home_itaway2 + 1);
+                }
+            }
+        } else if (team == 2) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (shots_on_target_home_first_time_away_fora != -1) {
+                    lshots_on_target_home_first_time_home_fora.add(shots_on_target_home_first_time_away_fora + 1);
+                }
+                if (shots_on_target_home_first_time_total != -1) {
+                    lshots_on_target_home_first_time_home_total.add(shots_on_target_home_first_time_total + 1);
+                }
+                if (shots_on_target_home_first_time_away_ithome != -1) {
+                    lshots_on_target_home_first_time_home_ithome.add(shots_on_target_home_first_time_away_ithome + 1);
+                }
+                if (shots_on_target_home_first_time_away_itaway != -1) {
+                    lshots_on_target_home_first_time_home_itaway.add(shots_on_target_home_first_time_away_itaway + 1);
+                }
+            } else {
+                if (shots_on_target_home_first_time_away_fora2 != -1) {
+                    lshots_on_target_home_first_time_home_fora.add(shots_on_target_home_first_time_away_fora2 + 1);
+                }
+                if (shots_on_target_home_first_time_total2 != -1) {
+                    lshots_on_target_home_first_time_home_total.add(shots_on_target_home_first_time_total2 + 1);
+                }
+                if (shots_on_target_home_first_time_away_ithome2 != -1) {
+                    lshots_on_target_home_first_time_home_ithome.add(shots_on_target_home_first_time_away_ithome2 + 1);
+                }
+                if (shots_on_target_home_first_time_away_itaway2 != -1) {
+                    lshots_on_target_home_first_time_home_itaway.add(shots_on_target_home_first_time_away_itaway2 + 1);
+                }
+            }
+        }
+    }
+    private void offsidesCountMatches(int team, event evs, coefficient_table coeffs, ArrayList<match_table> lastMatchesTeamByLevel, ArrayList<Integer> loffsides_home_first_time_home_fora, ArrayList<Integer> loffsides_home_first_time_home_total, ArrayList<Integer> loffsides_home_first_time_home_ithome, ArrayList<Integer> loffsides_home_first_time_home_itaway) {
+        Double value = coeffs.getOutcomeValue();
+        int offsides_home_first_time_home_fora = -1, offsides_home_first_time_total = -1, offsides_home_first_time_home_ithome = -1, offsides_home_first_time_home_itaway = -1;
+        int offsides_home_first_time_away_fora = -1, offsides_home_first_time_away_ithome = -1, offsides_home_first_time_away_itaway = -1;
+        int offsides_home_first_time_home_fora2 = -1, offsides_home_first_time_total2 = -1, offsides_home_first_time_home_ithome2 = -1, offsides_home_first_time_home_itaway2 = -1;
+        int offsides_home_first_time_away_fora2 = -1, offsides_home_first_time_away_ithome2 = -1, offsides_home_first_time_away_itaway2 = -1;
+        for (match_table match : lastMatchesTeamByLevel) {
+            if (evs.getGamePeriod() == 0) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest() + value > match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome() + value > match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome() - value > match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest() - value > match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome() + match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            offsides_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            offsides_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideFirstHalfGuest() + match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideFirstHalfHome() + match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 1) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getOffsideFirstHalfGuest() + value > match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideFirstHalfHome() + value > match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getOffsideFirstHalfHome() - value > match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideFirstHalfGuest() - value > match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getOffsideFirstHalfHome() + match.getOffsideFirstHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            offsides_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            offsides_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideFirstHalfGuest()) {
+                                offsides_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideFirstHalfHome()) {
+                                offsides_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 2) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getOffsideSecondHalfGuest() + value > match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideSecondHalfHome() + value > match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getOffsideSecondHalfHome() - value > match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getOffsideSecondHalfGuest() - value > match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getOffsideSecondHalfHome() + match.getOffsideSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            offsides_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            offsides_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getOffsideSecondHalfGuest()) {
+                                offsides_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getOffsideSecondHalfHome()) {
+                                offsides_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (team == 1) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (offsides_home_first_time_home_fora != -1) {
+                    loffsides_home_first_time_home_fora.add(offsides_home_first_time_home_fora + 1);
+                }
+                if (offsides_home_first_time_total != -1) {
+                    loffsides_home_first_time_home_total.add(offsides_home_first_time_total + 1);
+                }
+                if (offsides_home_first_time_home_ithome != -1) {
+                    loffsides_home_first_time_home_ithome.add(offsides_home_first_time_home_ithome + 1);
+                }
+                if (offsides_home_first_time_home_itaway != -1) {
+                    loffsides_home_first_time_home_itaway.add(offsides_home_first_time_home_itaway + 1);
+                }
+            } else {
+                if (offsides_home_first_time_home_fora2 != -1) {
+                    loffsides_home_first_time_home_fora.add(offsides_home_first_time_home_fora2 + 1);
+                }
+                if (offsides_home_first_time_total2 != -1) {
+                    loffsides_home_first_time_home_total.add(offsides_home_first_time_total2 + 1);
+                }
+                if (offsides_home_first_time_home_ithome2 != -1) {
+                    loffsides_home_first_time_home_ithome.add(offsides_home_first_time_home_ithome2 + 1);
+                }
+                if (offsides_home_first_time_home_itaway2 != -1) {
+                    loffsides_home_first_time_home_itaway.add(offsides_home_first_time_home_itaway2 + 1);
+                }
+            }
+        } else if (team == 2) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (offsides_home_first_time_away_fora != -1) {
+                    loffsides_home_first_time_home_fora.add(offsides_home_first_time_away_fora + 1);
+                }
+                if (offsides_home_first_time_total != -1) {
+                    loffsides_home_first_time_home_total.add(offsides_home_first_time_total + 1);
+                }
+                if (offsides_home_first_time_away_ithome != -1) {
+                    loffsides_home_first_time_home_ithome.add(offsides_home_first_time_away_ithome + 1);
+                }
+                if (offsides_home_first_time_away_itaway != -1) {
+                    loffsides_home_first_time_home_itaway.add(offsides_home_first_time_away_itaway + 1);
+                }
+            } else {
+                if (offsides_home_first_time_away_fora2 != -1) {
+                    loffsides_home_first_time_home_fora.add(offsides_home_first_time_away_fora2 + 1);
+                }
+                if (offsides_home_first_time_total2 != -1) {
+                    loffsides_home_first_time_home_total.add(offsides_home_first_time_total2 + 1);
+                }
+                if (offsides_home_first_time_away_ithome2 != -1) {
+                    loffsides_home_first_time_home_ithome.add(offsides_home_first_time_away_ithome2 + 1);
+                }
+                if (offsides_home_first_time_away_itaway2 != -1) {
+                    loffsides_home_first_time_home_itaway.add(offsides_home_first_time_away_itaway2 + 1);
+                }
+            }
+        }
+    }
+    private void foulsCountMatches(int team, event evs, coefficient_table coeffs, ArrayList<match_table> lastMatchesTeamByLevel, ArrayList<Integer> lfouls_home_first_time_home_fora, ArrayList<Integer> lfouls_home_first_time_home_total, ArrayList<Integer> lfouls_home_first_time_home_ithome, ArrayList<Integer> lfouls_home_first_time_home_itaway) {
+        Double value = coeffs.getOutcomeValue();
+        int fouls_home_first_time_home_fora = -1, fouls_home_first_time_total = -1, fouls_home_first_time_home_ithome = -1, fouls_home_first_time_home_itaway = -1;
+        int fouls_home_first_time_away_fora = -1, fouls_home_first_time_away_ithome = -1, fouls_home_first_time_away_itaway = -1;
+        int fouls_home_first_time_home_fora2 = -1, fouls_home_first_time_total2 = -1, fouls_home_first_time_home_ithome2 = -1, fouls_home_first_time_home_itaway2 = -1;
+        int fouls_home_first_time_away_fora2 = -1, fouls_home_first_time_away_ithome2 = -1, fouls_home_first_time_away_itaway2 = -1;
+        for (match_table match : lastMatchesTeamByLevel) {
+            if (evs.getGamePeriod() == 0) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest() + value > match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome() + value > match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome() - value > match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest() - value > match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome() + match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            fouls_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            fouls_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulFirstHalfGuest() + match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulFirstHalfHome() + match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 1) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getFoulFirstHalfGuest() + value > match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulFirstHalfHome() + value > match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getFoulFirstHalfHome() - value > match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulFirstHalfGuest() - value > match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getFoulFirstHalfHome() + match.getFoulFirstHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            fouls_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            fouls_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_away_itaway2++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulFirstHalfGuest()) {
+                                fouls_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulFirstHalfHome()) {
+                                fouls_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            } else if (evs.getGamePeriod() == 2) {
+                if (evs.getOccasion() == 3) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (match.getFoulSecondHalfGuest() + value > match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_fora++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulSecondHalfHome() + value > match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_fora++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (match.getFoulSecondHalfHome() - value > match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_fora2++;
+                            }
+                        } else if (team == 2) {
+                            if (match.getFoulSecondHalfGuest() - value > match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_fora2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 4) {
+                    int sum = match.getFoulSecondHalfHome() + match.getFoulSecondHalfGuest();
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (value > sum) {
+                            fouls_home_first_time_total++;
+                        }
+                    } else {
+                        if (value < sum) {
+                            fouls_home_first_time_total2++;
+                        }
+                    }
+                } else if (evs.getOccasion() == 5) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_ithome++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_ithome++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_home_ithome2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_away_ithome2++;
+                            }
+                        }
+                    }
+                } else if (evs.getOccasion() == 6) {
+                    if (coeffs.getIdCoefficient() % 2 == 0) {
+                        if (team == 1) {
+                            if (value > match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_itaway++;
+                            }
+                        } else if (team == 2) {
+                            if (value > match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_itaway++;
+                            }
+                        }
+                    } else {
+                        if (team == 1) {
+                            if (value < match.getFoulSecondHalfGuest()) {
+                                fouls_home_first_time_home_itaway2++;
+                            }
+                        } else if (team == 2) {
+                            if (value < match.getFoulSecondHalfHome()) {
+                                fouls_home_first_time_away_itaway2++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (team == 1) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (fouls_home_first_time_home_fora != -1) {
+                    lfouls_home_first_time_home_fora.add(fouls_home_first_time_home_fora + 1);
+                }
+                if (fouls_home_first_time_total != -1) {
+                    lfouls_home_first_time_home_total.add(fouls_home_first_time_total + 1);
+                }
+                if (fouls_home_first_time_home_ithome != -1) {
+                    lfouls_home_first_time_home_ithome.add(fouls_home_first_time_home_ithome + 1);
+                }
+                if (fouls_home_first_time_home_itaway != -1) {
+                    lfouls_home_first_time_home_itaway.add(fouls_home_first_time_home_itaway + 1);
+                }
+            } else {
+                if (fouls_home_first_time_home_fora2 != -1) {
+                    lfouls_home_first_time_home_fora.add(fouls_home_first_time_home_fora2 + 1);
+                }
+                if (fouls_home_first_time_total2 != -1) {
+                    lfouls_home_first_time_home_total.add(fouls_home_first_time_total2 + 1);
+                }
+                if (fouls_home_first_time_home_ithome2 != -1) {
+                    lfouls_home_first_time_home_ithome.add(fouls_home_first_time_home_ithome2 + 1);
+                }
+                if (fouls_home_first_time_home_itaway2 != -1) {
+                    lfouls_home_first_time_home_itaway.add(fouls_home_first_time_home_itaway2 + 1);
+                }
+            }
+        } else if (team == 2) {
+            if (coeffs.getIdCoefficient() % 2 == 0) {
+                if (fouls_home_first_time_away_fora != -1) {
+                    lfouls_home_first_time_home_fora.add(fouls_home_first_time_away_fora + 1);
+                }
+                if (fouls_home_first_time_total != -1) {
+                    lfouls_home_first_time_home_total.add(fouls_home_first_time_total + 1);
+                }
+                if (fouls_home_first_time_away_ithome != -1) {
+                    lfouls_home_first_time_home_ithome.add(fouls_home_first_time_away_ithome + 1);
+                }
+                if (fouls_home_first_time_away_itaway != -1) {
+                    lfouls_home_first_time_home_itaway.add(fouls_home_first_time_away_itaway + 1);
+                }
+            } else {
+                if (fouls_home_first_time_away_fora2 != -1) {
+                    lfouls_home_first_time_home_fora.add(fouls_home_first_time_away_fora2 + 1);
+                }
+                if (fouls_home_first_time_total2 != -1) {
+                    lfouls_home_first_time_home_total.add(fouls_home_first_time_total2 + 1);
+                }
+                if (fouls_home_first_time_away_ithome2 != -1) {
+                    lfouls_home_first_time_home_ithome.add(fouls_home_first_time_away_ithome2 + 1);
+                }
+                if (fouls_home_first_time_away_itaway2 != -1) {
+                    lfouls_home_first_time_home_itaway.add(fouls_home_first_time_away_itaway2 + 1);
                 }
             }
         }
